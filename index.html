@@ -57,48 +57,56 @@
       position: absolute;
       top: 0;
       width: 100%;
-      height: 32px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      height: 38px;
+      background: linear-gradient(90deg, rgba(40,40,60,0.85) 0%, rgba(98,0,238,0.12) 100%);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 16px;
+      padding: 0 28px;
       color: #fff;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1.5px solid rgba(160,107,255,0.18);
+      box-shadow: 0 2px 12px 0 rgba(98,0,238,0.06);
       z-index: 1001;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
     }
 
     .status-bar .left {
       display: flex;
-      gap: 12px;
+      gap: 18px;
       align-items: center;
     }
 
     .status-bar .left img {
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       object-fit: contain;
-      opacity: 0.9;
-      transition: opacity 0.2s ease;
+      opacity: 0.92;
+      filter: drop-shadow(0 1px 2px rgba(98,0,238,0.10));
+      transition: opacity 0.2s, filter 0.2s;
     }
 
     .status-bar .left img:hover {
       opacity: 1;
+      filter: drop-shadow(0 2px 6px #a06bff66);
     }
 
     .status-bar .right {
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 15px;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      gap: 12px;
+      padding: 6px 16px;
+      border-radius: 8px;
+      background: rgba(160,107,255,0.10);
+      box-shadow: 0 1px 4px 0 rgba(98,0,238,0.08);
+      color: #fff;
+      letter-spacing: 0.2px;
+      border: 1px solid rgba(160,107,255,0.13);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
 
     /* Sidebar */
@@ -119,6 +127,20 @@
       -webkit-backdrop-filter: blur(12px);
       border-right: 1px solid rgba(255,255,255,0.2);
       box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+      border-radius: 0;
+      overflow-y: auto;
+      box-sizing: border-box;
+      transition: none;
+    }
+    @media (max-width: 900px) {
+      .sidebar {
+        display: none;
+      }
+    }
+    @media (max-width: 600px) {
+      .sidebar {
+        display: none;
+      }
     }
 
     .profile-photo {
@@ -126,7 +148,13 @@
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid #6200ee;
+      border: 3px solid #fff;
+      box-shadow: 0 4px 32px 0 rgba(98,0,238,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+      outline: 2.5px solid #a06bff;
+      outline-offset: 3px;
+      transition: box-shadow 0.3s, outline 0.3s;
+      background: linear-gradient(135deg, #fff 60%, #a06bff 100%);
+      margin-bottom: 8px;
     }
 
     .sidebar h1 {
@@ -217,63 +245,164 @@
     .sidebar-buttons {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       width: 100%;
-      margin-top: 8px;
+      margin-top: 16px;
+    }
+    .sidebar-buttons-row {
+      flex-direction: row;
+      gap: 14px;
+    }
+    .sidebar-buttons-row .sidebar-button {
+      flex: 1 1 0;
+      width: 0;
+      min-width: 0;
+      margin: 0;
+      white-space: nowrap;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px !important;
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px 0 rgba(33, 150, 243, 0.10), 0 1.5px 4px 0 rgba(0,0,0,0.08);
+      border: none;
+      transition: box-shadow 0.18s, background 0.18s, color 0.18s, transform 0.18s;
+      z-index: 1;
+    }
+    .sidebar-buttons-row .sidebar-button:active {
+      box-shadow: 0 1px 2px 0 rgba(33, 150, 243, 0.10);
+      transform: scale(0.98);
+    }
+    .sidebar-buttons-row .sidebar-button:focus {
+      outline: 2px solid #1976d2;
+      outline-offset: 2px;
+    }
+    .sidebar-buttons-row .sidebar-button:not(.resume-btn) {
+      background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+      color: #fff;
+    }
+    .sidebar-buttons-row .sidebar-button:not(.resume-btn):hover {
+      background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
+      box-shadow: 0 4px 16px 0 rgba(33, 150, 243, 0.18);
+    }
+    .sidebar-buttons-row .sidebar-button.resume-btn {
+      background: linear-gradient(90deg, #7c4dff 0%, #651fff 100%);
+      color: #fff;
+      border: none;
+    }
+    .sidebar-buttons-row .sidebar-button.resume-btn:hover {
+      background: linear-gradient(90deg, #651fff 0%, #7c4dff 100%);
+      box-shadow: 0 4px 16px 0 rgba(103, 58, 183, 0.18);
+    }
+    .sidebar-buttons-row .sidebar-button img {
+      width: 20px;
+      height: 20px;
+      margin-right: 6px;
+      filter: drop-shadow(0 1px 2px rgba(33,150,243,0.10));
+      transition: transform 0.18s;
+    }
+    .sidebar-buttons-row .sidebar-button .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 0.5s linear;
+      background-color: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: 2;
+    }
+    @keyframes ripple {
+      to {
+        transform: scale(2.5);
+        opacity: 0;
+      }
+    }
+    @media (max-width: 900px) {
+      .sidebar-buttons-row {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .sidebar-buttons-row .sidebar-button {
+        width: 100%;
+      }
     }
 
     .sidebar-button {
       width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.15);
+      padding: 14px 0 14px 0;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(100deg, #a06bff 0%, #6200ee 100%);
       color: #fff;
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar-button img {
-      width: 16px;
-      height: 16px;
-      object-fit: contain;
-    }
-
-    .sidebar-button.resume-btn {
-      background: linear-gradient(135deg, rgba(98, 0, 238, 0.3), rgba(255, 255, 255, 0.2));
-      border-color: rgba(98, 0, 238, 0.3);
+      gap: 10px;
+      box-shadow: 0 2px 16px 0 rgba(98,0,238,0.10), 0 1.5px 4px 0 rgba(0,0,0,0.08);
       position: relative;
       overflow: hidden;
+      transition: box-shadow 0.25s, background 0.25s, transform 0.18s;
+      outline: none;
+      border: 1.5px solid rgba(98,0,238,0.18);
+      z-index: 1;
+      isolation: isolate;
     }
-
-    .sidebar-button.resume-btn::before {
+    .sidebar-button::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: 0.5s;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(98,0,238,0.10) 100%);
+      opacity: 0.7;
+      z-index: -1;
+      transition: opacity 0.25s;
     }
-
-    .sidebar-button.resume-btn:hover::before {
-      left: 100%;
+    .sidebar-button:hover, .sidebar-button:focus {
+      background: linear-gradient(100deg, #b388ff 0%, #7c4dff 100%);
+      box-shadow: 0 6px 24px 0 rgba(98,0,238,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+      transform: translateY(-2px) scale(1.03);
+      border-color: #a06bff;
     }
-
-    .sidebar-button:hover {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.25);
+    .sidebar-button:active {
+      background: linear-gradient(100deg, #7c4dff 0%, #a06bff 100%);
+      box-shadow: 0 2px 8px 0 rgba(98,0,238,0.10);
+      transform: scale(0.98);
     }
-
-    .sidebar-button.resume-btn:hover {
-      box-shadow: 0 4px 12px rgba(98, 0, 238, 0.2);
-      border-color: rgba(98, 0, 238, 0.5);
+    .sidebar-button img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 2px rgba(98,0,238,0.12));
+      transition: transform 0.25s;
+    }
+    .sidebar-button:hover img, .sidebar-button:focus img {
+      transform: scale(1.15) rotate(-8deg);
+    }
+    .sidebar-button.resume-btn {
+      background: linear-gradient(100deg, #fff 0%, #a06bff 100%);
+      color: #6200ee;
+      border: 1.5px solid #a06bff;
+      font-weight: 700;
+    }
+    .sidebar-button.resume-btn::before {
+      background: linear-gradient(90deg, rgba(98,0,238,0.08), rgba(255,255,255,0.18));
+      opacity: 0.8;
+    }
+    .sidebar-button.resume-btn:hover, .sidebar-button.resume-btn:focus {
+      background: linear-gradient(100deg, #e0c3fc 0%, #a06bff 100%);
+      color: #4b00b5;
+      border-color: #7c4dff;
+      box-shadow: 0 8px 32px 0 rgba(98,0,238,0.18);
+    }
+    .sidebar-button.resume-btn:active {
+      background: linear-gradient(100deg, #a06bff 0%, #fff 100%);
+      color: #6200ee;
     }
 
     @media (max-width: 900px) {
@@ -448,15 +577,254 @@
     .menu-bar-right {
       flex: 1;
       justify-content: flex-end;
-      gap: 12px;
-      font-size: 15px;
-      color: #333;
+      gap: 8px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
     }
 
-    .menu-bar-right img {
-      width: 16px;
-      height: 16px;
+    /* System Tray Icons Container */
+    .system-tray {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-right: 8px;
+    }
+
+    .system-tray:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .system-icon {
+      width: 18px;
+      height: 18px;
       object-fit: contain;
+      opacity: 0.85;
+      transition: all 0.25s ease;
+      filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+      cursor: pointer;
+      padding: 2px;
+      border-radius: 3px;
+    }
+
+    .system-icon:hover {
+      opacity: 1;
+      transform: scale(1.1);
+      filter: brightness(1.3) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Clock and Date Display */
+    .clock-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      min-width: 80px;
+      box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .clock-container:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .clock-time {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+      line-height: 1.2;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .clock-date {
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.2;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      margin-top: 1px;
+    }
+
+    /* Notification Badge */
+    .notification-badge {
+      position: relative;
+    }
+
+    .notification-badge::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(135deg, #ff4444, #ff6666);
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .notification-badge.active::after {
+      opacity: 1;
+      transform: scale(1);
+      animation: notificationPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes notificationPulse {
+      0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% { 
+        transform: scale(1.2);
+        opacity: 0.8;
+      }
+    }
+
+    /* Battery Status Indicator */
+    .battery-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .battery-percentage {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .battery-container.low-battery .system-icon {
+      filter: brightness(1.1) drop-shadow(0 1px 2px rgba(255, 68, 68, 0.4));
+    }
+
+    .battery-container.charging .system-icon {
+      filter: brightness(1.1) drop-shadow(0 1px 2px rgba(76, 175, 80, 0.4));
+    }
+
+    /* WiFi Signal Strength */
+    .wifi-container {
+      position: relative;
+    }
+
+    .wifi-container.weak-signal .system-icon {
+      filter: brightness(1.1) drop-shadow(0 1px 2px rgba(255, 152, 0, 0.4));
+    }
+
+    .wifi-container.strong-signal .system-icon {
+      filter: brightness(1.1) drop-shadow(0 1px 2px rgba(76, 175, 80, 0.4));
+    }
+
+    /* Show More Button */
+    .show-more-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-size: 10px;
+      margin-right: 4px;
+    }
+
+    .show-more-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 1);
+      transform: scale(1.05);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .menu-bar-right {
+        gap: 6px;
+        padding: 0 8px;
+      }
+      
+      .system-tray {
+        gap: 4px;
+        padding: 3px 6px;
+        margin-right: 6px;
+      }
+      
+      .system-icon {
+        width: 16px;
+        height: 16px;
+      }
+      
+      .clock-container {
+        padding: 4px 8px;
+        min-width: 70px;
+      }
+      
+      .clock-time {
+        font-size: 12px;
+      }
+      
+      .clock-date {
+        font-size: 10px;
+      }
+      
+      .battery-percentage {
+        font-size: 9px;
+        min-width: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .system-tray {
+        display: none;
+      }
+      
+      .clock-container {
+        padding: 4px 6px;
+        min-width: 60px;
+      }
+      
+      .clock-time {
+        font-size: 11px;
+      }
+      
+      .clock-date {
+        display: none;
+      }
     }    
 
     /* Project Categories */
@@ -1456,8 +1824,268 @@
       gap: 8px;
     }
   </style>
+  <style>
+    .about-popup {
+      display: none;
+      position: fixed;
+      right: 32px;
+      bottom: 70px;
+      min-width: 340px;
+      max-width: 92vw;
+      background: none;
+      z-index: 2002;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      animation: aboutPopupIn 0.25s cubic-bezier(.4,1,.4,1);
+      border: none;
+      box-shadow: none;
+    }
+    .about-modern-card {
+      background: rgba(40,40,60,0.92);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(98,0,238,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
+      padding: 32px 32px 24px 32px;
+      border: 1.5px solid rgba(160,107,255,0.18);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      color: #fff;
+      min-width: 320px;
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .about-modern-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 12px #a06bff33;
+      border: 2.5px solid #a06bff;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-modern-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .about-modern-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      margin-bottom: 8px;
+      color: #a06bff;
+      text-align: center;
+    }
+    .about-modern-desc {
+      font-size: 1.05rem;
+      color: #e0d7ff;
+      text-align: center;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .about-modern-divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #a06bff 0%, #fff 100%);
+      border-radius: 2px;
+      margin-bottom: 18px;
+    }
+    .about-modern-list {
+      width: 100%;
+      margin-bottom: 18px;
+    }
+    .about-modern-listitem {
+      font-size: 1.01rem;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .about-modern-label {
+      color: #a06bff;
+      font-weight: 600;
+      min-width: 90px;
+      display: inline-block;
+    }
+    .about-modern-footer {
+      font-size: 0.98rem;
+      color: #a06bff;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .about-modern-close {
+      background: linear-gradient(90deg, #a06bff 0%, #6200ee 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px 0 rgba(98,0,238,0.10);
+      cursor: pointer;
+      transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+      margin-top: 2px;
+    }
+    .about-modern-close:hover {
+      background: linear-gradient(90deg, #b388ff 0%, #7c4dff 100%);
+      box-shadow: 0 4px 16px 0 rgba(98,0,238,0.18);
+      transform: translateY(-2px) scale(1.03);
+    }
+    @keyframes aboutPopupIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: none; }
+    }
+  </style>
+  <style>
+    .achievements-screen {
+      position: fixed;
+      top: 32px;
+      left: 260px;
+      right: 0;
+      bottom: 64px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(.4,1,.4,1), transform 0.35s cubic-bezier(.4,1,.4,1);
+    }
+    .achievements-screen.show {
+      display: flex !important;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      transition: opacity 0.45s cubic-bezier(.4,1,.4,1), transform 0.45s cubic-bezier(.4,1,.4,1);
+    }
+    .achievements-screen.hide {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+    }
+    .achievements-content {
+      background: rgba(30,30,40,0.85);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      padding: 40px 32px 32px 32px;
+      max-width: 600px;
+      width: 100%;
+      position: relative;
+      color: #fff;
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+    .achievements-content h2 {
+      text-align: center;
+      margin-bottom: 32px;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .achievements-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .achievements-list li {
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 18px 18px 18px 48px;
+      position: relative;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+    }
+    .achievements-list .icon {
+      position: absolute;
+      left: 16px;
+      font-size: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .achievements-list .date {
+      margin-left: auto;
+      font-size: 0.95em;
+      color: #ffd700;
+      font-style: italic;
+      padding-left: 16px;
+    }
+    .achievements-content .close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(255,255,255,0.18);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .achievements-content .close-btn:hover {
+      background: rgba(255,255,255,0.32);
+    }
+    @media (max-width: 900px) {
+      .achievements-screen {
+        left: 0;
+        top: 0;
+        bottom: 0;
+      }
+      .achievements-content {
+        max-width: 98vw;
+        padding: 24px 6vw 24px 6vw;
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
+<style>
+  body, html, * {
+    cursor: none !important;
+  }
+  a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-icon, .app-icon:hover, .project-card, .project-card:hover, .system-icon, .system-icon:hover, .contact-button, .contact-button:hover, .resume-button, .resume-button:hover, .show-more-btn, .show-more-btn:hover, .win-button, .win-button:hover {
+    cursor: none !important;
+  }
+  .custom-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(98,0,238,0.18);
+    border: 2.5px solid #a06bff;
+    box-shadow: 0 0 12px 2px #a06bff44;
+    transition: transform 0.08s linear, background 0.2s;
+    will-change: transform;
+    display: none;
+  }
+</style>
 <body>
+  <div class="custom-cursor" id="customCursor"></div>
   <div class="desktop">    <!-- Status Bar -->
     <div class="status-bar">
       <div class="left">
@@ -1465,18 +2093,20 @@
         <img src="images/signal.png" alt="Signal" title="Network Signal">
         <img src="images/battery.png" alt="Battery" title="Battery Status">
       </div>
-      <div class="right">
+            <div class="right">
         <span id="statusTime"></span>
       </div>
     </div>
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <img class="profile-photo" src="images/ai.jpg" alt="Profile Photo">
-      <h1>John Doe</h1>
+      <img class="profile-photo" src="images/person.png" alt="Profile Photo">
+      <h1>Aman Kumar</h1>
       <div class="description">
         Passionate web developer with a love for creating user-friendly and visually appealing applications.
-      </div>      <div class="skills">
+      </div>
+      <div class="key-expertise" style="margin-top:18px; margin-bottom:8px; font-size:16px; font-weight:600; color:#fff; letter-spacing:0.5px; text-shadow:0 2px 4px rgba(0,0,0,0.15);">Key Expertise</div>
+      <div class="skills">
         <div class="skill-category">
           <span class="skill-title ui-ux">UI/UX Design</span>
           <div class="skill-progress" data-progress="90"></div>
@@ -1494,10 +2124,11 @@
           <div class="skill-progress" data-progress="80"></div>
         </div>
       </div>
-      <div class="sidebar-buttons">        <button class="sidebar-button" onclick="showSkills()">
+      <div class="sidebar-buttons sidebar-buttons-row">
+        <button class="sidebar-button" onclick="showSkills()">
           Skills
-        </button><button class="sidebar-button resume-btn" onclick="window.open('resume.pdf', '_blank')">
-          <img src="https://via.placeholder.com/16?text=R" alt="Resume">
+        </button>
+        <button class="sidebar-button resume-btn" onclick="window.open('resume.pdf', '_blank')">
           Resume
         </button>
       </div>
@@ -1677,9 +2308,40 @@
           </button>
         </div>
         <div class="menu-bar-right">
-          <img src="images/wifi.png" alt="WiFi">
-          <img src="images/battery.png" alt="Battery">
-          <span class="menu-bar-clock">7:03 PM</span>
+          <button class="show-more-btn" id="aboutArrowBtn" title="About this site">
+            <i class="fas fa-chevron-up"></i>
+          </button>
+          <div class="about-popup" id="aboutPopup">
+            <div class="about-modern-card">
+              <div class="about-modern-avatar">
+                <img src="images/person.png" alt="Aman Kumar" />
+              </div>
+              <div class="about-modern-title">About This Site</div>
+              <div class="about-modern-desc">This portfolio is inspired by Windows 11, featuring glass morphism and a modern UI/UX.</div>
+              <div class="about-modern-divider"></div>
+              <div class="about-modern-list">
+                <div class="about-modern-listitem"><span class="about-modern-label">Made by:</span> Aman Kumar</div>
+                <div class="about-modern-listitem"><span class="about-modern-label">Technologies:</span> HTML, CSS, JavaScript</div>
+              </div>
+              <div class="about-modern-footer">Design &amp; code by Aman Kumar &copy; 2024</div>
+              <button class="about-modern-close" id="aboutCloseBtn" title="Close">Close</button>
+            </div>
+          </div>
+          <div class="system-tray">
+            <div class="wifi-container strong-signal notification-badge" title="WiFi: Connected">
+              <img src="images/wifi.png" alt="WiFi" class="system-icon">
+            </div>
+            
+            <div class="battery-container charging" title="Battery: 85% (Charging)">
+              <img src="images/battery.png" alt="Battery" class="system-icon">
+              <span class="battery-percentage">85%</span>
+            </div>
+          </div>
+          
+          <div class="clock-container" onclick="toggleCalendar()" title="Click to view calendar">
+            <div class="clock-time" id="taskbarTime">7:03 PM</div>
+            <div class="clock-date" id="taskbarDate">Dec 15, 2024</div>
+          </div>
         </div>
       </div>
     </div><!-- Social Media Popup -->
@@ -1687,10 +2349,10 @@
       <div class="menu-header">
         <div class="menu-title">Connect With Me</div>
         <div class="menu-controls">
-          <button class="menu-button" onclick="refreshMenu()" title="Refresh">
+          <button class="menu-button" onclick="window.location.reload()" title="Refresh">
             <i class="fas fa-sync-alt"></i>
           </button>
-          <button class="menu-button power" onclick="closeMenu()" title="Close">
+          <button class="menu-button power" onclick="powerOffSite()" title="Close Site">
             <i class="fas fa-power-off"></i>
           </button>
         </div>
@@ -1704,9 +2366,9 @@
           <i class="fab fa-linkedin"></i>
           <span>LinkedIn</span>
         </a>
-        <a href="https://twitter.com/yourusername" target="_blank" class="twitter">
-          <i class="fab fa-twitter"></i>
-          <span>Twitter</span>
+        <a href="#" onclick="showAchievements(); return false;" class="achievements" style="background: linear-gradient(45deg, #FFD700, #FFA500);">
+          <i class="fas fa-trophy"></i>
+          <span>Achievements</span>
         </a>
         <a href="https://instagram.com/yourusername" target="_blank" class="instagram">
           <i class="fab fa-instagram"></i>
@@ -1747,9 +2409,52 @@
         </div>
       </div>
     </div>
+
+    <!-- Achievements Screen -->
+    <div class="achievements-screen" id="achievementsScreen" style="display:none;">
+      <div class="achievements-content">
+        <button class="close-btn" onclick="closeAchievementsScreen()">×</button>
+        <h2>🏆 Achievements & Milestones</h2>
+        <ul class="achievements-list">
+          <li><span class="icon">🎯</span> First Client Project – Successfully completed your first freelance project <span class="date">Jan 2023</span></li>
+          <li><span class="icon">💰</span> Revenue Milestone – Reached $10,000 in total project earnings <span class="date">Jun 2023</span></li>
+          <li><span class="icon">⭐</span> 5-Star Rating – Received perfect ratings from 10 clients <span class="date">Aug 2023</span></li>
+          <li><span class="icon">🚀</span> Full Stack Developer – Mastered both frontend and backend development <span class="date">Mar 2023</span></li>
+          <li><span class="icon">📱</span> Mobile App Launch – Published your first mobile application <span class="date">May 2023</span></li>
+          <li><span class="icon">🎨</span> Design System Creator – Built a comprehensive design system <span class="date">Jul 2023</span></li>
+          <li><span class="icon">🎓</span> Certification Master – Earned 5 professional certifications <span class="date">Apr 2023</span></li>
+          <li><span class="icon">💡</span> Open Source Contributor – Made 50+ contributions to open source projects <span class="date">Feb 2023</span></li>
+          <li><span class="icon">👥</span> Mentor – Helped 10 junior developers grow their skills <span class="date">Dec 2023</span></li>
+          <li><span class="icon">📝</span> Content Creator – Published 25 technical blog posts <span class="date">Aug 2023</span></li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <script>
+    // Custom cursor effect
+    const customCursor = document.getElementById('customCursor');
+    document.addEventListener('mousemove', (e) => {
+      customCursor.style.display = 'block';
+      // Use pageX/pageY for better alignment, and getBoundingClientRect for scroll
+      const cursorSize = 28;
+      const offsetX = cursorSize / 2;
+      const offsetY = cursorSize / 2;
+      customCursor.style.left = (e.clientX - offsetX) + 'px';
+      customCursor.style.top = (e.clientY - offsetY) + 'px';
+      customCursor.style.transform = 'none';
+    });
+    document.addEventListener('mouseleave', () => {
+      customCursor.style.display = 'none';
+    });
+    document.addEventListener('mouseenter', () => {
+      customCursor.style.display = 'block';
+    });
+    // Make sure the custom cursor is always on top
+    customCursor.style.position = 'fixed';
+    customCursor.style.pointerEvents = 'none';
+    customCursor.style.zIndex = '9999';
+
     function toggleStartMenu() {
       const menu = document.getElementById('startMenu');
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
@@ -2059,9 +2764,126 @@
       timeElement.textContent = now.toLocaleString('en-US', options);
     }
 
+    // Update taskbar time and date
+    function updateTaskbarTime() {
+      const timeElement = document.getElementById('taskbarTime');
+      const dateElement = document.getElementById('taskbarDate');
+      const now = new Date();
+      
+      // Format time
+      const timeOptions = { 
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      };
+      timeElement.textContent = now.toLocaleString('en-US', timeOptions);
+      
+      // Format date
+      const dateOptions = { 
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      };
+      dateElement.textContent = now.toLocaleString('en-US', dateOptions);
+    }
+
+    // Calendar toggle function
+    function toggleCalendar() {
+      // Add a subtle animation to indicate interaction
+      const clockContainer = document.querySelector('.clock-container');
+      clockContainer.style.transform = 'translateY(-1px) scale(0.98)';
+      setTimeout(() => {
+        clockContainer.style.transform = '';
+      }, 150);
+      
+      // Here you could add calendar popup functionality
+      console.log('Calendar clicked - could open calendar widget');
+    }
+
+    // System tray interactions
+    function initializeSystemTray() {
+      // WiFi icon click
+      const wifiContainer = document.querySelector('.wifi-container');
+      wifiContainer.addEventListener('click', () => {
+        // Toggle notification badge
+        wifiContainer.classList.toggle('active');
+        console.log('WiFi settings clicked');
+      });
+
+      // Battery icon click
+      const batteryContainer = document.querySelector('.battery-container');
+      batteryContainer.addEventListener('click', () => {
+        // Show battery details
+        console.log('Battery settings clicked');
+      });
+
+      // About popup logic for arrow button
+      const aboutArrowBtn = document.getElementById('aboutArrowBtn');
+      const aboutPopup = document.getElementById('aboutPopup');
+      const aboutCloseBtn = document.getElementById('aboutCloseBtn');
+      let aboutOpen = false;
+      aboutArrowBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        aboutOpen = !aboutOpen;
+        if (aboutOpen) {
+          aboutPopup.style.display = 'block';
+          aboutArrowBtn.querySelector('i').style.transform = 'rotate(180deg)';
+        } else {
+          aboutPopup.style.display = 'none';
+          aboutArrowBtn.querySelector('i').style.transform = '';
+        }
+      });
+      aboutCloseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        aboutPopup.style.display = 'none';
+        aboutArrowBtn.querySelector('i').style.transform = '';
+        aboutOpen = false;
+      });
+      // Close about popup when clicking outside
+      document.addEventListener('click', (e) => {
+        if (aboutOpen && !aboutPopup.contains(e.target) && !aboutArrowBtn.contains(e.target)) {
+          aboutPopup.style.display = 'none';
+          aboutArrowBtn.querySelector('i').style.transform = '';
+          aboutOpen = false;
+        }
+      });
+
+      // Show more button (original behavior, now only rotates chevron)
+      // (Kept for reference, but now handled by aboutArrowBtn)
+    }
+
+    // Simulate battery level changes
+    function simulateBatteryUpdates() {
+      const batteryContainer = document.querySelector('.battery-container');
+      const batteryPercentage = document.querySelector('.battery-percentage');
+      
+      setInterval(() => {
+        const currentLevel = parseInt(batteryPercentage.textContent);
+        const newLevel = Math.max(20, Math.min(100, currentLevel + (Math.random() > 0.5 ? 1 : -1)));
+        
+        batteryPercentage.textContent = newLevel + '%';
+        
+        // Update battery status classes
+        batteryContainer.classList.remove('low-battery', 'charging');
+        if (newLevel < 30) {
+          batteryContainer.classList.add('low-battery');
+        } else if (newLevel > 80) {
+          batteryContainer.classList.add('charging');
+        }
+      }, 30000); // Update every 30 seconds
+    }
+
     // Update time immediately and then every minute
     updateStatusTime();
-    setInterval(updateStatusTime, 60000);    // Social media popup toggle with animation
+    updateTaskbarTime();
+    setInterval(updateStatusTime, 60000);
+    setInterval(updateTaskbarTime, 60000);
+    
+    // Initialize system tray when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeSystemTray();
+      simulateBatteryUpdates();
+    });    // Social media popup toggle with animation
     function toggleSocialPopup() {
       const popup = document.getElementById('socialPopup');
       const button = document.querySelector('.social-button');
@@ -2126,6 +2948,45 @@
       if (!popup.contains(e.target) && !button.contains(e.target) && popup.classList.contains('show')) {
         toggleSocialPopup();
       }
+    });
+  // Achievements functionality
+    function showAchievements() {
+      // Hide other overlays if needed (e.g., social popup)
+      if (typeof closeMenu === 'function') closeMenu();
+      const achievementsScreen = document.getElementById('achievementsScreen');
+      achievementsScreen.style.display = 'flex';
+      achievementsScreen.classList.remove('hide');
+      // Force reflow for transition
+      void achievementsScreen.offsetWidth;
+      achievementsScreen.classList.add('show');
+    }
+
+    function closeAchievementsScreen() {
+      const achievementsScreen = document.getElementById('achievementsScreen');
+      achievementsScreen.classList.remove('show');
+      achievementsScreen.classList.add('hide');
+      setTimeout(() => {
+        achievementsScreen.style.display = 'none';
+      }, 350);
+    }
+  function powerOffSite() {
+      window.close();
+      setTimeout(function() {
+        window.location.href = 'about:blank';
+      }, 300);
+    }
+  // Material UI ripple effect for sidebar buttons
+    document.querySelectorAll('.sidebar-buttons-row .sidebar-button').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = (e.clientX - rect.left) + 'px';
+        ripple.style.top = (e.clientY - rect.top) + 'px';
+        ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+        btn.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 500);
+      });
     });
   </script>
 </body>
