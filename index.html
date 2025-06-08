@@ -1109,8 +1109,151 @@
       .project-grid {
         grid-template-columns: 1fr;
         gap: 12px;
-        padding: 0 8px;
+        padding: 0 4px;
       }
+      .project-card {
+        min-width: 0;
+        width: 100%;
+        max-width: 100vw;
+        border-radius: 10px;
+        padding: 0;
+      }
+      .card-image {
+        height: 90px !important;
+        min-height: 70px;
+        max-height: 120px;
+        font-size: 2.1em !important;
+        padding: 8px 0;
+      }
+      .card-content {
+        padding: 12px 8px 10px 8px !important;
+      }
+      .card-title {
+        font-size: 1.1em !important;
+      }
+      .card-description {
+        font-size: 0.98em !important;
+      }
+      .card-tags {
+        gap: 4px !important;
+      }
+      .tag {
+        font-size: 0.92em !important;
+        padding: 3px 8px !important;
+      }
+      .sidebar, .status-bar, .taskbar {
+        display: none !important;
+      }
+      .mobile-hamburger {
+        display: block !important;
+      }
+      .mobile-menu {
+        display: flex !important;
+      }
+      .desktop {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100vw !important;
+        min-width: 0 !important;
+      }
+      .app-grid {
+        left: 0 !important;
+        padding: 2px !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        min-width: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+      }
+      body, html {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100vw !important;
+        min-width: 0 !important;
+        overflow-x: hidden !important;
+      }
+    }
+    .mobile-hamburger {
+      display: none;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 3001;
+      background: #fff;
+      color: #6200ee;
+      border: none;
+      border-radius: 8px;
+      width: 44px;
+      height: 44px;
+      font-size: 2em;
+      box-shadow: 0 2px 8px #a06bff22;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80vw;
+      max-width: 340px;
+      height: 100vh;
+      background: rgba(40,40,60,0.98);
+      box-shadow: 2px 0 18px #a06bff33;
+      z-index: 4000;
+      flex-direction: column;
+      padding: 32px 18px 18px 18px;
+      gap: 18px;
+      transition: transform 0.25s cubic-bezier(.4,1,.4,1);
+      transform: translateX(-100%);
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+      display: flex !important;
+    }
+    .mobile-menu .close-btn {
+      align-self: flex-end;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2em;
+      margin-bottom: 18px;
+      cursor: pointer;
+    }
+    .mobile-menu .sidebar-buttons-row {
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+    .mobile-menu .sidebar-button {
+      width: 100%;
+      font-size: 1.1em;
+      padding: 12px 0;
+    }
+    .mobile-menu .contact-button {
+      width: 100%;
+      margin: 0 0 8px 0;
+      font-size: 1.1em;
+      padding: 12px 0;
+    }
+    .mobile-menu .profile-photo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 12px auto;
+    }
+    .mobile-menu h1 {
+      text-align: center;
+      font-size: 1.3em;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .mobile-menu .description {
+      text-align: center;
+      color: #e0d7ff;
+      font-size: 1em;
+      margin-bottom: 18px;
     }
     @media (max-width: 600px) {
       .sidebar {
@@ -1262,7 +1405,7 @@
 
     .skill-level {
       font-size: 14px;
-      color: #4caf50;
+      color: #a06bff;
       font-weight: 500;
     }
 
@@ -1941,6 +2084,53 @@
     }
   </style>
   <style>
+    .taskbar-tasks {
+      min-width: 0;
+      flex: 0 1 auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 18px;
+    }
+    .taskbar-task-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(160,107,255,0.18);
+      border-radius: 7px;
+      padding: 4px 14px 4px 10px;
+      font-size: 14px;
+      color: #a06bff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, border 0.18s;
+      box-shadow: 0 1px 4px 0 rgba(98,0,238,0.08);
+      outline: none;
+      position: relative;
+    }
+    .taskbar-task-btn.active, .taskbar-task-btn:focus {
+      background: #a06bff;
+      color: #fff;
+      border-color: #7c4dff;
+    }
+    .taskbar-task-btn .close-task-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.1em;
+      margin-left: 6px;
+      cursor: pointer;
+      border-radius: 3px;
+      padding: 0 4px;
+      transition: background 0.18s;
+    }
+    .taskbar-task-btn .close-task-btn:hover {
+      background: rgba(255,255,255,0.18);
+      color: #ffd700;
+    }
+  </style>
+  <style>
     .phone-popup {
       display: none;
       position: absolute;
@@ -2471,8 +2661,55 @@
   }
 </style>
 <body>
+<!-- Hamburger for mobile -->
+<button class="mobile-hamburger" id="mobileHamburger" aria-label="Open menu" style="display:none;"><i class="fas fa-bars"></i></button>
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+  <img class="profile-photo" src="images/person.png" alt="Profile Photo">
+  <h1>Aman Kumar</h1>
+  <div class="description">
+    Passionate web developer with a love for creating user-friendly and visually appealing applications.
+  </div>
+  <div class="sidebar-buttons sidebar-buttons-row">
+    <button class="sidebar-button" onclick="showSkills()">Skills</button>
+    <button class="sidebar-button resume-btn" onclick="window.open('https://drive.google.com/file/d/1ofUIV2JP5xFDYEWadYMPuCWZx7IFzdAv/view', '_blank')">Resume</button>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:center;margin:12px 0 0 0;">
+    <button class="contact-button email-btn dock-item" onclick="window.location.href='mailto:john.doe@gmail.com'" title="Email me">
+      <i class="far fa-envelope"></i>
+    </button>
+    <button class="contact-button phone-btn dock-item" id="showPhonePopupBtnMobile" title="Call me">
+      <i class="fas fa-phone"></i>
+    </button>
+  </div>
+  <div class="mobile-social-menu" style="margin:18px 0 0 0;display:flex;flex-direction:column;gap:10px;align-items:center;">
+    <a href="#" onclick="showAchievements(event); return false;" class="sidebar-button" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fas fa-trophy"></i> Achievements</a>
+    <a href="#" class="sidebar-button" id="openInstagramPopupBtnMobile" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fab fa-instagram"></i> Instagram</a>
+    <a href="https://github.com/amankuamr" target="_blank" class="sidebar-button" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fab fa-github"></i> GitHub</a>
+    <a href="https://linkedin.com/in/yourusername" target="_blank" class="sidebar-button" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fab fa-linkedin"></i> LinkedIn</a>
+  </div>
+</div>
 <div class="custom-cursor" id="customCursor"></div>
     <script>
+      // Hamburger menu logic
+      document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('mobileHamburger');
+        const menu = document.getElementById('mobileMenu');
+        const closeBtn = document.getElementById('mobileMenuClose');
+        hamburger.addEventListener('click', function() {
+          menu.classList.add('open');
+        });
+        closeBtn.addEventListener('click', function() {
+          menu.classList.remove('open');
+        });
+        // Hide menu on outside click
+        document.addEventListener('mousedown', function(e) {
+          if (menu.classList.contains('open') && !menu.contains(e.target) && e.target !== hamburger) {
+            menu.classList.remove('open');
+          }
+        });
+      });
       // Instagram popup logic
       document.addEventListener('DOMContentLoaded', function() {
         const openBtn = document.getElementById('openInstagramPopupBtn');
@@ -2569,7 +2806,7 @@
         <button class="sidebar-button" onclick="showSkills()">
           Skills
         </button>
-        <button class="sidebar-button resume-btn" onclick="showResumeScreen()">
+        <button class="sidebar-button resume-btn" onclick="window.open('https://drive.google.com/file/d/1ofUIV2JP5xFDYEWadYMPuCWZx7IFzdAv/view', '_blank')">
           Resume
         </button>
       </div>
@@ -2619,146 +2856,161 @@
         <h2>UI/UX Design</h2>
         <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('portfolio')">
-            <div class="card-image">
-              <img src="images/ai.jpg" alt="Portfolio Logo">
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">Portfolio</h3>
-              <p class="card-description">Modern portfolio website with Windows 11-inspired interface and glass morphism effects.</p>
-              <div class="card-tags">
-                <span class="tag">Figma</span>
-                <span class="tag">Framer</span>
-              </div>
-            </div>
+          <div class="card-image" style="display:flex;align-items:center;justify-content:center;height:160px;font-size:3.5em;color:#a06bff;">
+          <i class="fab fa-figma"></i>
+          </div>
+          <div class="card-content">
+          <h3 class="card-title">Portfolio</h3>
+          <p class="card-description">Modern portfolio website with Windows 11-inspired interface and glass morphism effects.</p>
+          <div class="card-tags">
+          <span class="tag">Figma</span>
+          <span class="tag">Framer</span>
+          </div>
+          </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('car-rental')">
-            <div class="card-image">
-              <img src="images/ai.jpg" alt="Car Rental Service">
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">Car Rental Service</h3>
-              <p class="card-description">A modern web application for booking and managing car rentals online.</p>
-              <div class="card-tags">
-                <span class="tag">Figma</span>
-                <span class="tag">Framer</span>
-              </div>
-            </div>
+          <div class="card-image" style="display:flex;align-items:center;justify-content:center;height:160px;font-size:3.5em;color:#1976d2;">
+          <i class="fas fa-car"></i>
+          </div>
+          <div class="card-content">
+          <h3 class="card-title">Car Rental Service</h3>
+          <p class="card-description">A modern web application for booking and managing car rentals online.</p>
+          <div class="card-tags">
+          <span class="tag">Figma</span>
+          <span class="tag">Framer</span>
+          </div>
+          </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('portfolio-html-css')">
-            <div class="card-image">
-              <img src="images/ai.jpg" alt="Portfolio HTML CSS">
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">Portfolio (HTML, CSS)</h3>
-              <p class="card-description">A responsive personal portfolio website built using only HTML and CSS, showcasing projects and skills with clean design.</p>
-              <div class="card-tags">
-                <span class="tag">HTML</span>
-                <span class="tag">CSS</span>
-                <span class="tag">Responsive</span>
-                <span class="tag">Portfolio</span>
-              </div>
-            </div>
+          <div class="card-image" style="display:flex;align-items:center;justify-content:center;height:160px;font-size:3.5em;color:#e44d26;">
+          <i class="fab fa-html5"></i>
           </div>
-        </div>
-      </div>
-
-      <!-- Web Development Section -->
-      <div class="project-section">
-        <h2>Web Development</h2>
-        <div class="project-grid">
+          <div class="card-content">
+          <h3 class="card-title">Portfolio (HTML, CSS)</h3>
+          <p class="card-description">A responsive personal portfolio website built using only HTML and CSS, showcasing projects and skills with clean design.</p>
+          <div class="card-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">Responsive</span>
+          <span class="tag">Portfolio</span>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          
+          <!-- Web Development Section -->
+          <div class="project-section">
+          <h2>Web Development</h2>
+          <div class="project-grid">
+          <div class="project-card" onclick="showProjectDetails('portfolio-html-css')">
+          <div class="card-image">
+          <img src="images/app icons/html-css.png" alt="Portfolio HTML CSS">
+          </div>
+          <div class="card-content">
+          <h3 class="card-title">Portfolio (HTML, CSS)</h3>
+          <p class="card-description">A responsive personal portfolio website built using only HTML and CSS, showcasing projects and skills with clean design.</p>
+          <div class="card-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">Responsive</span>
+          <span class="tag">Portfolio</span>
+          </div>
+          </div>
+          </div>
           <div class="project-card" onclick="showProjectDetails('ecommerce')">
-            <div class="card-image">
-              <img src="images/ai.jpg" alt="E-Commerce">
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">E-Commerce Platform</h3>
-              <p class="card-description">Full-featured e-commerce solution with shopping cart and payment integration.</p>
-              <div class="card-tags">
-                <span class="tag">Next.js</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">MongoDB</span>
-              </div>
-            </div>
+          <div class="card-image">
+          <img src="images/app icons/ecommerce.png" alt="E-Commerce">
+          </div>
+          <div class="card-content">
+          <h3 class="card-title">E-Commerce Platform</h3>
+          <p class="card-description">Full-featured e-commerce solution with shopping cart and payment integration.</p>
+          <div class="card-tags">
+          <span class="tag">Next.js</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">MongoDB</span>
+          </div>
+          </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('blog')">
-            <div class="card-image">
-              <img src="images/ai.jpg" alt="Blog">
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">Blog Platform</h3>
-              <p class="card-description">Modern blog platform with markdown support and search functionality.</p>
-              <div class="card-tags">
-                <span class="tag">Next.js</span>
-                <span class="tag">MDX</span>
-                <span class="tag">Tailwind</span>
-              </div>
-            </div>
+          <div class="card-image">
+          <img src="images/app icons/blog.png" alt="Blog">
+          </div>
+          <div class="card-content">
+          <h3 class="card-title">Blog Platform</h3>
+          <p class="card-description">Modern blog platform with markdown support and search functionality.</p>
+          <div class="card-tags">
+          <span class="tag">Next.js</span>
+          <span class="tag">MDX</span>
+          <span class="tag">Tailwind</span>
+          </div>
+          </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('weather')">
-            <div class="card-image">
-              <img src="images/ai.jpg" alt="Weather">
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">Weather App</h3>
-              <p class="card-description">Real-time weather application with forecast and radar maps.</p>
-              <div class="card-tags">
-                <span class="tag">React</span>
-                <span class="tag">Weather API</span>
-                <span class="tag">Maps</span>
-              </div>
-            </div>
+          <div class="card-image">
+          <img src="images/app icons/weather.png" alt="Weather">
+          </div>
+          <div class="card-content">
+          <h3 class="card-title">Weather App</h3>
+          <p class="card-description">Real-time weather application with forecast and radar maps.</p>
+          <div class="card-tags">
+          <span class="tag">React</span>
+          <span class="tag">Weather API</span>
+          <span class="tag">Maps</span>
+          </div>
+          </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('chat')">
-            <div class="card-image">
-              <img src="images/ai.jpg" alt="Chat">
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">Chat App</h3>
-              <p class="card-description">Real-time chat application with group chats and file sharing.</p>
-              <div class="card-tags">
-                <span class="tag">Socket.io</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">MongoDB</span>
-              </div>
-            </div>
+          <div class="card-image">
+          <img src="images/app icons/chat.png" alt="Chat">
           </div>
-        </div>
-      </div>
-
-      <!-- Game Development Section -->
-      <div class="project-section">
-        <h2>Game Development</h2>
-        <div class="project-grid">
+          <div class="card-content">
+          <h3 class="card-title">Chat App</h3>
+          <p class="card-description">Real-time chat application with group chats and file sharing.</p>
+          <div class="card-tags">
+          <span class="tag">Socket.io</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">MongoDB</span>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          
+          <!-- Game Development Section -->
+          <div class="project-section">
+          <h2>Game Development</h2>
+          <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('task-manager')">
-            <div class="card-image">
-              <img src="images/ai.jpg" alt="Task Manager">
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">Game Project Manager</h3>
-              <p class="card-description">Project management tool for game development teams.</p>
-              <div class="card-tags">
-                <span class="tag">Unity</span>
-                <span class="tag">C#</span>
-                <span class="tag">UI/UX</span>
-              </div>
-            </div>
+          <div class="card-image">
+          <img src="images/app icons/game-manager.png" alt="Task Manager">
+          </div>
+          <div class="card-content">
+          <h3 class="card-title">Game Project Manager</h3>
+          <p class="card-description">Project management tool for game development teams.</p>
+          <div class="card-tags">
+          <span class="tag">Unity</span>
+          <span class="tag">C#</span>
+          <span class="tag">UI/UX</span>
+          </div>
+          </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('notes')">
-            <div class="card-image">
-              <img src="images/ai.jpg" alt="Notes">
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">Game Design Notes</h3>
-              <p class="card-description">Note-taking app for game designers with sketch support.</p>
-              <div class="card-tags">
-                <span class="tag">Unity</span>
-                <span class="tag">C#</span>
-                <span class="tag">Game Design</span>
-              </div>
-            </div>
+          <div class="card-image">
+          <img src="images/app icons/notes.png" alt="Notes">
           </div>
-        </div>
-      </div>
+          <div class="card-content">
+          <h3 class="card-title">Game Design Notes</h3>
+          <p class="card-description">Note-taking app for game designers with sketch support.</p>
+          <div class="card-tags">
+          <span class="tag">Unity</span>
+          <span class="tag">C#</span>
+          <span class="tag">Game Design</span>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
           </div>
 
     <!-- Taskbar -->    <div class="taskbar">
@@ -2770,6 +3022,27 @@
           <button class="contact-button phone-btn dock-item" id="showPhonePopupBtn" title="Call me">
             <i class="fas fa-phone"></i>
           </button>
+          <div id="hotTopicsText" style="margin-left:14px;min-width:120px;font-size:13px;font-weight:700;white-space:nowrap;transition:opacity 0.4s,background 0.4s;opacity:1;display:flex;align-items:center;gap:7px;background:linear-gradient(90deg,#a06bff,#ffd700,#a06bff);background-size:200% 200%;animation:hotTopicsBg 3s linear infinite alternate;border-radius:8px;padding:2px 14px;box-shadow:0 2px 8px #a06bff22;">
+            <span style="font-size:1.1em;animation:hotTopicsIconPulse 1.2s infinite alternate;">🔥</span>
+            <span id="hotTopicsMsg">Check Achievements section</span>
+          </div>
+          <style>
+            @keyframes hotTopicsBg {
+              0% { background-position: 0% 50%; }
+              100% { background-position: 100% 50%; }
+            }
+            @keyframes hotTopicsIconPulse {
+              0% { filter: drop-shadow(0 0 2px #ffd700); transform: scale(1); }
+              100% { filter: drop-shadow(0 0 8px #ffd700); transform: scale(1.18); }
+            }
+            #hotTopicsText {
+              cursor: pointer;
+            }
+            #hotTopicsMsg {
+              display: inline-block;
+              transition: opacity 0.4s, transform 0.4s;
+            }
+          </style>
           <div id="phonePopup" class="phone-popup">
             <div class="phone-popup-content">
               <span class="phone-label">Phone:</span>
@@ -2782,12 +3055,13 @@
             <button class="close-phone-popup" id="closePhonePopupBtn">&times;</button>
           </div>
         </div>
-        <div class="menu-bar-center">
+        <div class="taskbar-tasks" id="taskbarTasks" style="display:flex;align-items:center;gap:6px;margin-left:18px;"></div>
+        <div class="menu-bar-center" style="display:flex;align-items:center;gap:10px;">
           <button class="social-button win-button" onclick="toggleSocialPopup()">
             <img src="images/startbutton.png" alt="Menu">
             <div class="button-effect"></div>
           </button>
-        </div>
+          </div>
         <div class="menu-bar-right">
           <button class="show-more-btn" id="aboutArrowBtn" title="About this site">
             <i class="fas fa-chevron-up"></i>
@@ -2804,7 +3078,7 @@
                 <div class="about-modern-listitem"><span class="about-modern-label">Made by:</span> Aman Kumar</div>
                 <div class="about-modern-listitem"><span class="about-modern-label">Technologies:</span> HTML, CSS, JavaScript</div>
               </div>
-              <div class="about-modern-footer">Design &amp; code by Aman Kumar &copy; 2024</div>
+              <div class="about-modern-footer">Design &amp; code by Aman Kumar &copy; 2025</div>
               <button class="about-modern-close" id="aboutCloseBtn" title="Close">Close</button>
             </div>
           </div>
@@ -2822,6 +3096,17 @@
           <div class="clock-container" onclick="toggleCalendar()" title="Click to view calendar">
             <div class="clock-time" id="taskbarTime">7:03 PM</div>
             <div class="clock-date" id="taskbarDate">Dec 15, 2024</div>
+          </div>
+          <!-- Calendar Popup -->
+          <div id="calendarPopup" style="display:none;position:fixed;right:24px;bottom:70px;z-index:5000;background:rgba(40,40,60,0.98);color:#fff;border-radius:14px;box-shadow:0 4px 32px #a06bff33;padding:22px 18px 18px 18px;min-width:270px;max-width:96vw;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <span id="calendarMonthYear" style="font-size:1.2em;font-weight:600;"></span>
+              <button onclick="closeCalendarPopup()" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
+            </div>
+            <table id="calendarTable" style="width:100%;border-collapse:collapse;text-align:center;font-size:1em;">
+              <thead><tr style="color:#a06bff;"><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr></thead>
+              <tbody></tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -2842,22 +3127,36 @@
         </div>
       </div>
       <div class="menu-grid">
-        <a href="https://github.com/yourusername" target="_blank" class="github">
-          <i class="fab fa-github"></i>
-          <span>GitHub</span>
-        </a>
-        <a href="https://linkedin.com/in/yourusername" target="_blank" class="linkedin">
-          <i class="fab fa-linkedin"></i>
-          <span>LinkedIn</span>
-        </a>
         <a href="#" onclick="showAchievements(event); return false;" class="achievements" style="background: linear-gradient(45deg, #FFD700, #FFA500);">
           <i class="fas fa-trophy"></i>
           <span>Achievements</span>
         </a>
-        <a href="#" class="instagram" id="openInstagramPopupBtn">
+        <a href="#" class="instagram" id="openInstagramPopupBtn" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
           <i class="fab fa-instagram"></i>
           <span>Instagram</span>
         </a>
+        <a href="https://github.com/amankuamr" target="_blank" class="github" style="background: #24292e;">
+          <i class="fab fa-github"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank" class="linkedin" style="background: #0077b5;">
+          <i class="fab fa-linkedin"></i>
+          <span>LinkedIn</span>
+        </a>
+      </div>
+      <div style="margin:18px 0 0 0;width:100%;">
+        <div style="color:#a06bff;font-weight:600;font-size:1.1em;margin-bottom:8px;margin-top:2px;">Apps</div>
+        <div style="display:flex;gap:12px;">
+          <a href="#" onclick="openTicTacToeModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(135deg,#fff 0%,#a06bff 100%);border-radius:10px;color:#6200ee;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #a06bff22;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
+            <i class="fas fa-times-circle" style="font-size:2em;margin-bottom:6px;"></i>
+            <span style="font-size:1em;">Tic Tac Toe</span>
+          </a>
+          <a href="#" onclick="openQuizModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(135deg,#fff 0%,#4caf50 100%);border-radius:10px;color:#fff;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #4caf5044;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
+            <i class="fas fa-question-circle" style="font-size:2em;margin-bottom:6px;"></i>
+            <span style="font-size:1em;">Quiz Game</span>
+          </a>
+        </div>
+      </div>
         <!-- Instagram Popup -->
         <div id="instagramPopup" class="instagram-popup">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
@@ -3100,7 +3399,7 @@
           box-shadow: 0 1px 4px 0 rgba(98,0,238,0.08);
         }
         .level-expert {
-          background: linear-gradient(90deg,#4caf50 0%,#81c784 100%);
+          background: linear-gradient(90deg,#4caf50 0%,#c89fff 100%);
           color: #fff;
         }
         .level-advanced {
@@ -3180,43 +3479,68 @@
     </div>
     <ul class="achievements-list" style="list-style:none;padding:0;margin:0;">
       
-    
+    <li style="padding:0 0 28px 0; margin:0; border:none; display:block;">
+      <div style="display:flex;align-items:center;gap:14px; margin-bottom:4px;">
+        <span style="font-size:1.5em;line-height:1;">💼</span>
+        <span style="font-weight:600;color:#fff;font-size:1.08em;">First Client</span>
+        <span style="color:#b0b0b0;font-size:0.98em;font-weight:400;margin-left:auto;">Feb 2024</span>
+      </div>
+      <div style="color:#e0e0e0;font-size:0.98em;font-weight:400;line-height:1.6;margin-left:2.2em;">Got my first client for logo designing from Chatra Rifle Association.</div>
+      <a href="https://drive.google.com/file/d/1rbL2MGn3E4Wo4oU71zfXcoMLrlHj9Vx1/view?usp=sharing" target="_blank" style="display:inline-block;margin:10px 0 0 2.2em;padding:7px 18px;background:linear-gradient(90deg,#a06bff 0%,#6200ee 100%);color:#fff;font-weight:600;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px #a06bff22;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">View Work</a>
+    </li>
     <li style="padding:0 0 28px 0; margin:0; border:none; display:block;">
       <div style="display:flex;align-items:center;gap:14px; margin-bottom:4px;">
         <span style="font-size:1.5em;line-height:1;">🏅</span>
         <span style="font-weight:600;color:#fff;font-size:1.08em;">GDSC Core Team</span>
         <span style="color:#b0b0b0;font-size:0.98em;font-weight:400;margin-left:auto;">Sep 2024</span>
-        <button class="achievement-list-btn" style="margin-left:10px;"><i class="fas fa-arrow-right"></i></button>
       </div>
       <div style="color:#e0e0e0;font-size:0.98em;font-weight:400;line-height:1.6;margin-left:2.2em;">Served as a core team member of Google Developer Student Clubs for 2023-2024, contributing to tech initiatives.</div>
-    </li>
+      <a href="https://drive.google.com/file/d/10L83ME1laF5QwwH5xnMHg3vkTWKPzMFs/view?usp=sharing" target="_blank" style="display:inline-block;margin:10px 0 0 2.2em;padding:7px 18px;background:linear-gradient(90deg,#a06bff 0%,#6200ee 100%);color:#fff;font-weight:600;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px #a06bff22;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">View Certificate</a>
+          </li>
     <li style="padding:0 0 28px 0; margin:0; border:none; display:block;">
       <div style="display:flex;align-items:center;gap:14px; margin-bottom:4px;">
         <span style="font-size:1.5em;line-height:1;">🎨</span>
         <span style="font-weight:600;color:#fff;font-size:1.08em;">UI/UX Internship</span>
         <span style="color:#b0b0b0;font-size:0.98em;font-weight:400;margin-left:auto;">Mar 2025</span>
-        <button class="achievement-list-btn" style="margin-left:10px;"><i class="fas fa-arrow-right"></i></button>
       </div>
       <div style="color:#e0e0e0;font-size:0.98em;font-weight:400;line-height:1.6;margin-left:2.2em;">Completed a UI/UX internship at Plasmid, showcasing commendable performance and diligence.</div>
-    </li>
+      <a href="https://drive.google.com/file/d/1tmveniuB3PazQ7q0VhHLnBSSzqRVUk8P/view?usp=sharing" target="_blank" style="display:inline-block;margin:10px 0 0 2.2em;padding:7px 18px;background:linear-gradient(90deg,#a06bff 0%,#6200ee 100%);color:#fff;font-weight:600;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px #a06bff22;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">View Certificate</a>
+          </li>
     <li style="padding:0 0 28px 0; margin:0; border:none; display:block;">
       <div style="display:flex;align-items:center;gap:14px; margin-bottom:4px;">
         <span style="font-size:1.5em;line-height:1;">🏭</span>
         <span style="font-weight:600;color:#fff;font-size:1.08em;">Industrial Training</span>
         <span style="color:#b0b0b0;font-size:0.98em;font-weight:400;margin-left:auto;">Mar 2025</span>
-        <button class="achievement-list-btn" style="margin-left:10px;"><i class="fas fa-arrow-right"></i></button>
       </div>
       <div style="color:#e0e0e0;font-size:0.98em;font-weight:400;line-height:1.6;margin-left:2.2em;">Finished industrial training at Plasmid, demonstrating keen enthusiasm and dedication.</div>
+      <a href="https://drive.google.com/file/d/1LdzxfvRmheKN32F3xmb9hbvdNQBQKQ0w/view?usp=drive_link" target="_blank" style="display:inline-block;margin:10px 0 0 2.2em;padding:7px 18px;background:linear-gradient(90deg,#a06bff 0%,#6200ee 100%);color:#fff;font-weight:600;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px #a06bff22;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">View Certificate</a>
+    </li>
+    <li style="padding:0 0 28px 0; margin:0; border:none; display:block;">
+      <div style="display:flex;align-items:center;gap:14px; margin-bottom:4px;">
+        <span style="font-size:1.5em;line-height:1;">🏆</span>
+        <span style="font-weight:600;color:#fff;font-size:1.08em;">Tech Fest Leadership</span>
+        <span style="color:#b0b0b0;font-size:0.98em;font-weight:400;margin-left:auto;">Feb 2024</span>
+      </div>
+      <div style="color:#e0e0e0;font-size:0.98em;font-weight:400;line-height:1.6;margin-left:2.2em;">Worked as lead graphics designer in University tech fest and awarded with a trophy for leadership.</div>
+    </li>
+    <li style="padding:0 0 28px 0; margin:0; border:none; display:block;">
+      <div style="display:flex;align-items:center;gap:14px; margin-bottom:4px;">
+        <span style="font-size:1.5em;line-height:1;">🎓</span>
+        <span style="font-weight:600;color:#fff;font-size:1.08em;">Pariksha Pe Charcha</span>
+        <span style="color:#b0b0b0;font-size:0.98em;font-weight:400;margin-left:auto;">2022</span>
+      </div>
+      <div style="color:#e0e0e0;font-size:0.98em;font-weight:400;line-height:1.6;margin-left:2.2em;">Attended Pariksha Pe Charcha event.</div>
+      <a href="https://drive.google.com/file/d/1lRVEPUp7tJMvv-7zeAqrqR1qPIlkl27Y/view?usp=sharing" target="_blank" style="display:inline-block;margin:10px 0 0 2.2em;padding:7px 18px;background:linear-gradient(90deg,#a06bff 0%,#6200ee 100%);color:#fff;font-weight:600;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px #a06bff22;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">View Certificate</a>
     </li>
     <li style="padding:0 0 28px 0; margin:0; border:none; display:block;">
       <div style="display:flex;align-items:center;gap:14px; margin-bottom:4px;">
         <span style="font-size:1.5em;line-height:1;">🏆</span>
         <span style="font-weight:600;color:#fff;font-size:1.08em;">Google UX Design</span>
         <span style="color:#b0b0b0;font-size:0.98em;font-weight:400;margin-left:auto;">Oct 2024</span>
-        <button class="achievement-list-btn" style="margin-left:10px;"><i class="fas fa-arrow-right"></i></button>
       </div>
       <div style="color:#e0e0e0;font-size:0.98em;font-weight:400;line-height:1.6;margin-left:2.2em;">Earned Google UX Design Professional Certificate, mastering end-to-end UX design processes.</div>
-    </li>
+      <a href="https://drive.google.com/file/d/1YCeSp9HQF4FZvwqevSDU5QeL0N1dhv8K/view?usp=sharing" target="_blank" style="display:inline-block;margin:10px 0 0 2.2em;padding:7px 18px;background:linear-gradient(90deg,#a06bff 0%,#6200ee 100%);color:#fff;font-weight:600;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px #a06bff22;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">View Certificate</a>
+          </li>
     </ul>
     </div>
     <style>
@@ -3749,13 +4073,210 @@
       setTimeout(() => {
         clockContainer.style.transform = '';
       }, 150);
-      
-      // Here you could add calendar popup functionality
-      console.log('Calendar clicked - could open calendar widget');
+      // Show calendar popup
+      showCalendarPopup();
+    }
+    function showCalendarPopup() {
+      const popup = document.getElementById('calendarPopup');
+      const monthYear = document.getElementById('calendarMonthYear');
+      const tableBody = document.querySelector('#calendarTable tbody');
+      // Get current date
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const today = now.getDate();
+      // Month and year label
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      monthYear.textContent = monthNames[month] + ' ' + year;
+      // First day of month
+      const firstDay = new Date(year, month, 1).getDay();
+      // Days in month
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      // Build calendar rows
+      let html = '<tr>';
+      let day = 1;
+      for (let i = 0; i < 7; i++) {
+        if (i < firstDay) {
+          html += '<td></td>';
+        } else {
+          html += `<td${day === today ? ' style=\"background:#a06bff;color:#fff;border-radius:6px;\"' : ''}>${day}</td>`;
+          day++;
+        }
+      }
+      html += '</tr>';
+      while (day <= daysInMonth) {
+        html += '<tr>';
+        for (let i = 0; i < 7; i++) {
+          if (day > daysInMonth) {
+            html += '<td></td>';
+          } else {
+            html += `<td${day === today ? ' style=\"background:#a06bff;color:#fff;border-radius:6px;\"' : ''}>${day}</td>`;
+            day++;
+          }
+        }
+        html += '</tr>';
+      }
+      tableBody.innerHTML = html;
+      popup.style.display = 'block';
+      // Hide on outside click
+      setTimeout(() => {
+        document.addEventListener('mousedown', calendarOutsideClick);
+      }, 10);
+    }
+    function closeCalendarPopup() {
+      const popup = document.getElementById('calendarPopup');
+      popup.style.display = 'none';
+      document.removeEventListener('mousedown', calendarOutsideClick);
+    }
+    function calendarOutsideClick(e) {
+      const popup = document.getElementById('calendarPopup');
+      if (popup.style.display === 'block' && !popup.contains(e.target) && !e.target.closest('.clock-container')) {
+        closeCalendarPopup();
+      }
     }
 
+    // Hot Topics Rotator
+    const hotTopicsMessages = [
+      "Check Achievements section",
+      "My social handles in menu",
+      "Try the Quiz Game!",
+      "See my latest projects",
+      "Contact me via email or phone"
+    ];
+    let hotTopicsIndex = 0;
+    function rotateHotTopics() {
+      const msgElem = document.getElementById('hotTopicsMsg');
+      if (!msgElem) return;
+      msgElem.style.opacity = 0;
+      setTimeout(() => {
+        hotTopicsIndex = (hotTopicsIndex + 1) % hotTopicsMessages.length;
+        msgElem.textContent = hotTopicsMessages[hotTopicsIndex];
+        msgElem.style.opacity = 1;
+      }, 400);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      setInterval(rotateHotTopics, 7000);
+    });
     // System tray interactions
     function initializeSystemTray() {
+      // --- Taskbar open tasks logic ---
+      const taskbarTasks = document.getElementById('taskbarTasks');
+      // Task definitions: id, label, isOpen, focus/close logic
+      const taskPanels = [
+        {
+          id: 'resumeScreen',
+          label: 'Resume',
+          isOpen: () => document.getElementById('resumeScreen').style.display === 'flex',
+          focus: () => { showResumeScreen(); },
+          close: () => { closeResumeScreen(); }
+        },
+        {
+          id: 'skillsScreen',
+          label: 'Skills',
+          isOpen: () => document.getElementById('skillsScreen').style.display === 'flex',
+          focus: () => { showSkills(); },
+          close: () => { closeSkillsScreen(); }
+        },
+        {
+          id: 'projectDetails',
+          label: 'Project',
+          isOpen: () => {
+            const el = document.getElementById('projectDetails');
+            return el && el.style.display === 'flex';
+          },
+          focus: () => {
+            const el = document.getElementById('projectDetails');
+            if (el) el.classList.add('active');
+          },
+          close: () => { closeProjectDetails(); }
+        },
+        {
+          id: 'socialPopup',
+          label: 'Social',
+          isOpen: () => {
+            const el = document.getElementById('socialPopup');
+            return el && (el.classList.contains('show') || el.style.display === 'flex');
+          },
+          focus: () => { toggleSocialPopup(); },
+          close: () => { closeMenu(); }
+        },
+        {
+          id: 'phonePopup',
+          label: 'Phone',
+          isOpen: () => {
+            const el = document.getElementById('phonePopup');
+            return el && el.style.display === 'block';
+          },
+          focus: () => {
+            const btn = document.getElementById('showPhonePopupBtn');
+            if (btn) btn.click();
+          },
+          close: () => {
+            const el = document.getElementById('phonePopup');
+            if (el) el.style.display = 'none';
+          }
+        },
+        {
+          id: 'aboutPopup',
+          label: 'About',
+          isOpen: () => {
+            const el = document.getElementById('aboutPopup');
+            return el && el.style.display === 'block';
+          },
+          focus: () => {
+            const btn = document.getElementById('aboutArrowBtn');
+            if (btn) btn.click();
+          },
+          close: () => {
+            const el = document.getElementById('aboutPopup');
+            if (el) el.style.display = 'none';
+          }
+        },
+        {
+          id: 'achievementsPanel',
+          label: 'Achievements',
+          isOpen: () => {
+            const el = document.getElementById('achievementsPanel');
+            return el && el.style.display === 'block';
+          },
+          focus: () => {
+            const el = document.querySelector('.achievements');
+            if (el) el.click();
+          },
+          close: () => {
+            const el = document.getElementById('achievementsPanel');
+            if (el) el.style.display = 'none';
+          }
+        }
+      ];
+      function updateTaskbarTasks() {
+        if (!taskbarTasks) return;
+        taskbarTasks.innerHTML = '';
+        taskPanels.forEach(panel => {
+          if (panel.isOpen()) {
+            const btn = document.createElement('button');
+            btn.className = 'taskbar-task-btn';
+            btn.textContent = panel.label;
+            btn.onclick = panel.focus;
+            btn.title = 'Show ' + panel.label;
+            // Close button
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'close-task-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.onclick = (e) => {
+              e.stopPropagation();
+              panel.close();
+              setTimeout(updateTaskbarTasks, 100);
+            };
+            btn.appendChild(closeBtn);
+            taskbarTasks.appendChild(btn);
+          }
+        });
+      }
+      // Observe changes to panels/popups
+      setInterval(updateTaskbarTasks, 300);
+      // --- End taskbar open tasks logic ---
+
       // WiFi icon click
       const wifiContainer = document.querySelector('.wifi-container');
       wifiContainer.addEventListener('click', () => {
@@ -4162,5 +4683,301 @@
       box-shadow: 0 0 12px 2px #b388ff44 !important;
     }
   </style>
+<!-- Tic Tac Toe Game Modal -->
+<div id="tictactoeModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:5000;background:rgba(24,24,32,0.96);backdrop-filter:blur(4px);align-items:center;justify-content:center;flex-direction:column;">
+  <div style="background:#222;border-radius:14px;box-shadow:0 4px 32px #a06bff33;padding:18px 18px 12px 18px;max-width:98vw;max-height:98vh;display:flex;flex-direction:column;align-items:center;">
+    <div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span style="color:#a06bff;font-size:1.2em;font-weight:600;">Tic Tac Toe</span>
+      <button onclick="closeTicTacToeModal()" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
+    </div>
+    <div style="margin-bottom:10px;display:flex;align-items:center;gap:10px;">
+      <label for="tttDifficulty" style="color:#fff;font-size:1em;">Difficulty:</label>
+      <select id="tttDifficulty" style="font-size:1em;padding:4px 10px;border-radius:6px;border:1.5px solid #a06bff;background:#333;color:#fff;">
+        <option value="easy">Easy</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+    <div id="tictactoeBoard" style="display:grid;grid-template-columns:repeat(3,60px);grid-template-rows:repeat(3,60px);gap:8px;margin-bottom:12px;"></div>
+    <div id="tictactoeStatus" style="color:#fff;margin-bottom:8px;font-size:1.1em;"></div>
+    <button id="tictactoeRestart" style="display:none;background:#a06bff;color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:1em;cursor:pointer;">Restart</button>
+  </div>
+</div>
+<script>
+// Tic Tac Toe Game Logic
+const tttModal = document.getElementById('tictactoeModal');
+const tttBoard = document.getElementById('tictactoeBoard');
+const tttStatus = document.getElementById('tictactoeStatus');
+const tttRestart = document.getElementById('tictactoeRestart');
+const tttOpenBtn = document.getElementById('tictactoeOpenBtn');
+let tttGame, tttPlayer, tttDifficulty = 'easy';
+const tttDifficultySelect = document.getElementById('tttDifficulty');
+tttDifficultySelect.addEventListener('change', function() {
+  tttDifficulty = this.value;
+  startTicTacToe();
+});
+function openTicTacToeModal() {
+  tttModal.style.display = 'flex';
+  tttDifficulty = tttDifficultySelect.value;
+  startTicTacToe();
+}
+function closeTicTacToeModal() {
+  tttModal.style.display = 'none';
+}
+tttOpenBtn.onclick = openTicTacToeModal;
+function startTicTacToe() {
+  tttGame = Array(9).fill(null);
+  tttPlayer = 'X'; // User is X, machine is O
+  tttStatus.textContent = "Your turn (X)";
+  tttRestart.style.display = 'none';
+  renderTicTacToe();
+}
+function renderTicTacToe() {
+  tttBoard.innerHTML = '';
+  tttGame.forEach((cell, i) => {
+    const btn = document.createElement('button');
+    btn.style.width = btn.style.height = '60px';
+    btn.style.fontSize = '2em';
+    btn.style.background = '#333';
+    btn.style.color = cell === 'X' ? '#ffd93d' : '#a06bff';
+    btn.style.border = '2px solid #a06bff';
+    btn.style.borderRadius = '8px';
+    btn.style.cursor = cell || tttWinner(tttGame) ? 'default' : 'pointer';
+    btn.textContent = cell || '';
+    btn.disabled = !!cell || !!tttWinner(tttGame);
+    btn.onclick = () => handleTicTacToeMove(i);
+    tttBoard.appendChild(btn);
+  });
+}
+function handleTicTacToeMove(i) {
+  if (tttGame[i] || tttWinner(tttGame)) return;
+  tttGame[i] = tttPlayer;
+  renderTicTacToe();
+  if (tttWinner(tttGame)) {
+    tttStatus.textContent = tttWinner(tttGame) === 'draw' ? "It's a draw!" : (tttWinner(tttGame) === 'X' ? 'You win!' : 'Machine wins!');
+    tttRestart.style.display = 'inline-block';
+    return;
+  }
+  tttPlayer = 'O';
+  tttStatus.textContent = "Machine's turn (O)";
+  setTimeout(machineMove, 500);
+}
+function machineMove() {
+  let move;
+  if (tttDifficulty === 'easy') {
+    // Easy: random move
+    const empty = tttGame.map((v, i) => v ? null : i).filter(v => v !== null);
+    if (empty.length === 0) return;
+    move = empty[Math.floor(Math.random() * empty.length)];
+  } else {
+    // Hard: minimax
+    move = bestMove(tttGame, 'O');
+  }
+  tttGame[move] = 'O';
+  renderTicTacToe();
+  if (tttWinner(tttGame)) {
+    tttStatus.textContent = tttWinner(tttGame) === 'draw' ? "It's a draw!" : (tttWinner(tttGame) === 'X' ? 'You win!' : 'Machine wins!');
+    tttRestart.style.display = 'inline-block';
+    return;
+  }
+  tttPlayer = 'X';
+  tttStatus.textContent = "Your turn (X)";
+}
+// Minimax for unbeatable AI
+function bestMove(board, player) {
+  const opponent = player === 'X' ? 'O' : 'X';
+  if (tttWinner(board) === 'O') return null;
+  if (tttWinner(board) === 'X') return null;
+  if (tttWinner(board) === 'draw') return null;
+  let bestScore = -Infinity;
+  let move = null;
+  for (let i = 0; i < 9; i++) {
+    if (!board[i]) {
+      board[i] = player;
+      let score = minimax(board, 0, false);
+      board[i] = null;
+      if (score > bestScore) {
+        bestScore = score;
+        move = i;
+      }
+    }
+  }
+  return move;
+}
+function minimax(board, depth, isMaximizing) {
+  const winner = tttWinner(board);
+  if (winner === 'O') return 10 - depth;
+  if (winner === 'X') return depth - 10;
+  if (winner === 'draw') return 0;
+  if (isMaximizing) {
+    let best = -Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (!board[i]) {
+        board[i] = 'O';
+        best = Math.max(best, minimax(board, depth + 1, false));
+        board[i] = null;
+      }
+    }
+    return best;
+  } else {
+    let best = Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (!board[i]) {
+        board[i] = 'X';
+        best = Math.min(best, minimax(board, depth + 1, true));
+        board[i] = null;
+      }
+    }
+    return best;
+  }
+}
+function tttWinner(b) {
+  const lines = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+  ];
+  for (const [a,b1,c] of lines) {
+    if (b[a] && b[a] === b[b1] && b[a] === b[c]) return b[a];
+  }
+  if (b.every(cell => cell)) return 'draw';
+  return null;
+}
+tttRestart.onclick = startTicTacToe;
+</script>
+<!-- Quiz Game Modal -->
+<div id="quizModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:5000;background:rgba(24,24,32,0.96);backdrop-filter:blur(4px);align-items:center;justify-content:center;flex-direction:column;">
+  <div style="background:linear-gradient(135deg,#fff 0%,#4caf50 100%);border-radius:18px;box-shadow:0 4px 32px #4caf5044;padding:28px 24px 18px 24px;max-width:98vw;max-height:98vh;display:flex;flex-direction:column;align-items:center;min-width:320px;">
+    <div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span style="color:#4caf50;font-size:1.3em;font-weight:700;letter-spacing:0.5px;">Quiz Game</span>
+      <button onclick="closeQuizModal()" style="background:none;border:none;color:#333;font-size:1.5em;cursor:pointer;">&times;</button>
+    </div>
+    <div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+      <label for="quizDifficulty" style="color:#333;font-size:1em;font-weight:600;">Difficulty:</label>
+      <select id="quizDifficulty" style="font-size:1em;padding:6px 14px;border-radius:8px;border:1.5px solid #4caf50;background:#fff;color:#222;font-weight:600;">
+        <option value="10">Till 10th</option>
+        <option value="12">Till 12th</option>
+        <option value="grad">Till Graduation</option>
+      </select>
+    </div>
+    <div id="quizContent" style="width:100%;max-width:400px;"></div>
+    <button id="quizRestart" style="display:none;background:#4caf50;color:#fff;border:none;border-radius:8px;padding:10px 28px;font-size:1.1em;font-weight:600;cursor:pointer;margin-top:18px;">Restart</button>
+  </div>
+</div>
+<script>
+// Quiz Game Logic
+const quizModal = document.getElementById('quizModal');
+const quizContent = document.getElementById('quizContent');
+const quizRestart = document.getElementById('quizRestart');
+const quizDifficultySelect = document.getElementById('quizDifficulty');
+let quizQuestions, quizIndex, quizScore, quizSelectedDifficulty;
+const QUIZ_QUESTIONS = {
+  '10': [
+    { q: 'What does UI stand for?', a: ['User Interface','Universal Input','Unique Identifier','User Internet'], c: 0 },
+    { q: 'Which tool is commonly used for graphics design?', a: ['Photoshop','Excel','Word','PowerPoint'], c: 0 },
+    { q: 'What does HTML stand for?', a: ['HyperText Markup Language','HighText Machine Language','HyperTabular Markup Language','None'], c: 0 },
+    { q: 'Which is a game engine?', a: ['Unity','Excel','Photoshop','Word'], c: 0 },
+    { q: 'Which color is made by mixing red and blue?', a: ['Purple','Green','Orange','Yellow'], c: 0 },
+    { q: 'Which is a web browser?', a: ['Chrome','Excel','Photoshop','Word'], c: 0 },
+    { q: 'Which is a type of image file?', a: ['JPEG','DOCX','MP3','PDF'], c: 0 },
+    { q: 'What is the shortcut for copy?', a: ['Ctrl+C','Ctrl+V','Ctrl+X','Ctrl+Z'], c: 0 },
+    { q: 'Which is a primary color?', a: ['Red','Green','Purple','Orange'], c: 0 },
+    { q: 'Which is used to draw shapes on a computer?', a: ['Paint','Excel','Word','PowerPoint'], c: 0 },
+    { q: 'Which is a programming language?', a: ['Python','Excel','Photoshop','Word'], c: 0 },
+    { q: 'What does CSS stand for?', a: ['Cascading Style Sheets','Creative Style System','Computer Style Sheet','Colorful Style Sheet'], c: 0 },
+    { q: 'Which is a social media platform?', a: ['Instagram','Excel','Photoshop','Word'], c: 0 },
+    { q: 'Which is a device for input?', a: ['Keyboard','Monitor','Speaker','Printer'], c: 0 },
+    { q: 'Which is a file extension for a webpage?', a: ['.html','.exe','.mp3','.jpg'], c: 0 }
+  ],
+  '12': [
+    { q: 'What is UX in design?', a: ['User Experience','Universal X','Ultra Experience','User Xylophone'], c: 0 },
+    { q: 'Which is a vector graphics tool?', a: ['Illustrator','Paint','Notepad','Excel'], c: 0 },
+    { q: 'Which tag is used for a link in HTML?', a: ['<a>','<link>','<href>','<url>'], c: 0 },
+    { q: 'Which language is used for web styling?', a: ['CSS','Python','C++','Java'], c: 0 },
+    { q: 'Which is a popular game development language?', a: ['C#','HTML','CSS','PHP'], c: 0 },
+    { q: 'Which is a UI prototyping tool?', a: ['Figma','Excel','Word','PowerPoint'], c: 0 },
+    { q: 'Which is a markup language?', a: ['HTML','Python','C++','Java'], c: 0 },
+    { q: 'Which is a color model?', a: ['RGB','PDF','MP3','DOCX'], c: 0 },
+    { q: 'Which is a web server language?', a: ['PHP','HTML','CSS','SVG'], c: 0 },
+    { q: 'Which is a 3D modeling software?', a: ['Blender','Excel','Word','PowerPoint'], c: 0 },
+    { q: 'Which is a type of animation?', a: ['Frame-by-frame','Word-by-word','Page-by-page','Line-by-line'], c: 0 },
+    { q: 'Which is a CSS framework?', a: ['Bootstrap','Excel','Word','PowerPoint'], c: 0 },
+    { q: 'Which is a web development stack?', a: ['MERN','WORD','EXCEL','PHOTOSHOP'], c: 0 },
+    { q: 'Which is a game design document?', a: ['GDD','PDF','MP3','DOCX'], c: 0 },
+    { q: 'Which is a type of user research?', a: ['Interview','Painting','Coding','Printing'], c: 0 }
+  ],
+  'grad': [
+    { q: 'Which principle is key in UI design?', a: ['Consistency','Ambiguity','Randomness','Obscurity'], c: 0 },
+    { q: 'Which is a raster graphics format?', a: ['PNG','SVG','EPS','AI'], c: 0 },
+    { q: 'What does API stand for?', a: ['Application Programming Interface','Advanced Programming Index','Application Program Internet','None'], c: 0 },
+    { q: 'Which is a JavaScript framework?', a: ['React','Laravel','Django','Flask'], c: 0 },
+    { q: 'Which is a game development platform?', a: ['Unreal Engine','WordPress','Photoshop','Excel'], c: 0 },
+    { q: 'Which is a design pattern?', a: ['MVC','PDF','MP3','DOCX'], c: 0 },
+    { q: 'Which is a CSS preprocessor?', a: ['Sass','HTML','SVG','PNG'], c: 0 },
+    { q: 'Which is a version control system?', a: ['Git','Word','Excel','PowerPoint'], c: 0 },
+    { q: 'Which is a web API format?', a: ['JSON','JPEG','MP3','PDF'], c: 0 },
+    { q: 'Which is a color theory term?', a: ['Complementary','Supplementary','Documentary','Elementary'], c: 0 },
+    { q: 'Which is a UX research method?', a: ['Usability Testing','Painting','Coding','Printing'], c: 0 },
+    { q: 'Which is a web hosting service?', a: ['Netlify','Excel','Word','PowerPoint'], c: 0 },
+    { q: 'Which is a game engine for 2D games?', a: ['Godot','Excel','Word','PowerPoint'], c: 0 },
+    { q: 'Which is a wireframing tool?', a: ['Balsamiq','Excel','Word','PowerPoint'], c: 0 },
+    { q: 'Which is a database?', a: ['MongoDB','SVG','PNG','PDF'], c: 0 }
+  ]
+};
+function openQuizModal() {
+  quizModal.style.display = 'flex';
+  quizSelectedDifficulty = quizDifficultySelect.value;
+  startQuiz();
+}
+function closeQuizModal() {
+  quizModal.style.display = 'none';
+}
+quizDifficultySelect.addEventListener('change', function() {
+  quizSelectedDifficulty = this.value;
+  startQuiz();
+});
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+function startQuiz() {
+  // Pick 5 random questions from the pool
+  quizQuestions = shuffle(QUIZ_QUESTIONS[quizSelectedDifficulty].slice()).slice(0, 5);
+  quizIndex = 0;
+  quizScore = 0;
+  quizRestart.style.display = 'none';
+  showQuizQuestion();
+}
+function showQuizQuestion() {
+  if (quizIndex >= quizQuestions.length) {
+    quizContent.innerHTML = `<div style='text-align:center;font-size:1.2em;font-weight:700;color:#4caf50;margin-bottom:10px;'>Quiz Complete!</div><div style='text-align:center;font-size:1.1em;margin-bottom:18px;'>Your Score: <span style='color:#222;font-weight:700;'>${quizScore} / ${quizQuestions.length}</span></div>`;
+    quizRestart.style.display = 'inline-block';
+    return;
+  }
+  const q = quizQuestions[quizIndex];
+  // Shuffle answers and track correct index
+  const answerObjs = q.a.map((ans, idx) => ({ ans, isCorrect: idx === q.c }));
+  shuffle(answerObjs);
+  // Store the correct index for this question
+  q._shuffledAnswers = answerObjs.map(obj => obj.ans);
+  q._correctIndex = answerObjs.findIndex(obj => obj.isCorrect);
+  let html = `<div style='font-size:1.1em;font-weight:600;color:#222;margin-bottom:16px;'>Q${quizIndex+1}. ${q.q}</div>`;
+  html += '<div style="display:flex;flex-direction:column;gap:12px;">';
+  q._shuffledAnswers.forEach((ans, i) => {
+    html += `<button onclick='answerQuiz(${i})' style='background:#fff;color:#4caf50;border:2px solid #4caf50;border-radius:8px;padding:10px 0;font-size:1em;font-weight:600;transition:background 0.18s,color 0.18s;border-radius:8px;cursor:pointer;'>${ans}</button>`;
+  });
+  html += '</div>';
+  quizContent.innerHTML = html;
+}
+function answerQuiz(i) {
+  const q = quizQuestions[quizIndex];
+  if (i === q._correctIndex) quizScore++;
+  quizIndex++;
+  showQuizQuestion();
+}
+quizRestart.onclick = startQuiz;
+</script>
 </body>
 </html>
