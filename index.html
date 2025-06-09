@@ -6,12 +6,19 @@
   <title>My Portfolio</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
   <style>
+    @media (max-width: 600px) {
+      #settingsPopup {
+        max-width: 98vw !important;
+        min-width: 0 !important;
+        padding: 18px 4vw 14px 4vw !important;
+      }
+    }
     .resume-screen {
       position: fixed;
       top: 32px;
       left: 260px;
       right: 0;
-      bottom: 64px;
+      bottom: 56px;
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
       color: #fff;
@@ -114,8 +121,11 @@
       box-sizing: border-box;
       overflow-x: hidden;
     }
-    html {
+    html, body {
       scroll-behavior: smooth;
+    }
+    .project-section {
+      scroll-margin-top: 48px;
     }
     body {
       background-color: #f0f4f8;
@@ -234,8 +244,8 @@
       position: absolute;
       left: 0;
       top: 32px;
-      width: 260px;
-      min-width: 180px;
+      width: 320px;
+      min-width: 220px;
       height: calc(100vh - 32px);
       padding: 16px;
       display: flex;
@@ -551,7 +561,7 @@
     .app-grid {
       position: fixed;
       top: 32px;
-      left: 260px;
+      left: 320px;
       right: 0;
       bottom: 56px;
       display: flex;
@@ -1335,11 +1345,11 @@
     .skills-screen {
       position: fixed;
       top: 32px;
-      left: 260px;
+      left: 320px;
       right: 0;
-      bottom: 64px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
+      bottom: 56px;
+      background: rgba(24, 26, 27, 0.92);
+      backdrop-filter: blur(4px);
       color: #fff;
       display: none;
       padding: 20px;
@@ -1433,9 +1443,10 @@
 
     /* Close button for skills screen */
     .skills-screen .close-btn {
-      position: absolute;
-      top: 16px;
-      right: 16px;
+      position: sticky;
+      top: 18px;
+      right: 18px;
+      float: right;
       background: rgba(255,255,255,0.2);
       border: 1px solid rgba(255,255,255,0.2);
       color: #fff;
@@ -1448,6 +1459,7 @@
       justify-content: center;
       font-size: 18px;
       transition: all 0.2s ease;
+      z-index: 10;
     }
 
     .skills-screen .close-btn:hover {
@@ -2099,6 +2111,48 @@
     }
   </style>
   <style>
+    .triangle-cursor {
+      position: fixed !important;
+      pointer-events: none;
+      z-index: 2147483647 !important;
+      width: 28px;
+      height: 28px;
+      display: none;
+      transition: transform 0.08s linear;
+    }
+    #triangleTrail {
+      position: fixed;
+      top: 0; left: 0;
+      width: 0; height: 0;
+      pointer-events: none;
+      z-index: 2147483646;
+      display: none;
+    }
+    .triangle-trail-ghost {
+      width: 28px;
+      height: 28px;
+      position: fixed;
+      pointer-events: none;
+      will-change: transform, opacity;
+      transition: transform 0.18s cubic-bezier(.4,1,.4,1), opacity 0.18s;
+      z-index: 2147483646;
+      background: none;
+    }
+    .triangle-trail-ghost svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+    }
+    /* Always show triangle cursor when active */
+    .triangle-cursor[style*="display: block"] {
+      display: block !important;
+      z-index: 2147483647 !important;
+      pointer-events: none !important;
+    }
+    /* Hide system cursor on menu when triangle cursor is active */
+    #socialPopup:hover, #mobileMenu:hover {
+      cursor: none !important;
+    }
     .taskbar-tasks {
       min-width: 0;
       flex: 0 1 auto;
@@ -2654,28 +2708,173 @@
   </style>
 </head>
 <style>
-  body, html, * {
-    cursor: none !important;
-  }
-  a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-icon, .app-icon:hover, .project-card, .project-card:hover, .system-icon, .system-icon:hover, .contact-button, .contact-button:hover, .resume-button, .resume-button:hover, .show-more-btn, .show-more-btn:hover, .win-button, .win-button:hover {
-    cursor: none !important;
-  }
-  .custom-cursor {
-    position: fixed !important;
-    pointer-events: none;
-    z-index: 2147483647 !important;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: rgba(98,0,238,0.18);
-    border: 2.5px solid #a06bff;
-    box-shadow: 0 0 12px 2px #a06bff44;
-    transition: transform 0.08s linear, background 0.2s;
-    will-change: transform;
-    display: none;
-  }
+/* Sidebar tile and button hover effects */
+.sidebar-tile, .sidebar-action-btn {
+  transition: transform 0.18s cubic-bezier(.4,1,.4,1), box-shadow 0.18s, background 0.18s;
+  cursor: pointer;
+}
+.sidebar-tile:hover {
+  transform: scale(1.045);
+  box-shadow: 0 4px 18px 0 rgba(98,0,238,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+  z-index: 2;
+}
+.sidebar-action-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 4px 18px 0 rgba(98,0,238,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+  filter: brightness(0.93);
+}
+/* Lockscreen styles */
+#lockscreenOverlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 9999999;
+  background: rgba(32,32,48,0.92);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s cubic-bezier(.4,1,.4,1);
+  opacity: 0;
+  pointer-events: none;
+}
+#lockscreenOverlay.active {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+.lockscreen-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  user-select: none;
+}
+.lockscreen-time {
+  font-size: 4em;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 16px #0008;
+  margin-bottom: 0.2em;
+}
+.lockscreen-date {
+  font-size: 1.5em;
+  color: #e0e0e0;
+  margin-bottom: 2em;
+  text-shadow: 0 1px 8px #0006;
+}
+.lockscreen-slide {
+  color: #fff;
+  font-size: 1.2em;
+  background: rgba(160,107,255,0.18);
+  border-radius: 18px;
+  padding: 12px 32px;
+  margin-top: 2em;
+  box-shadow: 0 2px 12px #a06bff33;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-align: center;
+  user-select: none;
+  transition: background 0.2s;
+}
+.lockscreen-slide.active {
+  background: #a06bff;
+  color: #fff;
+}
+.lockscreen-arrow {
+  display: block;
+  font-size: 2.2em;
+  color: #a06bff;
+  margin: 0 auto 0.2em auto;
+  animation: lockArrowDown 1.2s infinite alternate;
+}
+@keyframes lockArrowDown {
+  0% { transform: translateY(0); opacity: 0.7; }
+  100% { transform: translateY(16px); opacity: 1; }
+}
+/* Background override classes for settings */
+body.bg-default::before {
+  background: url('images/bg.jpg') center center/cover no-repeat !important;
+  background-blend-mode: overlay !important;
+  opacity: 1 !important;
+}
+body.bg-bg1::before {
+  background: url('images/settings/bg1.jpg') center center/cover no-repeat !important;
+  background-blend-mode: overlay !important;
+  opacity: 1 !important;
+}
+body.bg-bg2::before {
+  background: url('images/settings/bg2.jpg') center center/cover no-repeat !important;
+  background-blend-mode: overlay !important;
+  opacity: 1 !important;
+}
+body.bg-bg3::before {
+  background: url('images/settings/bg3.jpg') center center/cover no-repeat !important;
+  background-blend-mode: overlay !important;
+  opacity: 1 !important;
+}
+body.bg-bg4::before {
+  background: url('images/settings/bg4.jpg') center center/cover no-repeat !important;
+  background-blend-mode: overlay !important;
+  opacity: 1 !important;
+}
+/* Cursor override classes for settings */
+
+body.cursor-custom, body.cursor-custom *, body.cursor-custom a, body.cursor-custom button {
+  cursor: none !important;
+}
+body.cursor-crosshair, body.cursor-crosshair *, body.cursor-crosshair a, body.cursor-crosshair button {
+  cursor: crosshair !important;
+}
+body.cursor-triangle, body.cursor-triangle *, body.cursor-triangle a, body.cursor-triangle button {
+  cursor: none !important;
+}
+/* Hide custom cursor unless custom is selected */
+#customCursor { display: none; }
+body.cursor-custom #customCursor { display: block !important; }
+body.cursor-triangle #triangleCursor { display: block !important; }
+/* Default: custom cursor is hidden */
+body:not(.cursor-custom):not(.cursor-triangle) #customCursor { display: none !important; }
+body:not(.cursor-triangle) #triangleCursor { display: none !important; }
+/* Always show custom/triangle cursor if selected */
+body.cursor-custom #customCursor { display: block !important; }
+body.cursor-triangle #triangleCursor { display: block !important; }
+/* Remove forced none by default, only apply with .cursor-custom or .cursor-triangle */
+body, html, * {
+  cursor: auto !important;
+}
+a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-icon, .app-icon:hover, .project-card, .project-card:hover, .system-icon, .system-icon:hover, .contact-button, .contact-button:hover, .resume-button, .resume-button:hover, .show-more-btn, .show-more-btn:hover, .win-button, .win-button:hover {
+  cursor: none !important;
+}
+.custom-cursor {
+  position: fixed !important;
+  pointer-events: none;
+  z-index: 2147483647 !important;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(98,0,238,0.18);
+  border: 2.5px solid #a06bff;
+  box-shadow: 0 0 12px 2px #a06bff44;
+  transition: transform 0.08s linear, background 0.2s;
+  will-change: transform;
+  display: none;
+}
 </style>
-<body>
+<body class="cursor-custom">
+<!-- Lockscreen overlay -->
+<div id="lockscreenOverlay">
+  <div class="lockscreen-content">
+    <div class="lockscreen-time" id="lockscreenTime">12:00</div>
+    <div class="lockscreen-date" id="lockscreenDate">Monday, January 1</div>
+    <div class="lockscreen-arrow">&#8595;</div>
+    <div class="lockscreen-slide" id="lockscreenSlide">Slide up to unlock</div>
+  </div>
+</div>
 <!-- Hamburger for mobile -->
 <button class="mobile-hamburger" id="mobileHamburger" aria-label="Open menu" style="display:none;"><i class="fas fa-bars"></i></button>
 <!-- Mobile menu -->
@@ -2684,14 +2883,14 @@
   <img class="profile-photo" src="images/person.png" alt="Profile Photo">
   <h1>Aman Kumar</h1>
   <div class="description">
-    Passionate web developer with a love for creating user-friendly and visually appealing applications.
+    Passionate graphic and UI/UX designer with a strong focus on creating visually appealing and user-friendly experiences. Also skilled in web development and game development.
   </div>
   <div class="sidebar-buttons sidebar-buttons-row">
     <button class="sidebar-button" onclick="showSkills()">Skills</button>
     <button class="sidebar-button resume-btn" onclick="window.open('https://drive.google.com/file/d/1ofUIV2JP5xFDYEWadYMPuCWZx7IFzdAv/view', '_blank')">Resume</button>
   </div>
   <div style="display:flex;gap:10px;justify-content:center;margin:12px 0 0 0;">
-    <button class="contact-button email-btn dock-item" onclick="window.location.href='mailto:john.doe@gmail.com'" title="Email me">
+    <button class="contact-button email-btn dock-item" onclick="window.location.href='mailto:amankumar1948sahu@gmail.com'" title="Email me">
       <i class="far fa-envelope"></i>
     </button>
     <button class="contact-button phone-btn dock-item" id="showPhonePopupBtnMobile" title="Call me">
@@ -2706,8 +2905,60 @@
   </div>
 </div>
 <div class="custom-cursor" id="customCursor"></div>
+<div class="triangle-cursor" id="triangleCursor" style="display:none;">
+  <svg width="28" height="28" viewBox="0 0 28 28">
+    <polygon points="14,4 24,24 4,24" fill="#a06bff" stroke="#6200ee" stroke-width="2"/>
+  </svg>
+</div>
+<!-- Triangle cursor trail -->
+<div id="triangleTrail" style="pointer-events:none;position:fixed;top:0;left:0;z-index:2147483646;display:none;">
+  <div class="triangle-trail-ghost" style="position:fixed;top:0;left:0;opacity:0.18;"></div>
+  <div class="triangle-trail-ghost" style="position:fixed;top:0;left:0;opacity:0.12;"></div>
+  <div class="triangle-trail-ghost" style="position:fixed;top:0;left:0;opacity:0.08;"></div>
+  <div class="triangle-trail-ghost" style="position:fixed;top:0;left:0;opacity:0.05;"></div>
+</div>
     <script>
       // Hamburger menu logic
+    // Lockscreen logic
+    let lockscreenActive = false;
+    let lockscreenDragStartY = null;
+    let lockscreenDragCurrentY = null;
+    const lockscreenOverlay = document.getElementById('lockscreenOverlay');
+    const lockscreenSlide = document.getElementById('lockscreenSlide');
+    const lockscreenTime = document.getElementById('lockscreenTime');
+    const lockscreenDate = document.getElementById('lockscreenDate');
+    // Show lockscreen
+    function showLockscreen() {
+      lockscreenOverlay.classList.add('active');
+      lockscreenActive = true;
+      updateLockscreenTime();
+    }
+    // Hide lockscreen
+    function hideLockscreen() {
+      lockscreenOverlay.classList.remove('active');
+      lockscreenActive = false;
+    }
+    // Update lockscreen time/date
+    function updateLockscreenTime() {
+      if (!lockscreenTime || !lockscreenDate) return;
+      const now = new Date();
+      lockscreenTime.textContent = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      lockscreenDate.textContent = now.toLocaleDateString(undefined, {weekday:'long', month:'long', day:'numeric'});
+    }
+    setInterval(updateLockscreenTime, 30000);
+    // Lockscreen event listeners must be set after DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      const projectsText = document.getElementById('projectsStatusText');
+      if (projectsText) {
+        projectsText.style.cursor = 'pointer';
+        projectsText.title = 'Click to lock screen';
+        projectsText.addEventListener('click', showLockscreen);
+      }
+      if (lockscreenSlide) {
+        lockscreenSlide.style.cursor = 'pointer';
+        lockscreenSlide.addEventListener('click', hideLockscreen);
+      }
+    });
       document.addEventListener('DOMContentLoaded', function() {
         const hamburger = document.getElementById('mobileHamburger');
         const menu = document.getElementById('mobileMenu');
@@ -2759,6 +3010,97 @@
       });
     </script>
     <script>
+      // Settings Popup Logic
+      document.addEventListener('DOMContentLoaded', function() {
+        const settingsBtn = document.getElementById('settingsButton');
+        const settingsPopup = document.getElementById('settingsPopup');
+        const closeSettingsBtn = document.getElementById('closeSettingsPopupBtn');
+        // Show popup
+        if(settingsBtn && settingsPopup && closeSettingsBtn) {
+          settingsBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            settingsPopup.style.display = 'block';
+          });
+          closeSettingsBtn.addEventListener('click', function() {
+            settingsPopup.style.display = 'none';
+          });
+          // Hide popup when clicking outside
+          document.addEventListener('mousedown', function(e) {
+            if (settingsPopup.style.display === 'block' && !settingsPopup.contains(e.target) && e.target !== settingsBtn) {
+              settingsPopup.style.display = 'none';
+            }
+          });
+        }
+        // Background change (toggle classes)
+        document.querySelectorAll('.bg-option').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.body.classList.remove('bg-default', 'bg-bg1', 'bg-bg2', 'bg-bg3', 'bg-bg4');
+            const bg = btn.getAttribute('data-bg');
+            if(bg === 'default') {
+              document.body.classList.add('bg-default');
+            } else if(bg === 'bg1') {
+              document.body.classList.add('bg-bg1');
+            } else if(bg === 'bg2') {
+              document.body.classList.add('bg-bg2');
+            } else if(bg === 'bg3') {
+              document.body.classList.add('bg-bg3');
+            } else if(bg === 'bg4') {
+              document.body.classList.add('bg-bg4');
+            }
+            // Save to localStorage
+            localStorage.setItem('portfolio_last_bg', bg);
+          });
+        });
+        // Cursor change (toggle classes)
+        document.querySelectorAll('.cursor-option').forEach(btn => {
+          btn.addEventListener('click', function() {
+            document.body.classList.remove('cursor-custom', 'cursor-crosshair', 'cursor-triangle');
+            const cursor = btn.getAttribute('data-cursor');
+            if(cursor === 'custom') {
+              document.body.classList.add('cursor-custom');
+            } else if(cursor === 'crosshair') {
+              document.body.classList.add('cursor-crosshair');
+            } else if(cursor === 'triangle') {
+              document.body.classList.add('cursor-triangle');
+            }
+            // Save to localStorage
+            localStorage.setItem('portfolio_last_cursor', cursor);
+          });
+        });
+        // On page load, restore last bg and cursor
+        document.addEventListener('DOMContentLoaded', function() {
+          // Restore background
+          var lastBg = localStorage.getItem('portfolio_last_bg');
+          if (lastBg) {
+            document.body.classList.remove('bg-default', 'bg-bg1', 'bg-bg2', 'bg-bg3', 'bg-bg4');
+            if(lastBg === 'default') {
+              document.body.classList.add('bg-default');
+            } else if(lastBg === 'bg1') {
+              document.body.classList.add('bg-bg1');
+            } else if(lastBg === 'bg2') {
+              document.body.classList.add('bg-bg2');
+            } else if(lastBg === 'bg3') {
+              document.body.classList.add('bg-bg3');
+            } else if(lastBg === 'bg4') {
+              document.body.classList.add('bg-bg4');
+            }
+          }
+          // Restore cursor
+          var lastCursor = localStorage.getItem('portfolio_last_cursor');
+          if (lastCursor) {
+            document.body.classList.remove('cursor-custom', 'cursor-crosshair', 'cursor-triangle');
+            if(lastCursor === 'custom') {
+              document.body.classList.add('cursor-custom');
+            } else if(lastCursor === 'crosshair') {
+              document.body.classList.add('cursor-crosshair');
+            } else if(lastCursor === 'triangle') {
+              document.body.classList.add('cursor-triangle');
+            }
+          }
+        });
+      });
+    </script>
+    <script>
       // Instagram dropdown logic
       document.addEventListener('DOMContentLoaded', function() {
         const btn = document.getElementById('instagramDropdownBtn');
@@ -2778,13 +3120,52 @@
     </script>
 <div class="desktop">    <!-- Status Bar -->
 <div class="status-bar">
-      <div class="left">
-        <img src="images/wifi.png" alt="WiFi" title="Connected to WiFi">
-        <img src="images/signal.png" alt="Signal" title="Network Signal">
-        <img src="images/battery.png" alt="Battery" title="Battery Status">
+      <div class="left" style="display:flex;align-items:center;gap:10px;min-width:180px;">
+        <span id="statusQuote" style="font-size:1em;font-weight:400;letter-spacing:0.01em;opacity:1;transition:opacity 0.7s;display:inline-block;">Stay positive and keep moving forward.</span>
+        <style>
+        @keyframes quoteReveal {
+          0% { opacity: 0; transform: translateY(16px) scale(0.98); }
+          60% { opacity: 1; transform: translateY(-2px) scale(1.01); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        #statusQuote.reveal-anim {
+          animation: quoteReveal 0.7s cubic-bezier(.4,1,.4,1);
+        }
+        </style>
       </div>
+      <script>
+      // Positive quotes rotation with animation
+      const quotes = [
+        "Stay positive and keep moving forward.",
+        "Believe in yourself and all that you are.",
+        "Every day is a new beginning.",
+        "Dream big, work hard, stay focused.",
+        "You are capable of amazing things.",
+        "Success is not final, failure is not fatal.",
+        "Be the reason someone smiles today.",
+        "Your only limit is your mind.",
+        "Great things never come from comfort zones.",
+        "Start each day with a grateful heart."
+      ];
+      let quoteIndex = 0;
+      const statusQuote = document.getElementById('statusQuote');
+      function rotateQuote() {
+        if (!statusQuote) return;
+        statusQuote.style.opacity = 0;
+        setTimeout(() => {
+          quoteIndex = (quoteIndex + 1) % quotes.length;
+          statusQuote.textContent = quotes[quoteIndex];
+          statusQuote.style.opacity = 1;
+          statusQuote.classList.remove('reveal-anim');
+          // Force reflow to restart animation
+          void statusQuote.offsetWidth;
+          statusQuote.classList.add('reveal-anim');
+        }, 700);
+      }
+      setInterval(rotateQuote, 5000);
+      </script>
       <div class="center" style="position: absolute; left: 50%; transform: translateX(-50%); text-align: center;">
-        <span style="color: #fff; font-weight: 600; font-size: 15px;">Projects</span>
+        <span id="projectsStatusText" style="color: #fff; font-weight: 600; font-size: 15px;">Projects</span>
       </div>
       <div class="right">
         <span id="statusTime"></span>
@@ -2796,32 +3177,38 @@
       <img class="profile-photo" src="images/person.png" alt="Profile Photo">
       <h1>Aman Kumar</h1>
       <div class="description">
-        Passionate web developer with a love for creating user-friendly and visually appealing applications.
+        Passionate designer specialized in Graphic Design, UI/UX, and Web Development, with added skills in game development.
       </div>
-      <div class="key-expertise" style="margin-top:18px; margin-bottom:8px; font-size:16px; font-weight:600; color:#fff; letter-spacing:0.5px; text-shadow:0 2px 4px rgba(0,0,0,0.15);">Key Expertise</div>
-      <div class="skills">
-        <div class="skill-category">
-          <span class="skill-title ui-ux">UI/UX Design</span>
-          <div class="skill-progress" data-progress="90"></div>
+      <div class="skills-tile-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:4px 4px;padding:2px 0 2px 0;">
+        <a href="#uiux-section" class="sidebar-tile" style="background:#1976d2;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #1976d244;text-decoration:none;">
+          <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-pencil-ruler'></i></div>
+          <div style="font-size:0.95em;font-weight:700;">UI/UX Design</div>
+          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:linear-gradient(90deg,#1976d2,#64b5f6);color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #1976d244;">2 yrs</span>
+        </a>
+        <a href="#graphics-section" class="sidebar-tile" style="background:#a06bff;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #a06bff44;text-decoration:none;">
+          <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-paint-brush'></i></div>
+          <div style="font-size:0.95em;font-weight:700;">Graphics Design</div>
+          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:linear-gradient(90deg,#a06bff,#c89fff);color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #a06bff44;">3 yrs</span>
+        </a>
+        <a href="#webdev-section" class="sidebar-tile" style="background:#0077b5;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #0077b544;text-decoration:none;">
+          <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-code'></i></div>
+          <div style="font-size:0.95em;font-weight:700;">Web Development</div>
+          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:linear-gradient(90deg,#0077b5,#64b5f6);color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #0077b544;">2 yrs</span>
+        </a>
+        <a href="#game-section" class="sidebar-tile" style="background:#ffd93d;color:#333;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #ffd93d44;text-decoration:none;">
+          <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-gamepad'></i></div>
+          <div style="font-size:0.95em;font-weight:700;">Game Development</div>
+          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:linear-gradient(90deg,#ffd93d,#ffe569);color:#333;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #ffd93d44;">2 yrs</span>
+        </a>
         </div>
-                <div class="skill-category">
-          <span class="skill-title graphics">Graphics Design</span>
-          <div class="skill-progress" data-progress="85"></div>
-        </div>
-        <div class="skill-category">
-          <span class="skill-title web-dev">Web Development</span>
-          <div class="skill-progress" data-progress="95"></div>
-        </div>
-        <div class="skill-category">
-          <span class="skill-title game-dev">Game Development</span>
-          <div class="skill-progress" data-progress="80"></div>
-        </div>
-      </div>
-      <div class="sidebar-buttons sidebar-buttons-row">
-        <button class="sidebar-button" onclick="showSkills()">
+      <div style="width:90%;height:2.5px;background:linear-gradient(90deg,#a06bff 0%,#fff 100%);border-radius:2px;margin:8px auto 8px auto;opacity:0.85;"></div>
+      <div class="sidebar-buttons sidebar-buttons-row" style="display:flex;gap:8px;margin-top:0;">
+        <button class="sidebar-action-btn" onclick="showSkills()" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0 6px 0;background:#1976d2;color:#fff;font-size:0.98em;font-weight:700;border:none;border-radius:9px;box-shadow:0 1px 4px #1976d244;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;cursor:pointer;min-width:0;">
+          <span style="font-size:1.1em;margin-bottom:2px;"><i class="fas fa-lightbulb"></i></span>
           Skills
         </button>
-        <button class="sidebar-button resume-btn" onclick="window.open('https://drive.google.com/file/d/1ofUIV2JP5xFDYEWadYMPuCWZx7IFzdAv/view', '_blank')">
+        <button class="sidebar-action-btn" onclick="window.open('https://drive.google.com/file/d/1ofUIV2JP5xFDYEWadYMPuCWZx7IFzdAv/view', '_blank')" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0 6px 0;background:#ffd93d;color:#333;font-size:0.98em;font-weight:700;border:none;border-radius:9px;box-shadow:0 1px 4px #ffd93d44;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;cursor:pointer;min-width:0;">
+          <span style="font-size:1.1em;margin-bottom:2px;"><i class="fas fa-file-alt"></i></span>
           Resume
         </button>
       </div>
@@ -2830,7 +3217,7 @@
     <!-- App Icons Grid -->
     <div class="app-grid">
       <!-- Graphic Design Section -->
-      <div class="project-section">
+      <div class="project-section" id="graphics-section">
         <h2>Graphic Design</h2>
         <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('illustrator')">
@@ -2867,7 +3254,7 @@
       </div>
 
       <!-- UI/UX Design Section -->
-      <div class="project-section">
+      <div class="project-section" id="uiux-section">
         <h2>UI/UX Design</h2>
         <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('portfolio')">
@@ -2915,7 +3302,7 @@
           </div>
           
           <!-- Web Development Section -->
-          <div class="project-section">
+          <div class="project-section" id="webdev-section">
           <h2>Web Development</h2>
           <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('portfolio-html-css')">
@@ -2972,7 +3359,7 @@
           </div>
           
           <!-- Game Development Section -->
-          <div class="project-section">
+          <div class="project-section" id="game-section">
           <h2>Game Development</h2>
           <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('task-manager')">
@@ -3014,9 +3401,23 @@
     <!-- Taskbar -->    <div class="taskbar">
       <div class="menu-bar">
         <div class="menu-bar-left">
-          <button class="contact-button email-btn dock-item" onclick="window.location.href='mailto:john.doe@gmail.com'" title="Email me">
-            <i class="far fa-envelope"></i>
+          <button class="contact-button email-btn dock-item" id="showEmailPopupBtn" title="Email me">
+          <i class="far fa-envelope"></i>
           </button>
+          <div id="emailPopup" class="phone-popup" style="display:none;">
+            <div class="phone-popup-content">
+              <span class="phone-label">Email:</span>
+              <span class="phone-number" id="emailAddress">amankumar1948sahu@gmail.com</span>
+              <button class="copy-btn" id="copyEmailBtn" title="Copy to clipboard">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=amankumar1948sahu@gmail.com" target="_blank" style="display:inline-block;margin:8px 0 0 0;padding:6px 18px;background:linear-gradient(90deg,#a06bff 0%,#6200ee 100%);color:#fff;font-weight:600;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px #a06bff22;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
+              <i class="fas fa-paper-plane" style="margin-right:6px;"></i>Send Email
+            </a>
+            <span class="copy-success" id="copyEmailSuccessMsg" style="display:none;">Copied!</span>
+            <button class="close-phone-popup" id="closeEmailPopupBtn">&times;</button>
+          </div>
           <button class="contact-button phone-btn dock-item" id="showPhonePopupBtn" title="Call me">
             <i class="fas fa-phone"></i>
           </button>
@@ -3070,7 +3471,7 @@
                 <img src="images/person.png" alt="Aman Kumar" />
               </div>
               <div class="about-modern-title">About This Site</div>
-              <div class="about-modern-desc">This portfolio is inspired by Windows 11, featuring glass morphism and a modern UI/UX.</div>
+              <div class="about-modern-desc">This portfolio is inspired by Windows 11, featuring glassmorphism and a modern UI/UX. I put my best into creating it—it's not copied, just pure creativity.</div>
               <div class="about-modern-divider"></div>
               <div class="about-modern-list">
                 <div class="about-modern-listitem"><span class="about-modern-label">Made by:</span> Aman Kumar</div>
@@ -3116,12 +3517,40 @@
           <button class="menu-button" onclick="window.location.reload()" title="Refresh">
             <i class="fas fa-sync-alt"></i>
           </button>
+          <button class="menu-button" id="settingsButton" title="Settings">
+            <i class="fas fa-cog"></i>
+          </button>
           <button class="menu-button" id="darkModeToggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
             <i class="fas fa-moon"></i>
           </button>
           <button class="menu-button power" onclick="powerOffSite()" title="Close Site">
             <i class="fas fa-power-off"></i>
           </button>
+        </div>
+      </div>
+      <!-- Settings Popup -->
+      <div id="settingsPopup" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:rgba(40,40,60,0.98);border-radius:14px;box-shadow:0 4px 32px #a06bff33;padding:32px 18px 24px 18px;min-width:240px;width:340px;max-width:90vw;box-sizing:border-box;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+          <span style="color:#fff;font-size:1.2em;font-weight:600;">Settings</span>
+          <button id="closeSettingsPopupBtn" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
+        </div>
+        <div style="margin-bottom:18px;">
+          <label style="color:#a06bff;font-weight:600;">Background:</label>
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <button class="bg-option" data-bg="default" style="width:36px;height:36px;border-radius:8px;border:2px solid #a06bff;background:url('images/bg.jpg') center/cover no-repeat;"></button>
+            <button class="bg-option" data-bg="bg1" style="width:36px;height:36px;border-radius:8px;border:2px solid #a06bff;background:url('images/settings/bg1.jpg') center/cover no-repeat;"></button>
+            <button class="bg-option" data-bg="bg2" style="width:36px;height:36px;border-radius:8px;border:2px solid #a06bff;background:url('images/settings/bg2.jpg') center/cover no-repeat;"></button>
+            <button class="bg-option" data-bg="bg3" style="width:36px;height:36px;border-radius:8px;border:2px solid #a06bff;background:url('images/settings/bg3.jpg') center/cover no-repeat;"></button>
+            <button class="bg-option" data-bg="bg4" style="width:36px;height:36px;border-radius:8px;border:2px solid #a06bff;background:url('images/settings/bg4.jpg') center/cover no-repeat;"></button>
+          </div>
+        </div>
+        <div style="margin-bottom:18px;">
+          <label style="color:#a06bff;font-weight:600;">Cursor:</label>
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <button class="cursor-option" data-cursor="custom" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Custom</button>
+            <button class="cursor-option" data-cursor="crosshair" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Crosshair</button>
+            <button class="cursor-option" data-cursor="triangle" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Triangle</button>
+          </div>
         </div>
       </div>
       <div class="menu-grid">
@@ -3145,11 +3574,11 @@
       <div style="margin:18px 0 0 0;width:100%;">
         <div style="color:#a06bff;font-weight:600;font-size:1.1em;margin-bottom:8px;margin-top:2px;">Apps</div>
         <div style="display:flex;gap:12px;">
-          <a href="#" onclick="openTicTacToeModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(135deg,#fff 0%,#a06bff 100%);border-radius:10px;color:#6200ee;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #a06bff22;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
+          <a href="#" onclick="openTicTacToeModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(45deg,#FFD700,#FFA500);border-radius:10px;color:#24292e;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #FFD70044;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
             <i class="fas fa-times-circle" style="font-size:2em;margin-bottom:6px;"></i>
             <span style="font-size:1em;">Tic Tac Toe</span>
           </a>
-          <a href="#" onclick="openQuizModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(135deg,#fff 0%,#4caf50 100%);border-radius:10px;color:#fff;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #4caf5044;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
+          <a href="#" onclick="openQuizModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:#0077b5;border-radius:10px;color:#fff;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #0077b544;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
             <i class="fas fa-question-circle" style="font-size:2em;margin-bottom:6px;"></i>
             <span style="font-size:1em;">Quiz Game</span>
           </a>
@@ -3205,12 +3634,12 @@
             <div class="progress-bar" style="width:0%;background:linear-gradient(90deg,#FF6B6B,#FF8E8E);transition:width 1.2s cubic-bezier(.4,1,.4,1);"></div>
           </div>
           <div class="skill-items">
-            <span title="Collaborative interface design tool">Figma</span>
-            <span title="Prototyping and UI design">Adobe XD</span>
-            <span title="Blueprints for app/web layout">Wireframing</span>
-            <span title="Clickable, interactive mockups">Prototyping</span>
-            <span title="Understanding user needs">User Research</span>
-            <span title="Testing usability with real users">Usability Testing</span>
+            <span title="Collaborative interface design tool"><span class="skill-icon-hover"><i class="fab fa-figma"></i></span>Figma</span>
+            <span title="Prototyping and UI design"><span class="skill-icon-hover"><i class="fas fa-vector-square"></i></span>Adobe XD</span>
+            <span title="Blueprints for app/web layout"><span class="skill-icon-hover"><i class="fas fa-project-diagram"></i></span>Wireframing</span>
+            <span title="Clickable, interactive mockups"><span class="skill-icon-hover"><i class="fas fa-mouse-pointer"></i></span>Prototyping</span>
+            <span title="Understanding user needs"><span class="skill-icon-hover"><i class="fas fa-users"></i></span>User Research</span>
+            <span title="Testing usability with real users"><span class="skill-icon-hover"><i class="fas fa-vial"></i></span>Usability Testing</span>
           </div>
         </div>
         <div class="skill-card">
@@ -3224,12 +3653,12 @@
             <div class="progress-bar" style="width:0%;background:linear-gradient(90deg,#4ECDC4,#6BE5D8);transition:width 1.2s cubic-bezier(.4,1,.4,1);"></div>
           </div>
           <div class="skill-items">
-            <span title="Photo editing and compositing">Photoshop</span>
-            <span title="Vector illustration and logos">Illustrator</span>
-            <span title="Motion graphics and animation">After Effects</span>
-            <span title="Brand and product logos">Logo Design</span>
-            <span title="Visual brand systems">Brand Identity</span>
-            <span title="Font and type design">Typography</span>
+            <span title="Photo editing and compositing"><span class="skill-icon-hover"><i class="fab fa-adobe"></i></span>Photoshop</span>
+            <span title="Vector illustration and logos"><span class="skill-icon-hover"><i class="fas fa-pen-nib"></i></span>Illustrator</span>
+            <span title="Motion graphics and animation"><span class="skill-icon-hover"><i class="fas fa-film"></i></span>After Effects</span>
+            <span title="Brand and product logos"><span class="skill-icon-hover"><i class="fas fa-certificate"></i></span>Logo Design</span>
+            <span title="Visual brand systems"><span class="skill-icon-hover"><i class="fas fa-palette"></i></span>Brand Identity</span>
+            <span title="Font and type design"><span class="skill-icon-hover"><i class="fas fa-font"></i></span>Typography</span>
           </div>
         </div>
         <div class="skill-card">
@@ -3243,12 +3672,12 @@
             <div class="progress-bar" style="width:0%;background:linear-gradient(90deg,#A06BFF,#C89FFF);transition:width 1.2s cubic-bezier(.4,1,.4,1);"></div>
           </div>
           <div class="skill-items">
-            <span title="Semantic markup and styles">HTML5/CSS3</span>
-            <span title="Dynamic web programming">JavaScript</span>
-            <span title="Component-based UI library">React</span>
-            <span title="Backend JavaScript runtime">Node.js</span>
-            <span title="Typed JavaScript">TypeScript</span>
-            <span title="React-based web framework">Next.js</span>
+            <span title="Semantic markup and styles"><span class="skill-icon-hover"><i class="fab fa-html5"></i></span>HTML5/CSS3</span>
+            <span title="Dynamic web programming"><span class="skill-icon-hover"><i class="fab fa-js"></i></span>JavaScript</span>
+            <span title="Component-based UI library"><span class="skill-icon-hover"><i class="fab fa-react"></i></span>React</span>
+            <span title="Backend JavaScript runtime"><span class="skill-icon-hover"><i class="fab fa-node-js"></i></span>Node.js</span>
+            <span title="Typed JavaScript"><span class="skill-icon-hover"><i class="fas fa-code"></i></span>TypeScript</span>
+            <span title="React-based web framework"><span class="skill-icon-hover"><i class="fas fa-layer-group"></i></span>Next.js</span>
           </div>
         </div>
         <div class="skill-card">
@@ -3262,12 +3691,12 @@
             <div class="progress-bar" style="width:0%;background:linear-gradient(90deg,#FFD93D,#FFE569);transition:width 1.2s cubic-bezier(.4,1,.4,1);"></div>
           </div>
           <div class="skill-items">
-            <span title="Game engine for 2D/3D games">Unity</span>
-            <span title="Programming language for Unity">C#</span>
-            <span title="Gameplay and mechanics design">Game Design</span>
-            <span title="3D asset creation">3D Modeling</span>
-            <span title="Level structure and flow">Level Design</span>
-            <span title="Animating characters and objects">Animation</span>
+            <span title="Game engine for 2D/3D games"><span class="skill-icon-hover"><i class="fas fa-cube"></i></span>Unity</span>
+            <span title="Programming language for Unity"><span class="skill-icon-hover"><i class="fas fa-terminal"></i></span>C#</span>
+            <span title="Gameplay and mechanics design"><span class="skill-icon-hover"><i class="fas fa-gamepad"></i></span>Game Design</span>
+            <span title="3D asset creation"><span class="skill-icon-hover"><i class="fas fa-cubes"></i></span>3D Modeling</span>
+            <span title="Level structure and flow"><span class="skill-icon-hover"><i class="fas fa-map"></i></span>Level Design</span>
+            <span title="Animating characters and objects"><span class="skill-icon-hover"><i class="fas fa-running"></i></span>Animation</span>
           </div>
         </div>
       </div>
@@ -3428,6 +3857,13 @@
           border-radius: 8px;
           transition: width 1.2s cubic-bezier(.4,1,.4,1);
         }
+        .skill-progress.modern:hover .progress-bar {
+          width: 100% !important;
+          transition: width 0.7s cubic-bezier(.4,1,.4,1);
+        }
+        .skill-progress.modern .progress-bar {
+          /* Initial width is set inline via style attribute */
+        }
         .skill-items {
           display: flex;
           flex-wrap: wrap;
@@ -3446,6 +3882,19 @@
         .skill-items span:hover {
           background: #a06bff;
           color: #fff;
+        }
+        .skill-items span .skill-icon-hover {
+          opacity: 0;
+          transform: translateX(-10px) scale(0.95);
+          margin-right: 8px;
+          font-size: 1.2em;
+          vertical-align: middle;
+          transition: opacity 0.25s cubic-bezier(.4,1,.4,1), transform 0.25s cubic-bezier(.4,1,.4,1);
+          display: inline-block;
+        }
+        .skill-items span:hover .skill-icon-hover {
+          opacity: 1;
+          transform: translateX(0) scale(1);
         }
         .skill-items span[title]:hover::after {
           content: attr(title);
@@ -3470,7 +3919,7 @@
     </div>
 
     <!-- Achievements Panel (modern, about-style) -->
-    <div class="achievements-panel" id="achievementsPanel" style="display:none; position:fixed; top:0; right:0; height:100vh; width:400px; max-width:96vw; background:rgba(32,32,32,0.97); backdrop-filter:blur(20px); border-radius:16px 0 0 16px; box-shadow:-4px 0 32px rgba(0,0,0,0.18); padding:32px 24px 24px 24px; z-index:2002; transform:translateX(100%); transition:transform 0.35s cubic-bezier(.4,1,.4,1), opacity 0.35s cubic-bezier(.4,1,.4,1); opacity:0; overflow-y:auto;">
+    <div class="achievements-panel" id="achievementsPanel" style="display:none; position:fixed; top:0; right:0; height:calc(100vh - 56px); width:400px; max-width:96vw; background:rgba(32,32,32,0.97); backdrop-filter:blur(20px); border-radius:16px 0 0 16px; box-shadow:-4px 0 32px rgba(0,0,0,0.18); padding:32px 24px 40px 24px; z-index:2002; transform:translateX(100%); transition:transform 0.35s cubic-bezier(.4,1,.4,1), opacity 0.35s cubic-bezier(.4,1,.4,1); opacity:0; overflow-y:auto;">
     <div class="menu-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.1);">
     <div class="menu-title" style="color:#fff;font-size:18px;font-weight:500;">🏆 Achievements & Milestones</div>
     <button class="menu-button" id="achievementsCloseBtn" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1);color:#fff;width:32px;height:32px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;" title="Close">×</button>
@@ -3655,26 +4104,91 @@
     
     // Custom cursor effect
     const customCursor = document.getElementById('customCursor');
+    const triangleCursor = document.getElementById('triangleCursor');
+    const triangleTrail = document.getElementById('triangleTrail');
+    const trailGhosts = triangleTrail ? Array.from(triangleTrail.getElementsByClassName('triangle-trail-ghost')) : [];
+    // Prepare SVG for ghosts
+    const triangleSVG = '<svg width="28" height="28" viewBox="0 0 28 28"><polygon points="14,4 24,24 4,24" fill="#a06bff" stroke="#6200ee" stroke-width="2"/></svg>';
+    trailGhosts.forEach(g => g.innerHTML = triangleSVG);
+    // Trail state
+    const trailLength = trailGhosts.length;
+    const trailPositions = Array.from({length: trailLength}, () => ({x:0, y:0}));
     document.addEventListener('mousemove', (e) => {
-      customCursor.style.display = 'block';
+      // Show/hide based on body class
+      const isTriangle = document.body.classList.contains('cursor-triangle');
+      customCursor.style.display = isTriangle ? 'none' : 'block';
+      triangleCursor.style.display = isTriangle ? 'block' : 'none';
+      if (triangleTrail) triangleTrail.style.display = isTriangle ? 'block' : 'none';
       // Use pageX/pageY for better alignment, and getBoundingClientRect for scroll
       const cursorSize = 28;
       const offsetX = cursorSize / 2;
       const offsetY = cursorSize / 2;
-      customCursor.style.left = (e.clientX - offsetX) + 'px';
-      customCursor.style.top = (e.clientY - offsetY) + 'px';
+      const x = e.clientX - offsetX;
+      const y = e.clientY - offsetY;
+      customCursor.style.left = x + 'px';
+      customCursor.style.top = y + 'px';
       customCursor.style.transform = 'none';
+      triangleCursor.style.left = x + 'px';
+      triangleCursor.style.top = y + 'px';
+      triangleCursor.style.transform = 'none';
+      // Update trail positions
+      if (isTriangle && trailGhosts.length) {
+        // Shift positions
+        for (let i = trailLength - 1; i > 0; i--) {
+          trailPositions[i] = { ...trailPositions[i-1] };
+        }
+        trailPositions[0] = { x, y };
+        // Render ghosts
+        for (let i = 0; i < trailLength; i++) {
+          const ghost = trailGhosts[i];
+          ghost.style.left = trailPositions[i].x + 'px';
+          ghost.style.top = trailPositions[i].y + 'px';
+          ghost.style.transform = 'none';
+        }
+      }
     });
     document.addEventListener('mouseleave', () => {
       customCursor.style.display = 'none';
+      triangleCursor.style.display = 'none';
+      if (triangleTrail) triangleTrail.style.display = 'none';
     });
     document.addEventListener('mouseenter', () => {
-      customCursor.style.display = 'block';
+      const isTriangle = document.body.classList.contains('cursor-triangle');
+      customCursor.style.display = isTriangle ? 'none' : 'block';
+      triangleCursor.style.display = isTriangle ? 'block' : 'none';
+      if (triangleTrail) triangleTrail.style.display = isTriangle ? 'block' : 'none';
     });
+    // Show triangle cursor on menu hover (only if not in triangle mode)
+    function enableTriangleCursor() {
+      if (!document.body.classList.contains('cursor-triangle')) {
+        customCursor.style.display = 'none';
+        triangleCursor.style.display = 'block';
+      }
+    }
+    function disableTriangleCursor() {
+      if (!document.body.classList.contains('cursor-triangle')) {
+        customCursor.style.display = 'block';
+        triangleCursor.style.display = 'none';
+      }
+    }
+    // For both desktop and mobile menu
+    const socialPopup = document.getElementById('socialPopup');
+    if (socialPopup) {
+      socialPopup.addEventListener('mouseenter', enableTriangleCursor);
+      socialPopup.addEventListener('mouseleave', disableTriangleCursor);
+    }
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenu) {
+      mobileMenu.addEventListener('mouseenter', enableTriangleCursor);
+      mobileMenu.addEventListener('mouseleave', disableTriangleCursor);
+    }
     // Make sure the custom cursor is always on top
     customCursor.style.position = 'fixed';
     customCursor.style.pointerEvents = 'none';
     customCursor.style.zIndex = '9999';
+    triangleCursor.style.position = 'fixed';
+    triangleCursor.style.pointerEvents = 'none';
+    triangleCursor.style.zIndex = '9999';
 
     // Rainbow click effect for sidebar buttons
     document.querySelectorAll('.sidebar-buttons-row .sidebar-button').forEach(btn => {
@@ -3927,7 +4441,7 @@
         technologies: ['HTML', 'CSS', 'JavaScript', '2D Game', 'Adventure'],
         links: [
           { text: 'View Source', url: 'https://github.com/username/narnia-2d', icon: '📂' },
-          { text: 'Play Online', url: '#', icon: '🎮' }
+          { text: 'Play Online', url: 'narnia-game.html', icon: '🎮' }
         ]
       }
     };
@@ -4320,6 +4834,53 @@
           }
         });
       }
+      // Email popup logic
+      const showEmailPopupBtn = document.getElementById('showEmailPopupBtn');
+      const emailPopup = document.getElementById('emailPopup');
+      const closeEmailPopupBtn = document.getElementById('closeEmailPopupBtn');
+      const copyEmailBtn = document.getElementById('copyEmailBtn');
+      const copyEmailSuccessMsg = document.getElementById('copyEmailSuccessMsg');
+      if (showEmailPopupBtn && emailPopup && closeEmailPopupBtn && copyEmailBtn && copyEmailSuccessMsg) {
+        showEmailPopupBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const btnRect = showEmailPopupBtn.getBoundingClientRect();
+          const popup = emailPopup;
+          const parent = showEmailPopupBtn.offsetParent;
+          const parentRect = parent.getBoundingClientRect();
+          const popupWidth = 260;
+          // Temporarily show popup off-screen to measure height
+          popup.style.visibility = 'hidden';
+          popup.style.display = 'block';
+          popup.style.left = '-9999px';
+          popup.style.top = '-9999px';
+          popup.style.minWidth = popupWidth + 'px';
+          const popupHeight = popup.offsetHeight;
+          // Now position above the icon
+          const left = btnRect.left - parentRect.left + (btnRect.width / 2) - (popupWidth / 2);
+          const top = btnRect.top - parentRect.top - popupHeight - 12; // 12px gap
+          popup.style.left = left + 'px';
+          popup.style.top = top + 'px';
+          popup.style.visibility = 'visible';
+        });
+        closeEmailPopupBtn.addEventListener('click', function() {
+          emailPopup.style.display = 'none';
+        });
+        copyEmailBtn.addEventListener('click', function() {
+          const emailAddress = document.getElementById('emailAddress').textContent;
+          navigator.clipboard.writeText(emailAddress).then(function() {
+            copyEmailSuccessMsg.style.display = 'block';
+            setTimeout(() => {
+              copyEmailSuccessMsg.style.display = 'none';
+            }, 1200);
+          });
+        });
+        // Hide popup when clicking outside
+        document.addEventListener('mousedown', function(e) {
+          if (emailPopup.style.display === 'block' && !emailPopup.contains(e.target) && e.target !== showEmailPopupBtn) {
+            emailPopup.style.display = 'none';
+          }
+        });
+      }
 
       // About popup logic for arrow button
       const aboutArrowBtn = document.getElementById('aboutArrowBtn');
@@ -4665,22 +5226,22 @@
     }
   </style>
 <!-- Tic Tac Toe Game Modal -->
-<div id="tictactoeModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:5000;background:rgba(24,24,32,0.96);backdrop-filter:blur(4px);align-items:center;justify-content:center;flex-direction:column;">
-  <div style="background:#222;border-radius:14px;box-shadow:0 4px 32px #a06bff33;padding:18px 18px 12px 18px;max-width:98vw;max-height:98vh;display:flex;flex-direction:column;align-items:center;">
+<div id="tictactoeModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:5000;background:#24292e;backdrop-filter:blur(4px);align-items:center;justify-content:center;flex-direction:column;">
+  <div style="background:#333;border-radius:14px;box-shadow:0 4px 32px #a06bff33;padding:18px 18px 12px 18px;max-width:98vw;max-height:98vh;display:flex;flex-direction:column;align-items:center;">
     <div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <span style="color:#a06bff;font-size:1.2em;font-weight:600;">Tic Tac Toe</span>
       <button onclick="closeTicTacToeModal()" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
     </div>
     <div style="margin-bottom:10px;display:flex;align-items:center;gap:10px;">
       <label for="tttDifficulty" style="color:#fff;font-size:1em;">Difficulty:</label>
-      <select id="tttDifficulty" style="font-size:1em;padding:4px 10px;border-radius:6px;border:1.5px solid #a06bff;background:#333;color:#fff;">
+      <select id="tttDifficulty" style="font-size:1em;padding:4px 10px;border-radius:6px;border:1.5px solid #a06bff;background:#24292e;color:#fff;">
         <option value="easy">Easy</option>
         <option value="hard">Hard</option>
       </select>
     </div>
     <div id="tictactoeBoard" style="display:grid;grid-template-columns:repeat(3,60px);grid-template-rows:repeat(3,60px);gap:8px;margin-bottom:12px;"></div>
     <div id="tictactoeStatus" style="color:#fff;margin-bottom:8px;font-size:1.1em;"></div>
-    <button id="tictactoeRestart" style="display:none;background:#a06bff;color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:1em;cursor:pointer;">Restart</button>
+    <button id="tictactoeRestart" style="display:none;background:#0077b5;color:#fff;border:none;border-radius:8px;padding:8px 22px;font-size:1em;cursor:pointer;">Restart</button>
   </div>
 </div>
 <script>
@@ -4826,22 +5387,22 @@ function tttWinner(b) {
 tttRestart.onclick = startTicTacToe;
 </script>
 <!-- Quiz Game Modal -->
-<div id="quizModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:5000;background:rgba(24,24,32,0.96);backdrop-filter:blur(4px);align-items:center;justify-content:center;flex-direction:column;">
-  <div style="background:linear-gradient(135deg,#fff 0%,#4caf50 100%);border-radius:18px;box-shadow:0 4px 32px #4caf5044;padding:28px 24px 18px 24px;max-width:98vw;max-height:98vh;display:flex;flex-direction:column;align-items:center;min-width:320px;">
+<div id="quizModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:5000;background:#24292e;backdrop-filter:blur(4px);align-items:center;justify-content:center;flex-direction:column;">
+  <div style="background:#fff;border-radius:18px;box-shadow:0 4px 32px #0077b544;padding:28px 24px 18px 24px;max-width:98vw;max-height:98vh;display:flex;flex-direction:column;align-items:center;min-width:320px;">
     <div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <span style="color:#4caf50;font-size:1.3em;font-weight:700;letter-spacing:0.5px;">Quiz Game</span>
+      <span style="color:#0077b5;font-size:1.3em;font-weight:700;letter-spacing:0.5px;">Quiz Game</span>
       <button onclick="closeQuizModal()" style="background:none;border:none;color:#333;font-size:1.5em;cursor:pointer;">&times;</button>
     </div>
     <div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;">
       <label for="quizDifficulty" style="color:#333;font-size:1em;font-weight:600;">Difficulty:</label>
-      <select id="quizDifficulty" style="font-size:1em;padding:6px 14px;border-radius:8px;border:1.5px solid #4caf50;background:#fff;color:#222;font-weight:600;">
+      <select id="quizDifficulty" style="font-size:1em;padding:6px 14px;border-radius:8px;border:1.5px solid #0077b5;background:#fff;color:#222;font-weight:600;">
         <option value="10">Till 10th</option>
         <option value="12">Till 12th</option>
         <option value="grad">Till Graduation</option>
       </select>
     </div>
     <div id="quizContent" style="width:100%;max-width:400px;"></div>
-    <button id="quizRestart" style="display:none;background:#4caf50;color:#fff;border:none;border-radius:8px;padding:10px 28px;font-size:1.1em;font-weight:600;cursor:pointer;margin-top:18px;">Restart</button>
+    <button id="quizRestart" style="display:none;background:#0077b5;color:#fff;border:none;border-radius:8px;padding:10px 28px;font-size:1.1em;font-weight:600;cursor:pointer;margin-top:18px;">Restart</button>
   </div>
 </div>
 <script>
@@ -4947,7 +5508,7 @@ function showQuizQuestion() {
   let html = `<div style='font-size:1.1em;font-weight:600;color:#222;margin-bottom:16px;'>Q${quizIndex+1}. ${q.q}</div>`;
   html += '<div style="display:flex;flex-direction:column;gap:12px;">';
   q._shuffledAnswers.forEach((ans, i) => {
-    html += `<button onclick='answerQuiz(${i})' style='background:#fff;color:#4caf50;border:2px solid #4caf50;border-radius:8px;padding:10px 0;font-size:1em;font-weight:600;transition:background 0.18s,color 0.18s;border-radius:8px;cursor:pointer;'>${ans}</button>`;
+    html += `<button onclick='answerQuiz(${i})' style='background:#fff;color:#0077b5;border:2px solid #0077b5;border-radius:8px;padding:10px 0;font-size:1em;font-weight:600;transition:background 0.18s,color 0.18s;border-radius:8px;cursor:pointer;'>${ans}</button>`;
   });
   html += '</div>';
   quizContent.innerHTML = html;
