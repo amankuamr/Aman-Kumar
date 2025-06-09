@@ -106,6 +106,17 @@
       font-family: 'Roboto', sans-serif;
     }
 
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      height: 100vh !important;
+      width: 100vw !important;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       background-color: #f0f4f8;
       color: #333;
@@ -113,6 +124,20 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
+    }
+    .desktop {
+      margin: 0 !important;
+      padding: 0 !important;
+      height: 100vh !important;
+      width: 100vw !important;
+      box-sizing: border-box;
+      min-height: 0;
+      min-width: 0;
+      max-width: 100vw;
+      max-height: 100vh;
+      border-radius: 0;
+      box-shadow: none;
       overflow: hidden;
     }
 
@@ -524,16 +549,18 @@
 
     /* App Icons Grid */
     .app-grid {
-      position: absolute;
+      position: fixed;
       top: 32px;
       left: 260px;
       right: 0;
-      bottom: 64px;
+      bottom: 56px;
       display: flex;
       flex-direction: column;
       align-items: stretch;
       padding: 24px;
       overflow-y: auto;
+      background: none;
+      z-index: 2;
     }
 
     .app-icon {
@@ -586,19 +613,20 @@
 
     /* Taskbar */
     .taskbar {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 56px;
-      padding: 0;
+      position: fixed !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 56px !important;
+      margin: 0 !important;
+      padding: 0 !important;
       background: rgba(255,255,255,0.25);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
       display: flex;
       align-items: center;
-      z-index: 10;
+      z-index: 10000 !important;
       border-top: 1px solid rgba(255,255,255,0.2);
     }
 
@@ -950,130 +978,116 @@
     }    /* Project grid layout */
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      padding: 0 16px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 36px 32px;
+      padding: 0 18px;
       width: 100%;
+      align-items: stretch;
+      margin-bottom: 32px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    
+    /* macOS style for project cards */
     .project-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      border-radius: 18px;
+      border: 1.5px solid #a06bff33;
+      box-shadow: 0 8px 32px 0 rgba(98,0,238,0.10), 0 1.5px 8px 0 rgba(160,107,255,0.08);
+      transition: box-shadow 0.18s, transform 0.14s, background 0.18s, border-color 0.18s;
       cursor: pointer;
       position: relative;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      z-index: 1;
+      overflow: hidden;
+      padding: 0;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
     }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(farthest-corner at 0% 0%, 
-        rgba(255, 255, 255, 0.15) 0%, 
-        rgba(255, 255, 255, 0.05) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
     .project-card:hover {
-      transform: translateY(-5px) scale(1.02);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 
-        0 10px 20px rgba(0, 0, 0, 0.1),
-        0 6px 6px rgba(0, 0, 0, 0.1),
-        0 0 100px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 16px 48px 0 #a06bff22, 0 4px 16px 0 #b388ff22;
+      background: rgba(255,255,255,0.32);
+      transform: translateY(-4px) scale(1.018);
+      border-color: #a06bff;
+      backdrop-filter: blur(28px) saturate(1.3);
+      -webkit-backdrop-filter: blur(28px) saturate(1.3);
     }
-
-    .project-card:hover::before {
-      opacity: 1;
-    }
-
     .project-card .card-image {
       width: 100%;
-      height: 160px;
-      background: rgba(0, 0, 0, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
+      height: 180px;
+      background: #f5f6fa;
+      display: block;
+      border-radius: 18px 18px 0 0;
+      border-bottom: 1px solid #ececec;
       overflow: hidden;
+      position: relative;
+      z-index: 1;
+      padding: 0;
+      aspect-ratio: 16/9;
+      box-sizing: border-box;
     }
-
-    .project-card .card-image::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
+    .project-card .card-image img {
       width: 100%;
       height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-      );
-      transition: 0.5s;
+      object-fit: cover;
+      display: block;
+      border-radius: 18px 18px 0 0;
+      background: #e0e0e0;
     }
-
-    .project-card:hover .card-image::after {
-      left: 100%;
-    }
-
-    .project-card .card-image img {
-      width: 64px;
-      height: 64px;
-      object-fit: contain;
-      transition: transform 0.3s ease;
-    }
-
-    .project-card:hover .card-image img {
-      transform: scale(1.1);
-    }
-
     .project-card .card-content {
-      padding: 20px;
+      padding: 20px 20px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 0;
+      z-index: 2;
+      position: relative;
     }
-
     .project-card .card-title {
-      font-size: 18px;
-      font-weight: 500;
-      color: #fff;
+      font-size: 1.28em;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ffd93d 0%, #a06bff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin: 0 0 10px 0;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      letter-spacing: 0.01em;
+      transition: background 0.18s, text-shadow 0.18s, transform 0.16s;
+      text-shadow: 0 2px 12px #a06bff44, 0 1px 2px #ffd93d44;
     }
-
-    .project-card .card-description {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
-      line-height: 1.5;
-      margin: 0 0 15px 0;
+        .project-card .card-description {
+      font-size: 1em;
+      color: #fff;
+      line-height: 1.6;
+      margin: 0 0 14px 0;
+      min-height: 36px;
+      transition: color 0.18s;
     }
-
     .project-card .card-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      margin-bottom: 0;
     }
-
     .project-card .tag {
-      padding: 4px 12px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.9);
-      transition: all 0.2s ease;
+      padding: 4px 14px;
+      background: rgba(160,107,255,0.22);
+      border: 1px solid #a06bff44;
+      border-radius: 999px;
+      font-size: 0.97em;
+      color: #fff;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-bottom: 2px;
+      display: inline-block;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
     }
-
-    .project-card:hover .tag {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.3);
+    .project-card .tag:hover {
+      background: #a06bff;
+      color: #fff;
+      border-color: #fff;
     }
 
     @media (max-width: 900px) {
@@ -1454,8 +1468,8 @@
       flex-direction: column;
       gap: 16px;
       border-left: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: -2px 0 12px rgba(0,0,0,0.1);
-      transform: translateX(100%);
+      box-shadow: -2px 0 24px 4px #a06bff22, -2px 0 12px rgba(0,0,0,0.12);
+      transform: translateX(80px) scale(0.98);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1000;
       opacity: 0;
@@ -1479,9 +1493,10 @@
     }
 
     .project-details.active {
-      transform: translateX(0);
+      transform: translateX(0) scale(1);
       opacity: 1;
       visibility: visible;
+      box-shadow: -4px 0 48px 8px #a06bff44, -2px 0 24px 4px #a06bff22;
     }
 
     .project-details.panel-exit {
@@ -1626,10 +1641,10 @@
     }    /* Adjust content when panel is open */
     .app-grid.panel-open {
       padding-right: 400px;
-      transition: padding-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: padding-right 0.5s cubic-bezier(.4,1,.4,1);
     }
     .app-grid {
-      transition: padding-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: padding-right 0.5s cubic-bezier(.4,1,.4,1);
     }
     @media (min-width: 1200px) {
       .app-grid.panel-open {
@@ -1647,7 +1662,7 @@
     .project-grid {
       box-sizing: border-box;
       width: 100%;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: padding-right 0.5s cubic-bezier(.4,1,.4,1), transform 0.5s cubic-bezier(.4,1,.4,1);
     }
     .app-grid.panel-open .project-grid {
       padding-right: 0;
@@ -2646,9 +2661,9 @@
     cursor: none !important;
   }
   .custom-cursor {
-    position: fixed;
+    position: fixed !important;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 2147483647 !important;
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -2819,8 +2834,8 @@
         <h2>Graphic Design</h2>
         <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('illustrator')">
-            <div class="card-image">
-              <img src="images/app icons/illustrator.png" alt="Poster Design">
+            <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+              <img src="images/poster.jpg" alt="Poster Design" style="width:100%;height:100%;object-fit:cover;display:block;">
             </div>
             <div class="card-content">
               <h3 class="card-title">Poster Design</h3>
@@ -2835,8 +2850,8 @@
             </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('logo-design')">
-            <div class="card-image">
-              <img src="images/app icons/logo-design.png" alt="Logo Design">
+            <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+              <img src="images/Abstract-Mark-Logo-Design-Type-Graphic-Design-Blog-Inspiration.webp" alt="Logo Design" style="width:100%;height:100%;object-fit:cover;display:block;">
             </div>
             <div class="card-content">
               <h3 class="card-title">Logo Design</h3>
@@ -2856,8 +2871,8 @@
         <h2>UI/UX Design</h2>
         <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('portfolio')">
-          <div class="card-image" style="display:flex;align-items:center;justify-content:center;height:160px;font-size:3.5em;color:#a06bff;">
-          <i class="fab fa-figma"></i>
+          <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+            <img src="images/portfolio.png" alt="Portfolio" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
           <div class="card-content">
           <h3 class="card-title">Portfolio</h3>
@@ -2869,8 +2884,8 @@
           </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('car-rental')">
-          <div class="card-image" style="display:flex;align-items:center;justify-content:center;height:160px;font-size:3.5em;color:#1976d2;">
-          <i class="fas fa-car"></i>
+          <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+            <img src="images/carrental.avif" alt="Car Rental Service" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
           <div class="card-content">
           <h3 class="card-title">Car Rental Service</h3>
@@ -2882,8 +2897,8 @@
           </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('portfolio-html-css')">
-          <div class="card-image" style="display:flex;align-items:center;justify-content:center;height:160px;font-size:3.5em;color:#e44d26;">
-          <i class="fab fa-html5"></i>
+          <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+            <img src="images/portfoliohtml.png" alt="Portfolio (HTML, CSS)" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
           <div class="card-content">
           <h3 class="card-title">Portfolio (HTML, CSS)</h3>
@@ -2904,8 +2919,8 @@
           <h2>Web Development</h2>
           <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('portfolio-html-css')">
-          <div class="card-image">
-          <img src="images/app icons/html-css.png" alt="Portfolio HTML CSS">
+          <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+            <img src="images/portfoliohtml.png" alt="Portfolio (HTML, CSS)" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
           <div class="card-content">
           <h3 class="card-title">Portfolio (HTML, CSS)</h3>
@@ -2919,62 +2934,41 @@
           </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('ecommerce')">
-          <div class="card-image">
-          <img src="images/app icons/ecommerce.png" alt="E-Commerce">
+          <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+          <img src="images/zoo management.jpg" alt="Zoo Management System" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
           <div class="card-content">
-          <h3 class="card-title">E-Commerce Platform</h3>
-          <p class="card-description">Full-featured e-commerce solution with shopping cart and payment integration.</p>
+          <h3 class="card-title">Zoo Management System</h3>
+          <p class="card-description">A comprehensive system for managing zoo operations, animal records, staff, and visitor information.</p>
           <div class="card-tags">
-          <span class="tag">Next.js</span>
-          <span class="tag">Node.js</span>
-          <span class="tag">MongoDB</span>
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">PHP</span>
+          <span class="tag">Bootstrap</span>
           </div>
           </div>
           </div>
           <div class="project-card" onclick="showProjectDetails('blog')">
-          <div class="card-image">
-          <img src="images/app icons/blog.png" alt="Blog">
+          <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+          <img src="images/rental.jpg" alt="Car Rental Service" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
           <div class="card-content">
-          <h3 class="card-title">Blog Platform</h3>
-          <p class="card-description">Modern blog platform with markdown support and search functionality.</p>
+          <h3 class="card-title">Car Rental Service</h3>
+          <p class="card-description">A modern web application for booking and managing car rentals online, with real-time availability and secure payments.</p>
           <div class="card-tags">
-          <span class="tag">Next.js</span>
-          <span class="tag">MDX</span>
-          <span class="tag">Tailwind</span>
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">PHP</span>
+          <span class="tag">Bootstrap</span>
+          <span class="tag">Figma</span>
           </div>
           </div>
           </div>
-          <div class="project-card" onclick="showProjectDetails('weather')">
-          <div class="card-image">
-          <img src="images/app icons/weather.png" alt="Weather">
-          </div>
-          <div class="card-content">
-          <h3 class="card-title">Weather App</h3>
-          <p class="card-description">Real-time weather application with forecast and radar maps.</p>
-          <div class="card-tags">
-          <span class="tag">React</span>
-          <span class="tag">Weather API</span>
-          <span class="tag">Maps</span>
-          </div>
-          </div>
-          </div>
-          <div class="project-card" onclick="showProjectDetails('chat')">
-          <div class="card-image">
-          <img src="images/app icons/chat.png" alt="Chat">
-          </div>
-          <div class="card-content">
-          <h3 class="card-title">Chat App</h3>
-          <p class="card-description">Real-time chat application with group chats and file sharing.</p>
-          <div class="card-tags">
-          <span class="tag">Socket.io</span>
-          <span class="tag">Node.js</span>
-          <span class="tag">MongoDB</span>
-          </div>
-          </div>
-          </div>
-          </div>
+                    </div>
           </div>
           
           <!-- Game Development Section -->
@@ -2982,12 +2976,12 @@
           <h2>Game Development</h2>
           <div class="project-grid">
           <div class="project-card" onclick="showProjectDetails('task-manager')">
-          <div class="card-image">
-          <img src="images/app icons/game-manager.png" alt="Task Manager">
+          <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+          <img src="images/horror.jpg" alt="Horror 3D Game (Lost and Scared)" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
           <div class="card-content">
-          <h3 class="card-title">Game Project Manager</h3>
-          <p class="card-description">Project management tool for game development teams.</p>
+          <h3 class="card-title">Horror 3D Game (Lost and Scared)</h3>
+          <p class="card-description">A terrifying 3D horror game where players must escape a haunted environment, solve puzzles, and survive against unknown dangers.</p>
           <div class="card-tags">
           <span class="tag">Unity</span>
           <span class="tag">C#</span>
@@ -2995,21 +2989,25 @@
           </div>
           </div>
           </div>
-          <div class="project-card" onclick="showProjectDetails('notes')">
-          <div class="card-image">
-          <img src="images/app icons/notes.png" alt="Notes">
+
+          <!-- Narnia 2D Adventure Game Card -->
+          <div class="project-card" onclick="showProjectDetails('narnia-2d')">
+            <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden; background: #222; display: flex; align-items: center; justify-content: center;">
+              <img src="images/narnia.avif" alt="Narnia 2D Adventure Game" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';this.parentNode.style.background='#a06bff';this.parentNode.innerHTML='<span style=\'color:#fff;font-size:2em;\'>Narnia</span>';">
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Narnia (2D Adventure Game)</h3>
+              <p class="card-description">A 2D adventure game built with HTML, CSS, and JavaScript. Explore the magical world of Narnia, solve puzzles, and embark on an epic quest.</p>
+              <div class="card-tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">2D Game</span>
+                <span class="tag">Adventure</span>
+              </div>
+            </div>
           </div>
-          <div class="card-content">
-          <h3 class="card-title">Game Design Notes</h3>
-          <p class="card-description">Note-taking app for game designers with sketch support.</p>
-          <div class="card-tags">
-          <span class="tag">Unity</span>
-          <span class="tag">C#</span>
-          <span class="tag">Game Design</span>
-          </div>
-          </div>
-          </div>
-          </div>
+                    </div>
           </div>
           </div>
 
@@ -3896,57 +3894,40 @@
         ]
       },
       'ecommerce': {
-        name: 'E-Commerce Platform',
-        description: 'Full-featured e-commerce platform with shopping cart, payment integration, and admin dashboard.',
-        technologies: ['Next.js', 'Node.js', 'MongoDB', 'Stripe'],
+        name: 'Zoo Management System',
+        description: 'A comprehensive system for managing zoo operations, animal records, staff, and visitor information.',
+        technologies: ['HTML', 'CSS', 'JavaScript', 'MySQL', 'PHP', 'Bootstrap'],
         links: [
-          { text: 'View Source', url: 'https://github.com/username/ecommerce', icon: '📂' },
+          { text: 'View Source', url: 'https://github.com/username/zoo-management', icon: '📂' },
           { text: 'Live Demo', url: '#', icon: '🌐' }
         ]
       },
       'blog': {
-        name: 'Blog Platform',
-        description: 'Modern blog platform with markdown support, categories, and search functionality.',
-        technologies: ['Next.js', 'MDX', 'Tailwind CSS'],
+        name: 'Car Rental Service',
+        description: 'A modern web application for booking and managing car rentals online, with real-time availability and secure payments.',
+        technologies: ['HTML', 'CSS', 'JavaScript', 'MySQL', 'PHP', 'Bootstrap', 'Figma'],
         links: [
-          { text: 'View Source', url: 'https://github.com/username/blog', icon: '📂' },
+          { text: 'View Source', url: 'https://github.com/username/car-rental', icon: '📂' },
           { text: 'Live Demo', url: '#', icon: '🌐' }
         ]
       },
-      'weather': {
-        name: 'Weather Application',
-        description: 'Real-time weather application with forecast, radar maps, and location-based services.',
-        technologies: ['React', 'Weather API', 'Geolocation', 'Maps'],
-        links: [
-          { text: 'View Source', url: 'https://github.com/username/weather', icon: '📂' },
-          { text: 'Live Demo', url: '#', icon: '🌐' }
-        ]
-      },
-      'chat': {
-        name: 'Real-time Chat App',
-        description: 'Real-time chat application with private messaging, group chats, and file sharing.',
-        technologies: ['Socket.io', 'Node.js', 'React', 'MongoDB'],
-        links: [
-          { text: 'View Source', url: 'https://github.com/username/chat', icon: '📂' },
-          { text: 'Live Demo', url: '#', icon: '🌐' }
-        ]
-      },
-      'task-manager': {
-        name: 'Game Project Manager',
-        description: 'Project management tool specifically designed for game development teams.',
+                  'task-manager': {
+        name: 'Horror 3D Game (Lost and Scared)',
+        description: 'A terrifying 3D horror game where players must escape a haunted environment, solve puzzles, and survive against unknown dangers.',
         technologies: ['Unity', 'C#', 'Task Management', 'Team Collaboration'],
         links: [
           { text: 'View Source', url: 'https://github.com/username/task-manager', icon: '📂' },
           { text: 'Download', url: '#', icon: '🎮' }
         ]
       },
-      'notes': {
-        name: 'Game Design Notes',
-        description: 'Note-taking application tailored for game designers with support for sketches and flowcharts.',
-        technologies: ['Unity', 'C#', 'UI/UX', 'Game Design'],
+      'narnia-2d': {
+        name: 'Narnia (2D Adventure Game)',
+        description: 'A 2D adventure game built with HTML, CSS, and JavaScript. Explore the magical world of Narnia, solve puzzles, and embark on an epic quest.',
+        image: 'images/projects/narnia-2d.jpg',
+        technologies: ['HTML', 'CSS', 'JavaScript', '2D Game', 'Adventure'],
         links: [
-          { text: 'View Source', url: 'https://github.com/username/notes', icon: '📂' },
-          { text: 'Download', url: '#', icon: '🎮' }
+          { text: 'View Source', url: 'https://github.com/username/narnia-2d', icon: '📂' },
+          { text: 'Play Online', url: '#', icon: '🎮' }
         ]
       }
     };
