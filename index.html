@@ -1221,17 +1221,89 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 80vw;
+      width: 94vw;
       max-width: 340px;
       height: 100vh;
       background: rgba(40,40,60,0.98);
       box-shadow: 2px 0 18px #a06bff33;
       z-index: 4000;
       flex-direction: column;
-      padding: 32px 18px 18px 18px;
+      padding: 4px 3vw 18px 3vw;
       gap: 18px;
       transition: transform 0.25s cubic-bezier(.4,1,.4,1);
       transform: translateX(-100%);
+    }
+    .mobile-menu .sidebar-buttons-row {
+      flex-direction: row !important;
+      gap: 10px !important;
+      width: 100%;
+      margin-top: 0;
+      margin-bottom: 0;
+      justify-content: center;
+    }
+    .mobile-menu .sidebar-button {
+      width: 50%;
+      min-width: 0;
+      margin: 0;
+      white-space: nowrap;
+      justify-content: center;
+      position: relative;
+      border-radius: 24px !important;
+      font-size: 1em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px 0 rgba(33, 150, 243, 0.10), 0 1.5px 4px 0 rgba(0,0,0,0.08);
+      border: none;
+      transition: box-shadow 0.18s, background 0.18s, color 0.18s, transform 0.18s;
+      z-index: 1;
+    }
+    .mobile-menu .sidebar-button img {
+      width: 20px;
+      height: 20px;
+      margin-right: 6px;
+    }
+    .mobile-menu .sidebar-button.resume-btn {
+      background: linear-gradient(90deg, #7c4dff 0%, #651fff 100%);
+      color: #fff;
+      border: none;
+    }
+    .mobile-menu .sidebar-button.resume-btn:hover {
+      background: linear-gradient(90deg, #651fff 0%, #7c4dff 100%);
+      box-shadow: 0 4px 16px 0 rgba(103, 58, 183, 0.18);
+    }
+    .mobile-menu .sidebar-button:not(.resume-btn) {
+      background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+      color: #fff;
+    }
+    .mobile-menu .sidebar-button:not(.resume-btn):hover {
+      background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
+      box-shadow: 0 4px 16px 0 rgba(33, 150, 243, 0.18);
+    }
+    .mobile-menu .sidebar-button:active {
+      box-shadow: 0 1px 2px 0 rgba(33, 150, 243, 0.10);
+      transform: scale(0.98);
+    }
+    .mobile-menu .sidebar-button:focus {
+      outline: 2px solid #1976d2;
+      outline-offset: 2px;
+    }
+    .mobile-menu .sidebar-button {
+      padding: 10px 0;
+    }
+    .mobile-menu .profile-photo {
+      margin-top: 0;
+    }
+    .mobile-menu .close-btn {
+      margin-bottom: 8px;
+    }
+    @media (max-width: 400px) {
+      .mobile-menu {
+        width: 100vw;
+        max-width: 100vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+      }
     }
     .mobile-menu.open {
       transform: translateX(0);
@@ -2110,6 +2182,18 @@
       gap: 8px;
     }
   </style>
+<style>
+  .topbar-spacer {
+    height: 48px;
+    width: 100vw;
+    display: block;
+  }
+  @media (min-width: 900px) {
+    .topbar-spacer {
+      display: none;
+    }
+  }
+</style>
   <style>
     .triangle-cursor {
       position: fixed !important;
@@ -2706,7 +2790,85 @@
       to { opacity: 1; }
     }
   </style>
+<style>
+    </style>
 </head>
+<style>
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 48px;
+    background: rgba(40,40,60,0.98);
+    z-index: 6001;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: flex-start;
+    overflow: visible;
+  }
+  .topbar .mobile-hamburger {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2em;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    margin: 2px 0 2px 4px;
+    cursor: pointer;
+    box-shadow: none;
+    position: relative;
+    z-index: 6001;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+  }
+  .topbar .mobile-hamburger:active {
+    background: rgba(255,255,255,0.08);
+  }
+  .mobile-menu {
+    z-index: 6000 !important;
+  }
+  body {
+    padding-top: 0 !important;
+  }
+  @media (max-width: 899px) {
+    .desktop,
+    .app-grid {
+      margin-top: 48px !important;
+    }
+  }
+  @media (min-width: 900px) {
+    .topbar {
+      display: none !important;
+    }
+    .desktop {
+      margin-top: 0 !important;
+    }
+  }
+</style>
+<style>
+  .loader-spinner {
+    width: 54px;
+    height: 54px;
+    border: 6px solid #a06bff33;
+    border-top: 6px solid #a06bff;
+    border-radius: 50%;
+    animation: loaderSpin 1s linear infinite;
+    box-shadow: 0 2px 12px #a06bff22;
+  }
+  @keyframes loaderSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
 <style>
 /* Sidebar tile and button hover effects */
 .sidebar-tile, .sidebar-action-btn {
@@ -2865,7 +3027,19 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
   display: none;
 }
 </style>
+<style>
+  @media (max-width: 600px), (pointer: coarse) {
+    #customCursor,
+    #triangleCursor {
+      display: none !important;
+    }
+  }
+</style>
 <body class="cursor-custom">
+<!-- Page Loader Spinner -->
+<div id="pageLoader" style="position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.85);transition:opacity 0.5s;">
+  <div class="loader-spinner"></div>
+</div>
 <!-- Lockscreen overlay -->
 <div id="lockscreenOverlay">
   <div class="lockscreen-content">
@@ -2875,12 +3049,17 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
     <div class="lockscreen-slide" id="lockscreenSlide">Slide up to unlock</div>
   </div>
 </div>
-<!-- Hamburger for mobile -->
-<button class="mobile-hamburger" id="mobileHamburger" aria-label="Open menu" style="display:none;"><i class="fas fa-bars"></i></button>
+<!-- Top Bar -->
+<div class="topbar">
+  <button class="mobile-hamburger" id="mobileHamburger" aria-label="Open menu" style="z-index:6001;">
+    <i class="fas fa-bars"></i>
+  </button>
+</div>
+<div class="topbar-spacer"></div>
 <!-- Mobile menu -->
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" style="z-index:6000;">
   <button class="close-btn" id="mobileMenuClose" aria-label="Close menu">&times;</button>
-  <img class="profile-photo" src="images/person.png" alt="Profile Photo">
+    <img class="profile-photo" src="images/person.png" alt="Profile Photo">
   <h1>Aman Kumar</h1>
   <div class="description">
     Passionate graphic and UI/UX designer with a strong focus on creating visually appealing and user-friendly experiences. Also skilled in web development and game development.
@@ -2964,7 +3143,9 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
         const menu = document.getElementById('mobileMenu');
         const closeBtn = document.getElementById('mobileMenuClose');
         hamburger.addEventListener('click', function() {
-          menu.classList.add('open');
+          if (!menu.classList.contains('open')) {
+            menu.classList.add('open');
+          }
         });
         closeBtn.addEventListener('click', function() {
           menu.classList.remove('open');
@@ -3174,12 +3355,20 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <img class="profile-photo" src="images/person.png" alt="Profile Photo">
-      <h1>Aman Kumar</h1>
+      <div style="display:flex;align-items:center;gap:16px;width:100%;padding:8px 0 0 0;">
+        <div style="flex-shrink:0;display:flex;align-items:center;">
+          <img class="profile-photo" src="images/person.png" alt="Profile Photo">
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;">
+          <h1 style="text-align:left;margin:0 0 2px 0;font-size:22px;">Aman Kumar</h1>
+          <div style="font-size:12px;color:#e0d7ff;text-align:left;padding:0;margin:0;line-height:1.5;">India, Jharkhand<br>Currently in 3rd year BCA</div>
+        </div>
+      </div>
       <div class="description">
         Passionate designer specialized in Graphic Design, UI/UX, and Web Development, with added skills in game development.
       </div>
-      <div class="skills-tile-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:4px 4px;padding:2px 0 2px 0;">
+      <hr style="border:0;border-top:1px solid #a06bff;margin:10px 0 12px 0;width:100%;">
+      <div class="skills-tile-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px 12px;padding:2px 0 2px 0;">
         <a href="#uiux-section" class="sidebar-tile" style="background:#1976d2;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #1976d244;text-decoration:none;">
           <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-pencil-ruler'></i></div>
           <div style="font-size:0.95em;font-weight:700;">UI/UX Design</div>
@@ -3574,7 +3763,7 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
       <div style="margin:18px 0 0 0;width:100%;">
         <div style="color:#a06bff;font-weight:600;font-size:1.1em;margin-bottom:8px;margin-top:2px;">Apps</div>
         <div style="display:flex;gap:12px;">
-          <a href="#" onclick="openTicTacToeModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(45deg,#FFD700,#FFA500);border-radius:10px;color:#24292e;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #FFD70044;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
+          <a href="#" id="tictactoeOpenBtn" onclick="openTicTacToeModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(45deg,#FFD700,#FFA500);border-radius:10px;color:#24292e;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #FFD70044;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
             <i class="fas fa-times-circle" style="font-size:2em;margin-bottom:6px;"></i>
             <span style="font-size:1em;">Tic Tac Toe</span>
           </a>
@@ -5230,7 +5419,7 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
   <div style="background:#333;border-radius:14px;box-shadow:0 4px 32px #a06bff33;padding:18px 18px 12px 18px;max-width:98vw;max-height:98vh;display:flex;flex-direction:column;align-items:center;">
     <div style="width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <span style="color:#a06bff;font-size:1.2em;font-weight:600;">Tic Tac Toe</span>
-      <button onclick="closeTicTacToeModal()" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
+      <button id="tictactoeCloseBtn" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
     </div>
     <div style="margin-bottom:10px;display:flex;align-items:center;gap:10px;">
       <label for="tttDifficulty" style="color:#fff;font-size:1em;">Difficulty:</label>
@@ -5246,145 +5435,151 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
 </div>
 <script>
 // Tic Tac Toe Game Logic
-const tttModal = document.getElementById('tictactoeModal');
-const tttBoard = document.getElementById('tictactoeBoard');
-const tttStatus = document.getElementById('tictactoeStatus');
-const tttRestart = document.getElementById('tictactoeRestart');
-const tttOpenBtn = document.getElementById('tictactoeOpenBtn');
-let tttGame, tttPlayer, tttDifficulty = 'easy';
-const tttDifficultySelect = document.getElementById('tttDifficulty');
-tttDifficultySelect.addEventListener('change', function() {
-  tttDifficulty = this.value;
-  startTicTacToe();
-});
-function openTicTacToeModal() {
-  tttModal.style.display = 'flex';
-  tttDifficulty = tttDifficultySelect.value;
-  startTicTacToe();
-}
-function closeTicTacToeModal() {
-  tttModal.style.display = 'none';
-}
-tttOpenBtn.onclick = openTicTacToeModal;
-function startTicTacToe() {
-  tttGame = Array(9).fill(null);
-  tttPlayer = 'X'; // User is X, machine is O
-  tttStatus.textContent = "Your turn (X)";
-  tttRestart.style.display = 'none';
-  renderTicTacToe();
-}
-function renderTicTacToe() {
-  tttBoard.innerHTML = '';
-  tttGame.forEach((cell, i) => {
-    const btn = document.createElement('button');
-    btn.style.width = btn.style.height = '60px';
-    btn.style.fontSize = '2em';
-    btn.style.background = '#333';
-    btn.style.color = cell === 'X' ? '#ffd93d' : '#a06bff';
-    btn.style.border = '2px solid #a06bff';
-    btn.style.borderRadius = '8px';
-    btn.style.cursor = cell || tttWinner(tttGame) ? 'default' : 'pointer';
-    btn.textContent = cell || '';
-    btn.disabled = !!cell || !!tttWinner(tttGame);
-    btn.onclick = () => handleTicTacToeMove(i);
-    tttBoard.appendChild(btn);
+
+document.addEventListener('DOMContentLoaded', function() {
+  const tttModal = document.getElementById('tictactoeModal');
+  const tttBoard = document.getElementById('tictactoeBoard');
+  const tttStatus = document.getElementById('tictactoeStatus');
+  const tttRestart = document.getElementById('tictactoeRestart');
+  const tttOpenBtn = document.getElementById('tictactoeOpenBtn');
+  let tttGame, tttPlayer, tttDifficulty = 'easy';
+  const tttDifficultySelect = document.getElementById('tttDifficulty');
+  tttDifficultySelect.addEventListener('change', function() {
+    tttDifficulty = this.value;
+    startTicTacToe();
   });
-}
-function handleTicTacToeMove(i) {
-  if (tttGame[i] || tttWinner(tttGame)) return;
-  tttGame[i] = tttPlayer;
-  renderTicTacToe();
-  if (tttWinner(tttGame)) {
-    tttStatus.textContent = tttWinner(tttGame) === 'draw' ? "It's a draw!" : (tttWinner(tttGame) === 'X' ? 'You win!' : 'Machine wins!');
-    tttRestart.style.display = 'inline-block';
-    return;
+  tttOpenBtn.onclick = openTicTacToeModal;
+  const tttCloseBtn = document.getElementById('tictactoeCloseBtn');
+  if (tttCloseBtn) tttCloseBtn.onclick = closeTicTacToeModal;
+
+  function openTicTacToeModal() {
+    tttModal.style.display = 'flex';
+    tttDifficulty = tttDifficultySelect.value;
+    startTicTacToe();
   }
-  tttPlayer = 'O';
-  tttStatus.textContent = "Machine's turn (O)";
-  setTimeout(machineMove, 500);
-}
-function machineMove() {
-  let move;
-  if (tttDifficulty === 'easy') {
-    // Easy: random move
-    const empty = tttGame.map((v, i) => v ? null : i).filter(v => v !== null);
-    if (empty.length === 0) return;
-    move = empty[Math.floor(Math.random() * empty.length)];
-  } else {
-    // Hard: minimax
-    move = bestMove(tttGame, 'O');
+  function closeTicTacToeModal() {
+    tttModal.style.display = 'none';
   }
-  tttGame[move] = 'O';
-  renderTicTacToe();
-  if (tttWinner(tttGame)) {
-    tttStatus.textContent = tttWinner(tttGame) === 'draw' ? "It's a draw!" : (tttWinner(tttGame) === 'X' ? 'You win!' : 'Machine wins!');
-    tttRestart.style.display = 'inline-block';
-    return;
+  function startTicTacToe() {
+    tttGame = Array(9).fill(null);
+    tttPlayer = 'X'; // User is X, machine is O
+    tttStatus.textContent = "Your turn (X)";
+    tttRestart.style.display = 'none';
+    renderTicTacToe();
   }
-  tttPlayer = 'X';
-  tttStatus.textContent = "Your turn (X)";
-}
-// Minimax for unbeatable AI
-function bestMove(board, player) {
-  const opponent = player === 'X' ? 'O' : 'X';
-  if (tttWinner(board) === 'O') return null;
-  if (tttWinner(board) === 'X') return null;
-  if (tttWinner(board) === 'draw') return null;
-  let bestScore = -Infinity;
-  let move = null;
-  for (let i = 0; i < 9; i++) {
-    if (!board[i]) {
-      board[i] = player;
-      let score = minimax(board, 0, false);
-      board[i] = null;
-      if (score > bestScore) {
-        bestScore = score;
-        move = i;
-      }
+  function renderTicTacToe() {
+    tttBoard.innerHTML = '';
+    tttGame.forEach((cell, i) => {
+      const btn = document.createElement('button');
+      btn.style.width = btn.style.height = '60px';
+      btn.style.fontSize = '2em';
+      btn.style.background = '#333';
+      btn.style.color = cell === 'X' ? '#ffd93d' : '#a06bff';
+      btn.style.border = '2px solid #a06bff';
+      btn.style.borderRadius = '8px';
+      btn.style.cursor = cell || tttWinner(tttGame) ? 'default' : 'pointer';
+      btn.textContent = cell || '';
+      btn.disabled = !!cell || !!tttWinner(tttGame);
+      btn.onclick = () => handleTicTacToeMove(i);
+      tttBoard.appendChild(btn);
+    });
+  }
+  function handleTicTacToeMove(i) {
+    if (tttGame[i] || tttWinner(tttGame)) return;
+    tttGame[i] = tttPlayer;
+    renderTicTacToe();
+    if (tttWinner(tttGame)) {
+      tttStatus.textContent = tttWinner(tttGame) === 'draw' ? "It's a draw!" : (tttWinner(tttGame) === 'X' ? 'You win!' : 'Machine wins!');
+      tttRestart.style.display = 'inline-block';
+      return;
     }
+    tttPlayer = 'O';
+    tttStatus.textContent = "Machine's turn (O)";
+    setTimeout(machineMove, 500);
   }
-  return move;
-}
-function minimax(board, depth, isMaximizing) {
-  const winner = tttWinner(board);
-  if (winner === 'O') return 10 - depth;
-  if (winner === 'X') return depth - 10;
-  if (winner === 'draw') return 0;
-  if (isMaximizing) {
-    let best = -Infinity;
+  function machineMove() {
+    let move;
+    if (tttDifficulty === 'easy') {
+      // Easy: random move
+      const empty = tttGame.map((v, i) => v ? null : i).filter(v => v !== null);
+      if (empty.length === 0) return;
+      move = empty[Math.floor(Math.random() * empty.length)];
+    } else {
+      // Hard: minimax
+      move = bestMove(tttGame, 'O');
+    }
+    tttGame[move] = 'O';
+    renderTicTacToe();
+    if (tttWinner(tttGame)) {
+      tttStatus.textContent = tttWinner(tttGame) === 'draw' ? "It's a draw!" : (tttWinner(tttGame) === 'X' ? 'You win!' : 'Machine wins!');
+      tttRestart.style.display = 'inline-block';
+      return;
+    }
+    tttPlayer = 'X';
+    tttStatus.textContent = "Your turn (X)";
+  }
+  // Minimax for unbeatable AI
+  function bestMove(board, player) {
+    const opponent = player === 'X' ? 'O' : 'X';
+    if (tttWinner(board) === 'O') return null;
+    if (tttWinner(board) === 'X') return null;
+    if (tttWinner(board) === 'draw') return null;
+    let bestScore = -Infinity;
+    let move = null;
     for (let i = 0; i < 9; i++) {
       if (!board[i]) {
-        board[i] = 'O';
-        best = Math.max(best, minimax(board, depth + 1, false));
+        board[i] = player;
+        let score = minimax(board, 0, false);
         board[i] = null;
+        if (score > bestScore) {
+          bestScore = score;
+          move = i;
+        }
       }
     }
-    return best;
-  } else {
-    let best = Infinity;
-    for (let i = 0; i < 9; i++) {
-      if (!board[i]) {
-        board[i] = 'X';
-        best = Math.min(best, minimax(board, depth + 1, true));
-        board[i] = null;
+    return move;
+  }
+  function minimax(board, depth, isMaximizing) {
+    const winner = tttWinner(board);
+    if (winner === 'O') return 10 - depth;
+    if (winner === 'X') return depth - 10;
+    if (winner === 'draw') return 0;
+    if (isMaximizing) {
+      let best = -Infinity;
+      for (let i = 0; i < 9; i++) {
+        if (!board[i]) {
+          board[i] = 'O';
+          best = Math.max(best, minimax(board, depth + 1, false));
+          board[i] = null;
+        }
       }
+      return best;
+    } else {
+      let best = Infinity;
+      for (let i = 0; i < 9; i++) {
+        if (!board[i]) {
+          board[i] = 'X';
+          best = Math.min(best, minimax(board, depth + 1, true));
+          board[i] = null;
+        }
+      }
+      return best;
     }
-    return best;
   }
-}
-function tttWinner(b) {
-  const lines = [
-    [0,1,2],[3,4,5],[6,7,8],
-    [0,3,6],[1,4,7],[2,5,8],
-    [0,4,8],[2,4,6]
-  ];
-  for (const [a,b1,c] of lines) {
-    if (b[a] && b[a] === b[b1] && b[a] === b[c]) return b[a];
+  function tttWinner(b) {
+    const lines = [
+      [0,1,2],[3,4,5],[6,7,8],
+      [0,3,6],[1,4,7],[2,5,8],
+      [0,4,8],[2,4,6]
+    ];
+    for (const [a,b1,c] of lines) {
+      if (b[a] && b[a] === b[b1] && b[a] === b[c]) return b[a];
+    }
+    if (b.every(cell => cell)) return 'draw';
+    return null;
   }
-  if (b.every(cell => cell)) return 'draw';
-  return null;
-}
-tttRestart.onclick = startTicTacToe;
+  tttRestart.onclick = startTicTacToe;
+});
 </script>
 <!-- Quiz Game Modal -->
 <div id="quizModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:5000;background:#24292e;backdrop-filter:blur(4px);align-items:center;justify-content:center;flex-direction:column;">
@@ -5520,6 +5715,16 @@ function answerQuiz(i) {
   showQuizQuestion();
 }
 quizRestart.onclick = startQuiz;
+</script>
+<script>
+// Hide loader when page is fully loaded
+window.addEventListener('load', function() {
+  var loader = document.getElementById('pageLoader');
+  if(loader) {
+    loader.style.opacity = '0';
+    setTimeout(function() { loader.style.display = 'none'; }, 500);
+  }
+});
 </script>
 </body>
 </html>
