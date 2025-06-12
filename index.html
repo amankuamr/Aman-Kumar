@@ -1544,9 +1544,9 @@
       width: 400px;
       height: calc(100vh - 88px);
       padding: 24px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(24,26,27,0.92);
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
       color: #fff;
       display: none;
       flex-direction: column;
@@ -1723,23 +1723,11 @@
       opacity: 0;
       transition-delay: 0s;
     }    /* Adjust content when panel is open */
-    .app-grid.panel-open {
-      padding-right: 400px;
-      transition: padding-right 0.5s cubic-bezier(.4,1,.4,1);
-    }
     .app-grid {
       transition: padding-right 0.5s cubic-bezier(.4,1,.4,1);
     }
     @media (min-width: 1200px) {
-      .app-grid.panel-open {
-        padding-right: 400px;
-      }
       .app-grid {
-        padding-right: 0;
-      }
-    }
-    @media (max-width: 1200px) {
-      .app-grid.panel-open {
         padding-right: 0;
       }
     }
@@ -1747,10 +1735,6 @@
       box-sizing: border-box;
       width: 100%;
       transition: padding-right 0.5s cubic-bezier(.4,1,.4,1), transform 0.5s cubic-bezier(.4,1,.4,1);
-    }
-    .app-grid.panel-open .project-grid {
-      padding-right: 0;
-      transform: scale(0.98);
     }
 
     @media (max-width: 1400px) {
@@ -2434,10 +2418,12 @@
       bottom: 70px;
       min-width: 340px;
       max-width: 92vw;
-      background: none;
+      background: rgba(24,26,27,0.92);
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      border-radius: 18px;
       z-index: 2002;
       font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-      animation: aboutPopupIn 0.25s cubic-bezier(.4,1,.4,1);
       border: none;
       box-shadow: none;
     }
@@ -2446,7 +2432,7 @@
       border-radius: 18px;
       box-shadow: 0 8px 32px rgba(98,0,238,0.18), 0 1.5px 8px 0 rgba(0,0,0,0.10);
       padding: 32px 32px 24px 32px;
-      border: 1.5px solid rgba(160,107,255,0.18);
+      border: 1.5px solid #a06bff;
       backdrop-filter: blur(18px) saturate(1.2);
       -webkit-backdrop-filter: blur(18px) saturate(1.2);
       color: #fff;
@@ -2995,6 +2981,9 @@ body.cursor-crosshair, body.cursor-crosshair *, body.cursor-crosshair a, body.cu
 body.cursor-triangle, body.cursor-triangle *, body.cursor-triangle a, body.cursor-triangle button {
   cursor: none !important;
 }
+body.cursor-image, body.cursor-image *, body.cursor-image a, body.cursor-image button {
+  cursor: url('images/cursor.png') 0 0, auto !important;
+}
 /* Hide custom cursor unless custom is selected */
 #customCursor { display: none; }
 body.cursor-custom #customCursor { display: block !important; }
@@ -3011,6 +3000,9 @@ body, html, * {
 }
 a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-icon, .app-icon:hover, .project-card, .project-card:hover, .system-icon, .system-icon:hover, .contact-button, .contact-button:hover, .resume-button, .resume-button:hover, .show-more-btn, .show-more-btn:hover, .win-button, .win-button:hover {
   cursor: none !important;
+}
+body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.cursor-image button:hover, body.cursor-image .sidebar-button, body.cursor-image .sidebar-button:hover, body.cursor-image .app-icon, body.cursor-image .app-icon:hover, body.cursor-image .project-card, body.cursor-image .project-card:hover, body.cursor-image .system-icon, body.cursor-image .system-icon:hover, body.cursor-image .contact-button, body.cursor-image .contact-button:hover, body.cursor-image .resume-button, body.cursor-image .resume-button:hover, body.cursor-image .show-more-btn, body.cursor-image .show-more-btn:hover, body.cursor-image .win-button, body.cursor-image .win-button:hover, body.cursor-image .taskbar, body.cursor-image .taskbar * {
+  cursor: url('images/cursor.png') 0 0, auto !important;
 }
 .custom-cursor {
   position: fixed !important;
@@ -3035,11 +3027,83 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
     }
   }
 </style>
+<style>
+  .skeleton {
+    background: linear-gradient(90deg, #ececec 25%, #f5f5f5 37%, #ececec 63%);
+    background-size: 400% 100%;
+    animation: skeleton-loading 1.2s ease-in-out infinite;
+  }
+  @keyframes skeleton-loading {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+  }
+</style>
+<style>
+  .sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 2147483647;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 60%, #a06bff 100%);
+    opacity: 0.85;
+    animation: sparkle-fade 0.7s linear forwards;
+    will-change: transform, opacity;
+    box-shadow: 0 0 8px 2px #fff8, 0 0 16px 4px #a06bff44;
+  }
+  @keyframes sparkle-fade {
+    0% { opacity: 1; transform: scale(1) translateY(0); }
+    60% { opacity: 0.8; transform: scale(1.2) translateY(-6px); }
+    100% { opacity: 0; transform: scale(0.5) translateY(-12px); }
+  }
+</style>
 <body class="cursor-custom">
+<!-- Skeleton Loader -->
+<div id="skeletonLoader" style="position:fixed;z-index:99998;top:0;left:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:rgba(240,244,248,0.98);transition:opacity 0.5s;">
+  <div style="display:flex;gap:48px;align-items:center;">
+    <div class="skeleton skeleton-sidebar" style="width:220px;height:420px;border-radius:18px;"></div>
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <div class="skeleton skeleton-title" style="width:320px;height:32px;border-radius:8px;"></div>
+      <div class="skeleton skeleton-card" style="width:520px;height:180px;border-radius:18px;"></div>
+      <div class="skeleton skeleton-card" style="width:520px;height:180px;border-radius:18px;"></div>
+    </div>
+  </div>
+</div>
 <!-- Page Loader Spinner -->
 <div id="pageLoader" style="position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.85);transition:opacity 0.5s;">
   <div class="loader-spinner"></div>
 </div>
+<script>
+  // Hide skeleton and loader when page is fully loaded
+  window.addEventListener('load', function() {
+    var skeleton = document.getElementById('skeletonLoader');
+    var loader = document.getElementById('pageLoader');
+    if (skeleton) skeleton.style.display = 'none';
+    if (loader) loader.style.display = 'none';
+    // Show main content if it was hidden (optional)
+    document.body.style.overflow = '';
+  });
+</script>
+<script>
+// Sparkle animation for custom cursor
+(function() {
+  const cursor = document.getElementById('customCursor');
+  if (!cursor) return;
+  document.addEventListener('mousemove', function(e) {
+    // Move custom cursor
+    cursor.style.left = (e.clientX - cursor.offsetWidth/2) + 'px';
+    cursor.style.top = (e.clientY - cursor.offsetHeight/2) + 'px';
+    // Create sparkle
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = (e.clientX - 5) + 'px';
+    sparkle.style.top = (e.clientY - 5) + 'px';
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 700);
+  });
+})();
+</script>
 <!-- Lockscreen overlay -->
 <div id="lockscreenOverlay">
   <div class="lockscreen-content">
@@ -3083,7 +3147,12 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
     <a href="https://linkedin.com/in/yourusername" target="_blank" class="sidebar-button" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fab fa-linkedin"></i> LinkedIn</a>
   </div>
 </div>
-<div class="custom-cursor" id="customCursor"></div>
+<div class="custom-cursor" id="customCursor">
+  <div class="cursor-sparkle s1"></div>
+  <div class="cursor-sparkle s2"></div>
+  <div class="cursor-sparkle s3"></div>
+  <div class="cursor-sparkle s4"></div>
+</div>
 <div class="triangle-cursor" id="triangleCursor" style="display:none;">
   <svg width="28" height="28" viewBox="0 0 28 28">
     <polygon points="14,4 24,24 4,24" fill="#a06bff" stroke="#6200ee" stroke-width="2"/>
@@ -3235,7 +3304,7 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
         // Cursor change (toggle classes)
         document.querySelectorAll('.cursor-option').forEach(btn => {
           btn.addEventListener('click', function() {
-            document.body.classList.remove('cursor-custom', 'cursor-crosshair', 'cursor-triangle');
+            document.body.classList.remove('cursor-custom', 'cursor-crosshair', 'cursor-triangle', 'cursor-image');
             const cursor = btn.getAttribute('data-cursor');
             if(cursor === 'custom') {
               document.body.classList.add('cursor-custom');
@@ -3243,6 +3312,8 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
               document.body.classList.add('cursor-crosshair');
             } else if(cursor === 'triangle') {
               document.body.classList.add('cursor-triangle');
+            } else if(cursor === 'image') {
+              document.body.classList.add('cursor-image');
             }
             // Save to localStorage
             localStorage.setItem('portfolio_last_cursor', cursor);
@@ -3269,13 +3340,15 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
           // Restore cursor
           var lastCursor = localStorage.getItem('portfolio_last_cursor');
           if (lastCursor) {
-            document.body.classList.remove('cursor-custom', 'cursor-crosshair', 'cursor-triangle');
+            document.body.classList.remove('cursor-custom', 'cursor-crosshair', 'cursor-triangle', 'cursor-image');
             if(lastCursor === 'custom') {
               document.body.classList.add('cursor-custom');
             } else if(lastCursor === 'crosshair') {
               document.body.classList.add('cursor-crosshair');
             } else if(lastCursor === 'triangle') {
               document.body.classList.add('cursor-triangle');
+            } else if(lastCursor === 'image') {
+              document.body.classList.add('cursor-image');
             }
           }
         });
@@ -3372,22 +3445,22 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
         <a href="#uiux-section" class="sidebar-tile" style="background:#1976d2;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #1976d244;text-decoration:none;">
           <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-pencil-ruler'></i></div>
           <div style="font-size:0.95em;font-weight:700;">UI/UX Design</div>
-          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:linear-gradient(90deg,#1976d2,#64b5f6);color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #1976d244;">2 yrs</span>
+          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#2196f3;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #1976d244;">2 yrs EXP</span>
         </a>
         <a href="#graphics-section" class="sidebar-tile" style="background:#a06bff;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #a06bff44;text-decoration:none;">
           <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-paint-brush'></i></div>
           <div style="font-size:0.95em;font-weight:700;">Graphics Design</div>
-          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:linear-gradient(90deg,#a06bff,#c89fff);color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #a06bff44;">3 yrs</span>
+          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#9c27b0;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #a06bff44;">3 yrs EXP</span>
         </a>
         <a href="#webdev-section" class="sidebar-tile" style="background:#0077b5;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #0077b544;text-decoration:none;">
           <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-code'></i></div>
           <div style="font-size:0.95em;font-weight:700;">Web Development</div>
-          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:linear-gradient(90deg,#0077b5,#64b5f6);color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #0077b544;">2 yrs</span>
+          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#43a047;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #0077b544;">2 yrs EXP</span>
         </a>
         <a href="#game-section" class="sidebar-tile" style="background:#ffd93d;color:#333;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #ffd93d44;text-decoration:none;">
           <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-gamepad'></i></div>
           <div style="font-size:0.95em;font-weight:700;">Game Development</div>
-          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:linear-gradient(90deg,#ffd93d,#ffe569);color:#333;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #ffd93d44;">2 yrs</span>
+          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#ff7043;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #ffd93d44;">2 yrs EXP</span>
         </a>
         </div>
       <div style="width:90%;height:2.5px;background:linear-gradient(90deg,#a06bff 0%,#fff 100%);border-radius:2px;margin:8px auto 8px auto;opacity:0.85;"></div>
@@ -3666,7 +3739,7 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
                 <div class="about-modern-listitem"><span class="about-modern-label">Made by:</span> Aman Kumar</div>
                 <div class="about-modern-listitem"><span class="about-modern-label">Technologies:</span> HTML, CSS, JavaScript</div>
               </div>
-              <div class="about-modern-footer">Design &amp; code by Aman Kumar &copy; 2025</div>
+                                          <div class="about-modern-footer">Design &amp; code by Aman Kumar &copy; 2025</div>
               <button class="about-modern-close" id="aboutCloseBtn" title="Close">Close</button>
             </div>
           </div>
@@ -3718,7 +3791,7 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
         </div>
       </div>
       <!-- Settings Popup -->
-      <div id="settingsPopup" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:rgba(40,40,60,0.98);border-radius:14px;box-shadow:0 4px 32px #a06bff33;padding:32px 18px 24px 18px;min-width:240px;width:340px;max-width:90vw;box-sizing:border-box;">
+      <div id="settingsPopup" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:rgba(40,40,60,0.98);border-radius:14px;box-shadow:0 4px 32px #a06bff33;padding:32px 18px 24px 18px;min-width:0;width:auto;max-width:90vw;box-sizing:border-box;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
           <span style="color:#fff;font-size:1.2em;font-weight:600;">Settings</span>
           <button id="closeSettingsPopupBtn" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
@@ -3735,10 +3808,15 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
         </div>
         <div style="margin-bottom:18px;">
           <label style="color:#a06bff;font-weight:600;">Cursor:</label>
-          <div style="display:flex;gap:10px;margin-top:8px;">
-            <button class="cursor-option" data-cursor="custom" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Custom</button>
-            <button class="cursor-option" data-cursor="crosshair" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Crosshair</button>
-            <button class="cursor-option" data-cursor="triangle" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Triangle</button>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+            <div style="display:flex;gap:10px;">
+              <button class="cursor-option" data-cursor="custom" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Custom</button>
+              <button class="cursor-option" data-cursor="crosshair" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Crosshair</button>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button class="cursor-option" data-cursor="triangle" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Triangle</button>
+              <button class="cursor-option" data-cursor="image" style="padding:6px 16px;border-radius:8px;border:2px solid #a06bff;background:#fff;color:#6200ee;font-weight:600;">Image</button>
+            </div>
           </div>
         </div>
       </div>
@@ -3766,6 +3844,10 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
           <a href="#" id="tictactoeOpenBtn" onclick="openTicTacToeModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(45deg,#FFD700,#FFA500);border-radius:10px;color:#24292e;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #FFD70044;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
             <i class="fas fa-times-circle" style="font-size:2em;margin-bottom:6px;"></i>
             <span style="font-size:1em;">Tic Tac Toe</span>
+          </a>
+          <a href="tetris.html" target="_blank" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(135deg,#a06bff 0%,#6200ee 100%);border-radius:10px;color:#fff;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #a06bff44;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
+            <i class="fas fa-th-large" style="font-size:2em;margin-bottom:6px;"></i>
+            <span style="font-size:1em;">Tetris Game</span>
           </a>
           <a href="#" onclick="openQuizModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:#0077b5;border-radius:10px;color:#fff;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #0077b544;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
             <i class="fas fa-question-circle" style="font-size:2em;margin-bottom:6px;"></i>
@@ -4592,7 +4674,7 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
         description: 'A responsive personal portfolio website built using only HTML and CSS. Showcases projects, skills, and contact information with a clean, modern design.',
         technologies: ['HTML', 'CSS', 'Responsive', 'Portfolio'],
         links: [
-          { text: 'View Source', url: 'https://github.com/username/portfolio-html-css', icon: '📂' },
+          { text: 'View Source', url: 'https://github.com/amankuamr/Portfolio.git', icon: '📂' },
           { text: 'Live Demo', url: '#', icon: '🌐' }
         ]
       },
@@ -4610,8 +4692,8 @@ a, a:hover, button, button:hover, .sidebar-button, .sidebar-button:hover, .app-i
         description: 'A modern web application for booking and managing car rentals online, with real-time availability and secure payments.',
         technologies: ['HTML', 'CSS', 'JavaScript', 'MySQL', 'PHP', 'Bootstrap', 'Figma'],
         links: [
-          { text: 'View Source', url: 'https://github.com/username/car-rental', icon: '📂' },
-          { text: 'Live Demo', url: '#', icon: '🌐' }
+          { text: 'View Source', url: 'https://github.com/amankuamr/Car-Rental.git', icon: '📂' },
+          
         ]
       },
                   'task-manager': {

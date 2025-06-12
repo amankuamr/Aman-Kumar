@@ -5,151 +5,199 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Narnia Adventure Game</title>
   <style>
-    body {
-      background: linear-gradient(120deg, #a06bff 0%, #fff 100%);
+    html, body {
+      height: 100%;
+      width: 100%;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      overflow: hidden;
     }
-    h1 {
-      color: #fff;
-      text-shadow: 0 2px 8px #a06bff88;
-      margin-top: 32px;
-      font-size: 2.2em;
+    body {
+      background: linear-gradient(120deg, #a06bff 0%, #fff 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      width: 100vw;
+      height: 100vh;
+      position: relative;
     }
     #gameArea {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
       background: #24292e;
-      border: 4px solid #a06bff;
-      border-radius: 18px;
-      width: 480px;
-      height: 320px;
-      margin: 32px 0 0 0;
-      position: relative;
+      border: none;
+      border-radius: 0;
+      margin: 0;
+      box-shadow: none;
       overflow: hidden;
-      box-shadow: 0 4px 32px #a06bff33;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      z-index: 1;
     }
     #player {
       position: absolute;
-      width: 32px;
-      height: 32px;
+      width: 5vw;
+      height: 5vw;
+      min-width: 32px; min-height: 32px;
+      max-width: 64px; max-height: 64px;
       background: #ffd93d;
       border-radius: 8px;
       border: 2px solid #333;
-      left: 20px;
-      top: 140px;
+      left: 4vw;
+      top: 45vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5em;
+      font-size: 2vw;
       color: #333;
       transition: left 0.08s, top 0.08s;
-    }
-    .tree {
-      position: absolute;
-      width: 36px;
-      height: 48px;
-      background: #4caf50;
-      border-radius: 0 0 18px 18px;
-      left: 200px;
-      top: 80px;
-      box-shadow: 0 2px 8px #3333;
-      border: 2px solid #388e3c;
+      z-index: 2;
     }
     .portal {
       position: absolute;
-      width: 40px;
-      height: 60px;
+      width: 6vw;
+      height: 9vw;
+      min-width: 40px; min-height: 60px;
+      max-width: 80px; max-height: 120px;
       background: linear-gradient(120deg, #fff 0%, #a06bff 100%);
       border-radius: 12px;
-      left: 400px;
-      top: 120px;
       border: 3px solid #a06bff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2em;
+      font-size: 2vw;
       color: #a06bff;
       box-shadow: 0 2px 12px #a06bff44;
+      z-index: 2;
+      left: 85vw;
+      top: 40vh;
     }
-    #instructions {
-      margin-top: 18px;
-      color: #333;
-      background: #fff8;
+    .wall {
+      position: absolute;
+      background: #888;
+      border: 2px solid #333;
       border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 1.1em;
-      box-shadow: 0 2px 8px #a06bff22;
+      z-index: 2;
+    }
+    /* Example wall sizes */
+    .wall.horiz {
+      height: 3vw;
+      min-height: 18px;
+      max-height: 32px;
+    }
+    .wall.vert {
+      width: 3vw;
+      min-width: 18px;
+      max-width: 32px;
+    }
+    .tree {
+      position: absolute;
+      width: 5vw;
+      height: 7vw;
+      min-width: 36px; min-height: 48px;
+      max-width: 72px; max-height: 96px;
+      background: #4caf50;
+      border-radius: 0 0 18px 18px;
+      box-shadow: 0 2px 8px #3333;
+      border: 2px solid #388e3c;
+      z-index: 2;
+    }
+    #fullscreenBtn {
+      position: absolute;
+      top: 2vw;
+      right: 2vw;
+      z-index: 20;
+      background: #a06bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.8vw 1.6vw;
+      font-size: 1.2vw;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #a06bff33;
+      transition: background 0.2s;
+    }
+    #fullscreenBtn:hover {
+      background: #7c4dff;
+    }
+    @media (max-width: 600px) {
+      #fullscreenBtn { font-size: 3vw; padding: 2vw 4vw; }
     }
   </style>
 </head>
 <body>
-  <h1>Narnia Adventure Game</h1>
   <div id="gameArea">
+    <button id="fullscreenBtn">Fullscreen</button>
     <div id="player">🧒</div>
-    <div class="tree" style="left: 120px; top: 60px;"></div>
-    <div class="tree" style="left: 300px; top: 200px;"></div>
     <div class="portal">🌀</div>
-  </div>
-  <div id="instructions">
-    Use arrow keys to move. Reach the portal to win!<br>
-    Avoid the trees.
+    <!-- Walls -->
+    <div class="wall horiz" style="left: 10vw; top: 20vh; width: 40vw;"></div>
+    <div class="wall vert" style="left: 50vw; top: 20vh; height: 40vh;"></div>
+    <div class="wall horiz" style="left: 20vw; top: 70vh; width: 60vw;"></div>
+    <div class="wall vert" style="left: 20vw; top: 40vh; height: 30vh;"></div>
+    <!-- Trees -->
+    <div class="tree" style="left: 30vw; top: 30vh;"></div>
+    <div class="tree" style="left: 60vw; top: 60vh;"></div>
+    <div class="tree" style="left: 70vw; top: 25vh;"></div>
   </div>
   <script>
     const player = document.getElementById('player');
     const portal = document.querySelector('.portal');
-    const trees = Array.from(document.querySelectorAll('.tree'));
+    const obstacles = Array.from(document.querySelectorAll('.wall, .tree'));
     const gameArea = document.getElementById('gameArea');
-    let pos = { left: 20, top: 140 };
-    const step = 16;
+    const step = Math.max(window.innerWidth, window.innerHeight) * 0.02; // 2vw/vh
+    let pos = { left: 4 * window.innerWidth / 100, top: 45 * window.innerHeight / 100 };
+    function setPlayerPos() {
+      player.style.left = pos.left + 'px';
+      player.style.top = pos.top + 'px';
+    }
+    setPlayerPos();
     function movePlayer(dx, dy) {
       let newLeft = pos.left + dx;
       let newTop = pos.top + dy;
       // Boundaries
-      newLeft = Math.max(0, Math.min(448, newLeft));
-      newTop = Math.max(0, Math.min(288, newTop));
-      // Collision with trees
-      for (const tree of trees) {
-        const rect = tree.getBoundingClientRect();
-        const playerRect = player.getBoundingClientRect();
-        // Use gameArea as reference
-        const treeLeft = tree.offsetLeft;
-        const treeTop = tree.offsetTop;
+      const maxLeft = window.innerWidth - player.offsetWidth;
+      const maxTop = window.innerHeight - player.offsetHeight;
+      newLeft = Math.max(0, Math.min(maxLeft, newLeft));
+      newTop = Math.max(0, Math.min(maxTop, newTop));
+      // Collision with obstacles (walls and trees)
+      player.style.left = newLeft + 'px';
+      player.style.top = newTop + 'px';
+      const playerRect = player.getBoundingClientRect();
+      let blocked = false;
+      for (const obs of obstacles) {
+        const obsRect = obs.getBoundingClientRect();
         if (
-          newLeft + 32 > treeLeft &&
-          newLeft < treeLeft + 36 &&
-          newTop + 32 > treeTop &&
-          newTop < treeTop + 48
+          playerRect.left < obsRect.left + obsRect.width &&
+          playerRect.left + playerRect.width > obsRect.left &&
+          playerRect.top < obsRect.top + obsRect.height &&
+          playerRect.top + playerRect.height > obsRect.top
         ) {
-          return; // Block move
+          blocked = true;
+          break;
         }
+      }
+      if (blocked) {
+        // revert
+        setPlayerPos();
+        return;
       }
       pos.left = newLeft;
       pos.top = newTop;
-      player.style.left = pos.left + 'px';
-      player.style.top = pos.top + 'px';
+      setPlayerPos();
       checkPortal();
     }
     function checkPortal() {
-      const portalLeft = portal.offsetLeft;
-      const portalTop = portal.offsetTop;
+      const portalRect = portal.getBoundingClientRect();
+      const playerRect = player.getBoundingClientRect();
       if (
-        pos.left + 32 > portalLeft &&
-        pos.left < portalLeft + 40 &&
-        pos.top + 32 > portalTop &&
-        pos.top < portalTop + 60
+        playerRect.left < portalRect.left + portalRect.width &&
+        playerRect.left + playerRect.width > portalRect.left &&
+        playerRect.top < portalRect.top + portalRect.height &&
+        playerRect.top + playerRect.height > portalRect.top
       ) {
         setTimeout(() => {
           alert('You found the portal to Narnia!');
-          pos = { left: 20, top: 140 };
-          player.style.left = pos.left + 'px';
-          player.style.top = pos.top + 'px';
+          pos = { left: 4 * window.innerWidth / 100, top: 45 * window.innerHeight / 100 };
+          setPlayerPos();
         }, 100);
       }
     }
@@ -158,6 +206,20 @@
       if (e.key === 'ArrowRight') movePlayer(step, 0);
       if (e.key === 'ArrowUp') movePlayer(0, -step);
       if (e.key === 'ArrowDown') movePlayer(0, step);
+    });
+    // Fullscreen button
+    document.getElementById('fullscreenBtn').onclick = function() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        gameArea.requestFullscreen();
+      }
+    };
+    // Responsive: reposition player on resize
+    window.addEventListener('resize', () => {
+      pos.left = Math.max(0, Math.min(window.innerWidth - player.offsetWidth, pos.left));
+      pos.top = Math.max(0, Math.min(window.innerHeight - player.offsetHeight, pos.top));
+      setPlayerPos();
     });
   </script>
 </body>
