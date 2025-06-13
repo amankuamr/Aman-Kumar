@@ -3980,53 +3980,53 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
           </button>
           </div>
         <div class="menu-bar-right">
-          <button class="show-more-btn" id="aboutArrowBtn" title="About this site">
-            <i class="fas fa-chevron-up"></i>
-          </button>
-          <div id="aboutModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:calc(100vh - 56px);z-index:99999;background:rgba(24,26,27,0.55);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
-            <div id="aboutModalContent" style="max-width:600px;width:96vw;"></div>
-          </div>
-          <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            var aboutArrowBtn = document.getElementById('aboutArrowBtn');
-            var aboutModal = document.getElementById('aboutModal');
-            var aboutModalContent = document.getElementById('aboutModalContent');
-            aboutArrowBtn.addEventListener('click', function(e) {
-              e.preventDefault();
-              fetch('about.html')
+                <button class="show-more-btn" id="aboutArrowBtn" title="About this site">
+                <i class="fas fa-chevron-up"></i>
+                </button>
+                <div id="aboutModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:calc(100vh - 56px);z-index:99999;background:rgba(24,26,27,0.55);align-items:center;justify-content:center;">
+                <div id="aboutModalContent" style="max-width:600px;width:96vw;"></div>
+                </div>
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                var aboutArrowBtn = document.getElementById('aboutArrowBtn');
+                var aboutModal = document.getElementById('aboutModal');
+                var aboutModalContent = document.getElementById('aboutModalContent');
+                aboutArrowBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                fetch('about.html')
                 .then(res => res.text())
                 .then(html => {
-                  // Extract only the .about-popup content
-                  var temp = document.createElement('div');
-                  temp.innerHTML = html;
-                  var aboutPopup = temp.querySelector('.about-popup');
-                  aboutModalContent.innerHTML = '';
-                  if (aboutPopup) {
-                    aboutModalContent.appendChild(aboutPopup);
-                  } else {
-                    aboutModalContent.innerHTML = '<div style="color:#fff;padding:32px;">Failed to load about info.</div>';
-                  }
-                  aboutModal.style.display = 'flex';
-                  // Add close event
-                  var closeBtn = aboutModalContent.querySelector('.menu-button.close');
-                  if (closeBtn) {
-                    closeBtn.onclick = function() {
-                      aboutModal.style.display = 'none';
-                    };
-                  }
-                });
-            });
-            // Close modal on outside click
-            aboutModal.addEventListener('click', function(e) {
-              if (e.target === aboutModal) {
+                // Extract only the .about-popup content
+                var temp = document.createElement('div');
+                temp.innerHTML = html;
+                var aboutPopup = temp.querySelector('.about-popup');
+                aboutModalContent.innerHTML = '';
+                if (aboutPopup) {
+                aboutModalContent.appendChild(aboutPopup);
+                } else {
+                aboutModalContent.innerHTML = '<div style="color:#fff;padding:32px;">Failed to load about info.</div>';
+                }
+                aboutModal.style.display = 'flex';
+                // Add close event
+                var closeBtn = aboutModalContent.querySelector('.menu-button.close');
+                if (closeBtn) {
+                closeBtn.onclick = function() {
                 aboutModal.style.display = 'none';
-              }
-            });
-          });
-          </script>
-          <div class="about-popup" id="aboutPopup">
-            <div class="about-modern-card">
-              <div class="about-modern-avatar">
+                };
+                }
+                });
+                });
+                // Close modal on outside click
+                aboutModal.addEventListener('click', function(e) {
+                if (e.target === aboutModal) {
+                aboutModal.style.display = 'none';
+                }
+                });
+                });
+                </script>
+                <div class="about-popup" id="aboutPopup">
+                <div class="about-modern-card">
+                <div class="about-modern-avatar">
                 <img src="images/person.png" alt="Aman Kumar" />
               </div>
               <div class="about-modern-title">About This Site</div>
