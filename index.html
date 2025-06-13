@@ -247,20 +247,25 @@
       width: 320px;
       min-width: 220px;
       height: calc(100vh - 32px);
-      padding: 16px;
+      padding: 18px 18px 18px 18px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
-      background: rgba(255,255,255,0.2);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-right: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+      gap: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(160,107,255,0.10) 100%);
+      border-right: 1.5px solid rgba(255,255,255,0.22);
+      box-shadow: 0 8px 32px 0 rgba(98,0,238,0.10), 2px 0 24px 0 rgba(160,107,255,0.08);
       border-radius: 0;
       overflow-y: auto;
       box-sizing: border-box;
-      transition: none;
+      transition: background 0.5s cubic-bezier(.4,1,.4,1), box-shadow 0.5s cubic-bezier(.4,1,.4,1);
+      backdrop-filter: blur(24px) saturate(1.4) brightness(1.12);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4) brightness(1.12);
+      animation: sidebarGlassBG 8s ease-in-out infinite alternate;
+    }
+    @keyframes sidebarGlassBG {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
     @media (max-width: 900px) {
       .sidebar {
@@ -273,18 +278,25 @@
       }
     }
 
-    .profile-photo {
-      width: 120px;
-      height: 120px;
+        .profile-photo {
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #fff;
-      box-shadow: 0 4px 32px 0 rgba(98,0,238,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
-      outline: 2.5px solid #a06bff;
-      outline-offset: 3px;
-      transition: box-shadow 0.3s, outline 0.3s;
-      background: linear-gradient(135deg, #fff 60%, #a06bff 100%);
-      margin-bottom: 8px;
+      border: none;
+      box-shadow: none;
+      outline: none;
+      outline-offset: 0;
+      transition: none;
+      background: none;
+      position: relative;
+      z-index: 2;
+      display: block;
+      margin: 0 auto 8px auto;
+    }
+    @keyframes ring-rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .sidebar h1 {
@@ -297,8 +309,15 @@
       font-size: 14px;
       text-align: center;
       color: rgba(255,255,255,0.9);
-      margin: 16px 0;
-    }    .sidebar .skills {
+      margin: 8px 0 6px 0;
+    }
+    .sidebar hr {
+      margin: 4px 0 8px 0 !important;
+    }
+    .skills-tile-grid {
+      margin-top: 0 !important;
+    }
+    .sidebar .skills {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -546,6 +565,16 @@
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
+@keyframes badgeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.experience-badge:hover {
+  box-shadow: 0 4px 16px #a06bff88, 0 1px 8px #fff8;
+  transform: scale(1.08) rotate(-2deg);
+}
 
     @media (max-width: 900px) {
       .sidebar-buttons {
@@ -1677,35 +1706,39 @@
       transform: translateX(4px);
     }
 
-    .project-details .close-btn {
+    .project-details .close-btn.boxy-blur {
       position: absolute;
       top: 16px;
       right: 16px;
-      width: 32px;
-      height: 32px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
+      width: 44px;
+      height: 36px;
+      background: rgba(255,255,255,0.18);
       color: #fff;
-      font-size: 20px;
+      border: 1.5px solid rgba(160,107,255,0.22);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s ease;
+      box-shadow: 0 4px 24px 0 rgba(160,107,255,0.13), 0 1.5px 8px 0 rgba(0,0,0,0.10);
+      backdrop-filter: blur(16px) saturate(1.8);
+      -webkit-backdrop-filter: blur(16px) saturate(1.8);
+      transition: box-shadow 0.18s, background 0.18s, transform 0.18s;
       opacity: 0;
       transform: scale(0.8);
+      z-index: 10;
+      font-size: 1.5em;
     }
-
-    .project-details.active .close-btn {
+    .project-details.active .close-btn.boxy-blur {
       opacity: 1;
       transform: scale(1);
       transition-delay: 0.3s;
     }
-
-    .project-details .close-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.1);
+    .project-details .close-btn.boxy-blur:hover {
+      background: rgba(255,255,255,0.28);
+      box-shadow: 0 8px 32px #a06bff33;
+      transform: scale(1.08);
+      color: #a06bff;
     }
 
     /* Panel entrance/exit animations */
@@ -1875,79 +1908,130 @@
         transform: scale(1);
         opacity: 0.6;
       }
-    }/* Windows 10 Style Menu */
+    }/* Modern Frosted Glass Start Menu */
     .social-popup {
       position: fixed;
-      bottom: 60px;
+      bottom: 70px;
       left: 50%;
       transform: translate(-50%, 20px);
-      background: rgba(32, 32, 32, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 8px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      padding: 24px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(25px) saturate(1.8);
+      -webkit-backdrop-filter: blur(25px) saturate(1.8);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        0 8px 32px rgba(160, 107, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      padding: 32px;
       display: none;
       flex-direction: column;
-      width: 400px;
+      width: 480px;
+      max-width: 90vw;
       z-index: 1001;
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       pointer-events: none;
+      overflow: hidden;
+    }
+
+    .social-popup::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 50%, 
+        rgba(160, 107, 255, 0.1) 100%);
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: -1;
     }
 
     .social-popup .menu-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      position: relative;
     }
 
     .social-popup .menu-title {
       color: #fff;
-      font-size: 18px;
-      font-weight: 500;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     }
 
     .social-popup .menu-controls {
       display: flex;
-      gap: 8px;
+      gap: 12px;
     }
 
     .social-popup .menu-button {
       background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      width: 32px;
-      height: 32px;
-      border-radius: 4px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-popup .menu-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
     }
 
     .social-popup .menu-button:hover {
       background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.05);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 24px rgba(160, 107, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .social-popup .menu-button:hover::before {
+      left: 100%;
     }
 
     .social-popup .menu-button.power {
-      color: #ff4444;
+      color: #ff6b6b;
+      border-color: rgba(255, 107, 107, 0.3);
+    }
+
+    .social-popup .menu-button.power:hover {
+      background: rgba(255, 107, 107, 0.2);
+      box-shadow: 0 8px 24px rgba(255, 107, 107, 0.3);
     }
 
     .social-popup .menu-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 20px;
     }
 
     .social-popup.show {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
       opacity: 1;
       transform: translate(-50%, 0);
       pointer-events: auto;
@@ -1960,42 +2044,123 @@
       justify-content: center;
       text-decoration: none;
       color: #fff;
-      padding: 16px;
-      border-radius: 4px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      transform: scale(0.9);
+      padding: 24px 16px;
+      border-radius: 16px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: scale(0.9) translateY(20px);
       opacity: 0;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      height: 100px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      height: 120px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-popup a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        transparent 50%, 
+        rgba(255, 255, 255, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .social-popup.show a {
-      transform: scale(1);
+      transform: scale(1) translateY(0);
       opacity: 1;
     }
 
-    .social-popup a:nth-child(1) { transition-delay: 0.1s; background: #24292e; }
-    .social-popup a:nth-child(2) { transition-delay: 0.15s; background: #0077b5; }
-    .social-popup a:nth-child(3) { transition-delay: 0.2s; background: #1DA1F2; }
-    .social-popup a:nth-child(4) { transition-delay: 0.25s; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .social-popup a:nth-child(1) { 
+      transition-delay: 0.1s; 
+      background: linear-gradient(135deg, rgba(36, 41, 46, 0.8), rgba(36, 41, 46, 0.6));
+      border-color: rgba(36, 41, 46, 0.5);
+    }
+    .social-popup a:nth-child(2) { 
+      transition-delay: 0.15s; 
+      background: linear-gradient(135deg, rgba(0, 119, 181, 0.8), rgba(0, 119, 181, 0.6));
+      border-color: rgba(0, 119, 181, 0.5);
+    }
+    .social-popup a:nth-child(3) { 
+      transition-delay: 0.2s; 
+      background: linear-gradient(135deg, rgba(29, 161, 242, 0.8), rgba(29, 161, 242, 0.6));
+      border-color: rgba(29, 161, 242, 0.5);
+    }
+    .social-popup a:nth-child(4) { 
+      transition-delay: 0.25s; 
+      background: linear-gradient(135deg, 
+        rgba(240, 148, 51, 0.8), 
+        rgba(230, 104, 60, 0.8), 
+        rgba(220, 39, 67, 0.8));
+      border-color: rgba(240, 148, 51, 0.5);
+    }
 
     .social-popup a:hover {
-      transform: scale(1.05);
-      filter: brightness(1.2);
+      transform: scale(1.05) translateY(-4px);
+      box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(160, 107, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .social-popup a:hover::before {
+      opacity: 1;
     }
 
     .social-popup a i {
-      font-size: 32px;
-      margin-bottom: 8px;
+      font-size: 36px;
+      margin-bottom: 12px;
       color: #fff;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+      transition: transform 0.3s ease;
+    }
+
+    .social-popup a:hover i {
+      transform: scale(1.1) rotate(5deg);
     }
 
     .social-popup a span {
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 15px;
+      font-weight: 600;
       margin-top: 4px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Mobile responsive adjustments */
+    @media (max-width: 600px) {
+      .social-popup {
+        width: 95vw;
+        padding: 24px 20px;
+        bottom: 60px;
+      }
+      
+      .social-popup .menu-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      
+      .social-popup a {
+        height: 100px;
+        padding: 20px 12px;
+      }
+      
+      .social-popup a i {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+      
+      .social-popup a span {
+        font-size: 13px;
+      }
     }
 
     /* Menu title */
@@ -2858,13 +3023,23 @@
 <style>
 /* Sidebar tile and button hover effects */
 .sidebar-tile, .sidebar-action-btn {
-  transition: transform 0.18s cubic-bezier(.4,1,.4,1), box-shadow 0.18s, background 0.18s;
+  transition: transform 0.28s cubic-bezier(.4,1,.4,1), box-shadow 0.28s, background 0.28s, border 0.28s;
   cursor: pointer;
+  background: linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(160,107,255,0.10) 100%);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  box-shadow: 0 4px 24px 0 rgba(160,107,255,0.10), 0 1.5px 8px 0 rgba(0,0,0,0.08);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
 }
 .sidebar-tile:hover {
-  transform: scale(1.045);
-  box-shadow: 0 4px 18px 0 rgba(98,0,238,0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
-  z-index: 2;
+  transform: scale(1.06) translateY(-2px);
+  box-shadow: 0 12px 32px 0 #a06bff33, 0 4px 16px 0 #b388ff22;
+  background: linear-gradient(120deg, rgba(255,255,255,0.28) 0%, rgba(160,107,255,0.18) 100%);
+  border-color: #a06bff;
+  z-index: 3;
 }
 .sidebar-action-btn:hover {
   transform: scale(1.06);
@@ -3057,7 +3232,49 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
     60% { opacity: 0.8; transform: scale(1.2) translateY(-6px); }
     100% { opacity: 0; transform: scale(0.5) translateY(-12px); }
   }
+.profile-flip-container {
+      perspective: 800px;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 8px;
+    }
+    .profile-flip-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.7s cubic-bezier(.4,1,.4,1);
+      transform-style: preserve-3d;
+    }
+    .profile-flip-card.flipped {
+      transform: rotateY(180deg);
+    }
+    .profile-flip-front, .profile-flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .profile-flip-front {
+      z-index: 2;
+    }
+    .profile-flip-back {
+      transform: rotateY(180deg);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(40,40,60,0.92);
+    }
+    .profile-flip-back video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
 </style>
+
 <body class="cursor-custom">
 <!-- Skeleton Loader -->
 <div id="skeletonLoader" style="position:fixed;z-index:99998;top:0;left:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:rgba(240,244,248,0.98);transition:opacity 0.5s;">
@@ -3123,7 +3340,33 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
 <!-- Mobile menu -->
 <div class="mobile-menu" id="mobileMenu" style="z-index:6000;">
   <button class="close-btn" id="mobileMenuClose" aria-label="Close menu">&times;</button>
-    <img class="profile-photo" src="images/person.png" alt="Profile Photo">
+    <div class="profile-flip-container" id="profileFlipContainer" style="perspective:800px;width:120px;height:120px;">
+      <div class="profile-flip-card" id="profileFlipCard" style="width:100%;height:100%;position:relative;transition:transform 0.7s cubic-bezier(.4,1,.4,1);transform-style:preserve-3d;">
+        <div class="profile-flip-front" style="position:absolute;width:100%;height:100%;backface-visibility:hidden;z-index:2;">
+          <div class="profile-flip-container" id="profileFlipContainer">
+            <div class="profile-flip-card" id="profileFlipCard">
+              <div class="profile-flip-front">
+                <div class="profile-flip-container" id="profileFlipContainer">
+  <div class="profile-flip-card" id="profileFlipCard">
+    <div class="profile-flip-front">
+          </div>
+    <div class="profile-flip-back">
+      <span style="color:#fff;">Hello!</span>
+    </div>
+  </div>
+</div>
+              </div>
+              <div class="profile-flip-back">
+                <video id="profileFlipVideo" src="images/webmm.webm" preload="auto" loop muted></video>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-flip-back" style="position:absolute;width:100%;height:100%;backface-visibility:hidden;transform:rotateY(180deg);z-index:3;display:flex;align-items:center;justify-content:center;background:rgba(40,40,60,0.92);border-radius:50%;overflow:hidden;">
+          <video src="images/webmm.webm" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" autoplay loop muted playsinline></video>
+        </div>
+      </div>
+    </div>
   <h1>Aman Kumar</h1>
   <div class="description">
     Passionate graphic and UI/UX designer with a strong focus on creating visually appealing and user-friendly experiences. Also skilled in web development and game development.
@@ -3141,7 +3384,11 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
     </button>
   </div>
   <div class="mobile-social-menu" style="margin:18px 0 0 0;display:flex;flex-direction:column;gap:10px;align-items:center;">
-    <a href="#" onclick="showAchievements(event); return false;" class="sidebar-button" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fas fa-trophy"></i> Achievements</a>
+    <a href="#" onclick="showAchievements(event); return false;" class="sidebar-button" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fas fa-trophy"></i> Achievements<span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#2196f3;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #1976d244;">2 yrs EXP</span>
+        <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#9c27b0;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #a06bff44;">3 yrs EXP</span>
+        <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#43a047;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #0077b544;">2 yrs EXP</span>
+        <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#ff7043;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #ffd93d44;">2 yrs EXP</span>
+        </a>
     <a href="#" class="sidebar-button" id="openInstagramPopupBtnMobile" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fab fa-instagram"></i> Instagram</a>
     <a href="https://github.com/amankuamr" target="_blank" class="sidebar-button" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fab fa-github"></i> GitHub</a>
     <a href="https://linkedin.com/in/yourusername" target="_blank" class="sidebar-button" style="display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fab fa-linkedin"></i> LinkedIn</a>
@@ -3430,7 +3677,16 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
     <div class="sidebar">
       <div style="display:flex;align-items:center;gap:16px;width:100%;padding:8px 0 0 0;">
         <div style="flex-shrink:0;display:flex;align-items:center;">
-          <img class="profile-photo" src="images/person.png" alt="Profile Photo">
+          <div class="profile-flip-container" id="profileFlipContainer">
+            <div class="profile-flip-card" id="profileFlipCard">
+              <div class="profile-flip-front">
+                <img class="profile-photo" src="images/person.png" alt="Profile Photo">
+              </div>
+              <div class="profile-flip-back">
+                <video id="profileFlipVideo" src="images/webmm.webm" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></video>
+              </div>
+            </div>
+          </div>
         </div>
         <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;">
           <h1 style="text-align:left;margin:0 0 2px 0;font-size:22px;">Aman Kumar</h1>
@@ -3442,26 +3698,26 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
       </div>
       <hr style="border:0;border-top:1px solid #a06bff;margin:10px 0 12px 0;width:100%;">
       <div class="skills-tile-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px 12px;padding:2px 0 2px 0;">
-        <a href="#uiux-section" class="sidebar-tile" style="background:#1976d2;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #1976d244;text-decoration:none;">
+        <a href="#uiux-section" class="sidebar-tile" style="background:#1976d2;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #1976d244;text-decoration:none;position:relative;">
+          <span class="experience-badge" style="position:absolute;top:7px;right:10px;z-index:2;display:inline-block;font-size:0.88em;font-weight:700;background:#2196f3;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #1976d244;opacity:0;transform:translateY(-10px) scale(0.95);animation: badgeIn 0.7s cubic-bezier(.4,1,.4,1) 0.1s forwards;transition:box-shadow 0.18s,transform 0.18s;">2 EXP</span>
           <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-pencil-ruler'></i></div>
           <div style="font-size:0.95em;font-weight:700;">UI/UX Design</div>
-          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#2196f3;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #1976d244;">2 yrs EXP</span>
-        </a>
-        <a href="#graphics-section" class="sidebar-tile" style="background:#a06bff;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #a06bff44;text-decoration:none;">
+                  </a>
+        <a href="#graphics-section" class="sidebar-tile" style="background:#a06bff;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #a06bff44;text-decoration:none;position:relative;">
+          <span class="experience-badge" style="position:absolute;top:7px;right:10px;z-index:2;display:inline-block;font-size:0.88em;font-weight:700;background:#9c27b0;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #a06bff44;opacity:0;transform:translateY(-10px) scale(0.95);animation: badgeIn 0.7s cubic-bezier(.4,1,.4,1) 0.2s forwards;transition:box-shadow 0.18s,transform 0.18s;">3 EXP</span>
           <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-paint-brush'></i></div>
           <div style="font-size:0.95em;font-weight:700;">Graphics Design</div>
-          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#9c27b0;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #a06bff44;">3 yrs EXP</span>
-        </a>
-        <a href="#webdev-section" class="sidebar-tile" style="background:#0077b5;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #0077b544;text-decoration:none;">
+                  </a>
+        <a href="#webdev-section" class="sidebar-tile" style="background:#0077b5;color:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #0077b544;text-decoration:none;position:relative;">
+          <span class="experience-badge" style="position:absolute;top:7px;right:10px;z-index:2;display:inline-block;font-size:0.88em;font-weight:700;background:#43a047;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #0077b544;opacity:0;transform:translateY(-10px) scale(0.95);animation: badgeIn 0.7s cubic-bezier(.4,1,.4,1) 0.3s forwards;transition:box-shadow 0.18s,transform 0.18s;">2 EXP</span>
           <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-code'></i></div>
           <div style="font-size:0.95em;font-weight:700;">Web Development</div>
-          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#43a047;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #0077b544;">2 yrs EXP</span>
-        </a>
-        <a href="#game-section" class="sidebar-tile" style="background:#ffd93d;color:#333;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #ffd93d44;text-decoration:none;">
+                  </a>
+        <a href="#game-section" class="sidebar-tile" style="background:#ffd93d;color:#333;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:6px 8px 6px 10px;min-width:0;min-height:100px;height:100px;box-shadow:0 1px 4px #ffd93d44;text-decoration:none;position:relative;">
+          <span class="experience-badge" style="position:absolute;top:7px;right:10px;z-index:2;display:inline-block;font-size:0.88em;font-weight:700;background:#ff7043;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #ffd93d44;opacity:0;transform:translateY(-10px) scale(0.95);animation: badgeIn 0.7s cubic-bezier(.4,1,.4,1) 0.4s forwards;transition:box-shadow 0.18s,transform 0.18s;">2 EXP</span>
           <div style="font-size:1.1em;margin-bottom:1px;"><i class='fas fa-gamepad'></i></div>
           <div style="font-size:0.95em;font-weight:700;">Game Development</div>
-          <span class="experience-badge" style="margin-top:4px;display:inline-block;font-size:0.88em;font-weight:700;background:#ff7043;color:#fff;padding:1.5px 8px;border-radius:999px;box-shadow:0 1px 4px #ffd93d44;">2 yrs EXP</span>
-        </a>
+                  </a>
         </div>
       <div style="width:90%;height:2.5px;background:linear-gradient(90deg,#a06bff 0%,#fff 100%);border-radius:2px;margin:8px auto 8px auto;opacity:0.85;"></div>
       <div class="sidebar-buttons sidebar-buttons-row" style="display:flex;gap:8px;margin-top:0;">
@@ -3727,6 +3983,47 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
           <button class="show-more-btn" id="aboutArrowBtn" title="About this site">
             <i class="fas fa-chevron-up"></i>
           </button>
+          <div id="aboutModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;background:rgba(24,26,27,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+            <div id="aboutModalContent" style="max-width:600px;width:96vw;"></div>
+          </div>
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            var aboutArrowBtn = document.getElementById('aboutArrowBtn');
+            var aboutModal = document.getElementById('aboutModal');
+            var aboutModalContent = document.getElementById('aboutModalContent');
+            aboutArrowBtn.addEventListener('click', function(e) {
+              e.preventDefault();
+              fetch('about.html')
+                .then(res => res.text())
+                .then(html => {
+                  // Extract only the .about-popup content
+                  var temp = document.createElement('div');
+                  temp.innerHTML = html;
+                  var aboutPopup = temp.querySelector('.about-popup');
+                  aboutModalContent.innerHTML = '';
+                  if (aboutPopup) {
+                    aboutModalContent.appendChild(aboutPopup);
+                  } else {
+                    aboutModalContent.innerHTML = '<div style="color:#fff;padding:32px;">Failed to load about info.</div>';
+                  }
+                  aboutModal.style.display = 'flex';
+                  // Add close event
+                  var closeBtn = aboutModalContent.querySelector('.menu-button.close');
+                  if (closeBtn) {
+                    closeBtn.onclick = function() {
+                      aboutModal.style.display = 'none';
+                    };
+                  }
+                });
+            });
+            // Close modal on outside click
+            aboutModal.addEventListener('click', function(e) {
+              if (e.target === aboutModal) {
+                aboutModal.style.display = 'none';
+              }
+            });
+          });
+          </script>
           <div class="about-popup" id="aboutPopup">
             <div class="about-modern-card">
               <div class="about-modern-avatar">
@@ -3827,8 +4124,7 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
         </a>
         <a href="#" class="instagram" id="openInstagramPopupBtn" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
           <i class="fab fa-instagram"></i>
-          <span>Instagram</span>
-        </a>
+          <span>Instagram</span</a>
         <a href="https://github.com/amankuamr" target="_blank" class="github" style="background: #24292e;">
           <i class="fab fa-github"></i>
           <span>GitHub</span>
@@ -3839,9 +4135,9 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
         </a>
       </div>
       <div style="margin:18px 0 0 0;width:100%;">
-        <div style="color:#a06bff;font-weight:600;font-size:1.1em;margin-bottom:8px;margin-top:2px;">Apps</div>
+        <div style="color:#fff;font-weight:600;font-size:1.1em;margin-bottom:8px;margin-top:2px;">Apps</div>
         <div style="display:flex;gap:12px;">
-          <a href="#" id="tictactoeOpenBtn" onclick="openTicTacToeModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(45deg,#FFD700,#FFA500);border-radius:10px;color:#24292e;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #FFD70044;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
+          <a href="tictactoe.html" target="_blank" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:linear-gradient(45deg,#FFD700,#FFA500);border-radius:10px;color:#fff;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #FFD70044;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
             <i class="fas fa-times-circle" style="font-size:2em;margin-bottom:6px;"></i>
             <span style="font-size:1em;">Tic Tac Toe</span>
           </a>
@@ -3849,7 +4145,7 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
             <i class="fas fa-th-large" style="font-size:2em;margin-bottom:6px;"></i>
             <span style="font-size:1em;">Tetris Game</span>
           </a>
-          <a href="#" onclick="openQuizModal();toggleSocialPopup();return false;" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:#0077b5;border-radius:10px;color:#fff;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #0077b544;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
+          <a href="quiz.html" target="_blank" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 0;background:#0077b5;border-radius:10px;color:#fff;font-weight:600;text-decoration:none;box-shadow:0 2px 8px #0077b544;transition:background 0.18s,box-shadow 0.18s,transform 0.12s;">
             <i class="fas fa-question-circle" style="font-size:2em;margin-bottom:6px;"></i>
             <span style="font-size:1em;">Quiz Game</span>
           </a>
@@ -3881,7 +4177,9 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
 
     <!-- Project Details Panel -->
     <div class="project-details" id="projectDetails">
-      <button class="close-btn" onclick="closeProjectDetails()">×</button>
+      <button class="close-btn boxy-blur" onclick="closeProjectDetails()" title="Close">
+        <span aria-hidden="true" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.5em;line-height:1;">×</span>
+      </button>
       <h3></h3>
       <div class="technologies"></div>
       <p></p>

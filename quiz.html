@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Game</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* Windows 8 Loading Screen Styles */
+    #loadingScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out;
+    }
+
+    #loadingScreen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-logo {
+      font-size: 3.5em;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 40px;
+      text-shadow: 0 2px 20px rgba(160,107,255,0.5);
+      letter-spacing: 2px;
+    }
+
+    .loading-dots {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+
+    .loading-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      animation: loadingPulse 1.4s infinite ease-in-out both;
+    }
+
+    .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+    .loading-dot:nth-child(3) { animation-delay: 0s; }
+    .loading-dot:nth-child(4) { animation-delay: 0.16s; }
+    .loading-dot:nth-child(5) { animation-delay: 0.32s; }
+
+    @keyframes loadingPulse {
+      0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+      }
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .loading-text {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.1em;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    #gameContent {
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    #gameContent.show {
+      opacity: 1;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.8em;
+      color: #a06bff;
+      text-shadow: 0 2px 16px #a06bff44;
+      letter-spacing: 1px;
+    }
+
+    #quiz-container {
+      background: rgba(255,255,255,0.10);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 40px;
+      margin-bottom: 20px;
+    }
+
+    #startScreen {
+      text-align: center;
+    }
+
+    .level-selection {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .level-btn {
+      background: linear-gradient(135deg, #a06bff 0%, #ff6b9d 100%);
+      color: #fff;
+      border: none;
+      border-radius: 16px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(160,107,255,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      min-width: 120px;
+    }
+
+    .level-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(160,107,255,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+
+    .level-btn:active {
+      transform: translateY(0);
+    }
+
+    #gameScreen {
+      display: none;
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .score-info {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .score-item {
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.9em;
+      opacity: 0.8;
+      margin-bottom: 5px;
+    }
+
+    .score-value {
+      font-size: 1.4em;
+      font-weight: 600;
+      background: linear-gradient(135deg, #ffd93d 0%, #ff9a3d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .progress-bar {
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      height: 8px;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    .progress-fill {
+      background: linear-gradient(135deg, #a06bff 0%, #ff6b9d 100%);
+      height: 100%;
+      transition: width 0.3s ease;
+      border-radius: 10px;
+    }
+
+    .question-container {
+      margin-bottom: 30px;
+    }
+
+    .question {
+      font-size: 1.3em;
+      font-weight: 500;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    .answers {
+      display: grid;
+      gap: 15px;
+    }
+
+    .answer-btn {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 15px 20px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .answer-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .answer-btn.correct {
+      background: linear-gradient(135deg, rgba(0,255,100,0.3), rgba(0,200,100,0.4));
+      border-color: rgba(0,255,100,0.6);
+      box-shadow: 0 4px 16px rgba(0,255,100,0.3);
+    }
+
+    .answer-btn.incorrect {
+      background: linear-gradient(135deg, rgba(255,50,50,0.3), rgba(200,0,0,0.4));
+      border-color: rgba(255,50,50,0.6);
+      box-shadow: 0 4px 16px rgba(255,50,50,0.3);
+    }
+
+    .answer-btn:disabled {
+      cursor: not-allowed;
+    }
+
+    .next-btn {
+      background: linear-gradient(135deg, #a06bff 0%, #ff6b9d 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 30px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(160,107,255,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      margin: 20px auto 0;
+    }
+
+    .next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(160,107,255,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+
+    .next-btn:active {
+      transform: translateY(0);
+    }
+
+    #resultScreen {
+      display: none;
+      text-align: center;
+    }
+
+    .result-score {
+      font-size: 3em;
+      font-weight: 600;
+      margin: 20px 0;
+      background: linear-gradient(135deg, #ffd93d 0%, #ff9a3d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .result-message {
+      font-size: 1.3em;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .restart-btn {
+      background: linear-gradient(135deg, #a06bff 0%, #ff6b9d 100%);
+      color: #fff;
+      border: none;
+      border-radius: 16px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(160,107,255,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .restart-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(160,107,255,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+
+    .restart-btn:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2em;
+      }
+      
+      #quiz-container {
+        padding: 25px;
+      }
+      
+      .level-selection {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .quiz-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .score-info {
+        justify-content: center;
+      }
+      
+      .question {
+        font-size: 1.1em;
+      }
+      
+      .answer-btn {
+        font-size: 1em;
+        padding: 12px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Windows 8 Loading Screen -->
+  <div id="loadingScreen">
+    <div class="loading-logo">QUIZ GAME</div>
+    <div class="loading-dots">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+    </div>
+    <div class="loading-text">Loading questions...</div>
+  </div>
+
+  <!-- Game Content -->
+  <div id="gameContent">
+    <h1>Quiz Challenge</h1>
+    
+    <div id="quiz-container">
+      <!-- Start Screen -->
+      <div id="startScreen">
+        <h2>Choose Your Level</h2>
+        <p>Test your knowledge in UI/UX Design, Web Development, and Game Development!</p>
+        <div class="level-selection">
+          <button class="level-btn" onclick="startQuiz('10')">Class 10</button>
+          <button class="level-btn" onclick="startQuiz('12')">Class 12</button>
+          <button class="level-btn" onclick="startQuiz('grad')">Graduate</button>
+        </div>
+      </div>
+
+      <!-- Game Screen -->
+      <div id="gameScreen">
+        <div class="quiz-header">
+          <div class="score-info">
+            <div class="score-item">
+              <div class="score-label">Score</div>
+              <div class="score-value" id="score">0</div>
+            </div>
+            <div class="score-item">
+              <div class="score-label">Question</div>
+              <div class="score-value" id="questionNumber">1/10</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <div class="question-container">
+          <div class="question" id="question"></div>
+          <div class="answers" id="answers"></div>
+        </div>
+        
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+      </div>
+
+      <!-- Result Screen -->
+      <div id="resultScreen">
+        <h2>Quiz Complete!</h2>
+        <div class="result-score" id="finalScore"></div>
+        <div class="result-message" id="resultMessage"></div>
+        <button class="restart-btn" onclick="restartQuiz()">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="quiz-questions.js"></script>
+  <script>
+    // Loading Screen Logic
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        const gameContent = document.getElementById('gameContent');
+        
+        loadingScreen.classList.add('fade-out');
+        gameContent.classList.add('show');
+        
+        setTimeout(function() {
+          loadingScreen.style.display = 'none';
+        }, 500);
+      }, 2000);
+    });
+
+    // Quiz Game Logic
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let selectedLevel = '';
+
+    function startQuiz(level) {
+      selectedLevel = level;
+      currentQuestions = shuffleArray([...QUIZ_QUESTIONS[level]]).slice(0, 10);
+      currentQuestionIndex = 0;
+      score = 0;
+      
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('gameScreen').style.display = 'block';
+      document.getElementById('resultScreen').style.display = 'none';
+      
+      showQuestion();
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function showQuestion() {
+      const question = currentQuestions[currentQuestionIndex];
+      
+      document.getElementById('question').textContent = question.q;
+      document.getElementById('questionNumber').textContent = `${currentQuestionIndex + 1}/10`;
+      document.getElementById('score').textContent = score;
+      
+      // Update progress bar
+      const progress = ((currentQuestionIndex + 1) / 10) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+      
+      // Shuffle answers and track correct answer position
+      const originalCorrectIndex = question.c;
+      const answersWithIndex = question.a.map((answer, index) => ({
+        text: answer,
+        isCorrect: index === originalCorrectIndex
+      }));
+      
+      // Shuffle the answers
+      const shuffledAnswers = shuffleArray([...answersWithIndex]);
+      
+      // Find the new position of the correct answer
+      const newCorrectIndex = shuffledAnswers.findIndex(answer => answer.isCorrect);
+      
+      // Store the new correct index for this question
+      question.shuffledCorrectIndex = newCorrectIndex;
+      
+      // Create answer buttons
+      const answersContainer = document.getElementById('answers');
+      answersContainer.innerHTML = '';
+      
+      shuffledAnswers.forEach((answer, index) => {
+        const button = document.createElement('button');
+        button.className = 'answer-btn';
+        button.textContent = answer.text;
+        button.onclick = () => selectAnswer(index);
+        answersContainer.appendChild(button);
+      });
+      
+      document.getElementById('nextBtn').style.display = 'none';
+    }
+
+    function selectAnswer(selectedIndex) {
+      const question = currentQuestions[currentQuestionIndex];
+      const buttons = document.querySelectorAll('.answer-btn');
+      
+      // Disable all buttons
+      buttons.forEach(btn => btn.disabled = true);
+      
+      // Show correct/incorrect using the shuffled correct index
+      buttons.forEach((btn, index) => {
+        if (index === question.shuffledCorrectIndex) {
+          btn.classList.add('correct');
+        } else if (index === selectedIndex && index !== question.shuffledCorrectIndex) {
+          btn.classList.add('incorrect');
+        }
+      });
+      
+      // Update score
+      if (selectedIndex === question.shuffledCorrectIndex) {
+        score += 10;
+        document.getElementById('score').textContent = score;
+      }
+      
+      // Show next button
+      setTimeout(() => {
+        document.getElementById('nextBtn').style.display = 'block';
+      }, 1000);
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      
+      if (currentQuestionIndex < currentQuestions.length) {
+        showQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('gameScreen').style.display = 'none';
+      document.getElementById('resultScreen').style.display = 'block';
+      
+      const percentage = (score / 100) * 100;
+      document.getElementById('finalScore').textContent = `${score}/100`;
+      
+      let message = '';
+      if (percentage >= 90) {
+        message = '🏆 Excellent! You\'re a true expert!';
+      } else if (percentage >= 70) {
+        message = '🎉 Great job! You know your stuff!';
+      } else if (percentage >= 50) {
+        message = '👍 Good work! Keep learning!';
+      } else {
+        message = '📚 Keep studying and try again!';
+      }
+      
+      document.getElementById('resultMessage').textContent = message;
+    }
+
+    function restartQuiz() {
+      document.getElementById('startScreen').style.display = 'block';
+      document.getElementById('gameScreen').style.display = 'none';
+      document.getElementById('resultScreen').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
