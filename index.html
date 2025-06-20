@@ -3738,7 +3738,7 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
       <div class="project-section" id="graphics-section">
         <h2>Graphic Design</h2>
         <div class="project-grid">
-          <div class="project-card" onclick="showProjectDetails('illustrator')">
+                      <div class="project-card" onclick="showProjectDetails('illustrator')">
             <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
               <img src="images/poster.jpg" alt="Poster Design" style="width:100%;height:100%;object-fit:cover;display:block;">
             </div>
@@ -3823,6 +3823,21 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
           <div class="project-section" id="webdev-section">
           <h2>Web Development</h2>
           <div class="project-grid">
+            <!-- Password Manager Card -->
+            <div class="project-card" onclick="showProjectDetails('password-manager')">
+              <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
+                <img src="images/password.png" alt="Password Manager" style="width:100%;height:100%;object-fit:cover;display:block;">
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">Password Manager</h3>
+                <p class="card-description">A secure and modern web app to manage your passwords with encryption and easy access across devices.</p>
+                <div class="card-tags">
+                  <span class="tag">HTML</span>
+                  <span class="tag">CSS</span>
+                  <span class="tag">JavaScript</span>
+                </div>
+                </div>
+            </div>
           <div class="project-card" onclick="showProjectDetails('portfolio-html-css')">
           <div class="card-image" style="aspect-ratio: 16/9; height: 180px; padding: 0; overflow: hidden;">
             <img src="images/portfoliohtml.png" alt="Portfolio (HTML, CSS)" style="width:100%;height:100%;object-fit:cover;display:block;">
@@ -4931,6 +4946,14 @@ body.cursor-image a, body.cursor-image a:hover, body.cursor-image button, body.c
     });
 
     const projectData = {
+      'password-manager': {
+        name: 'Password Manager',
+        description: 'A secure and modern web app to manage your passwords with encryption and easy access across devices.',
+        technologies: ['HTML', 'CSS', 'JavaScript'],
+        links: [
+          { text: 'Live Demo', url: 'https://amankuamr.github.io/password-manager/', icon: '🔗' }
+        ]
+      },
       'illustrator': {
         name: 'Poster Design Projects',
         description: 'Collection of creative poster design projects. Includes layouts, illustrations, and visual storytelling.',
